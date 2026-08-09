@@ -1,22 +1,24 @@
-/* Hugo's Paella — under construction site */
+/* Hugo Paella — huisstijl v05 */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --bg: #fffdfb;
-  --bg-soft: #faf6f1;
-  --text: #2b2622;
-  --text-soft: #6b6259;
-  --accent: #c8532b;
-  --accent-dark: #a5401e;
-  --olive: #6b7a4f;
-  --line: #ece5dd;
+  --bg: #fff5e6;        /* Rijst-crème */
+  --bg-soft: #faead1;   /* iets dieper crème, voor kaarten */
+  --text: #24211f;      /* Warm antraciet */
+  --text-soft: #5d5752; /* Warm grijs */
+  --accent: #f15a24;    /* Paella-oranje */
+  --accent-dark: #c2431a;
+  --gold: #f4b942;      /* Saffraangeel */
+  --navy: #18324a;      /* Marineblauw */
+  --green: #39734d;     /* Peterseliegroen */
+  --line: #ecdcbf;
   --radius: 16px;
-  --shadow: 0 14px 34px rgba(43, 38, 34, 0.10);
-  --shadow-sm: 0 4px 14px rgba(43, 38, 34, 0.08);
+  --shadow: 0 14px 34px rgba(36, 33, 31, 0.10);
+  --shadow-sm: 0 4px 14px rgba(36, 33, 31, 0.08);
   --max: 1140px;
-  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Montserrat', Arial, sans-serif;
+  --font-body: 'Montserrat', Arial, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -47,7 +49,7 @@ a { color: var(--accent-dark); }
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgba(255, 253, 251, 0.85);
+  background: rgba(255, 245, 230, 0.88);
   backdrop-filter: saturate(180%) blur(10px);
   border-bottom: 1px solid var(--line);
 }
@@ -65,9 +67,9 @@ a { color: var(--accent-dark); }
   align-items: center;
   gap: 10px;
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 800;
   font-size: 1.3rem;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.01em;
   color: var(--text);
   text-decoration: none;
 }
@@ -79,7 +81,7 @@ a { color: var(--accent-dark); }
 }
 
 .brand-text {
-  word-spacing: -0.12em;
+  word-spacing: -0.1em;
 }
 
 .accent,
@@ -102,8 +104,8 @@ a { color: var(--accent-dark); }
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--accent-dark);
-  background: #fbe9e0;
-  border: 1px solid #f2cdb9;
+  background: rgba(241, 90, 36, 0.12);
+  border: 1px solid rgba(241, 90, 36, 0.32);
   padding: 7px 14px;
   border-radius: 999px;
 }
@@ -125,7 +127,7 @@ a { color: var(--accent-dark); }
 
 .lang-switch a.active {
   color: var(--accent-dark);
-  background: #fbe9e0;
+  background: rgba(241, 90, 36, 0.12);
 }
 
 .lang-switch a:not(.active):hover {
@@ -161,7 +163,7 @@ a { color: var(--accent-dark); }
 
 .intro h1 {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 800;
   font-size: clamp(2.6rem, 6vw, 4.4rem);
   line-height: 1.05;
   margin: 0 0 18px;
@@ -170,10 +172,9 @@ a { color: var(--accent-dark); }
 
 .intro .subtitle {
   font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--accent);
-  font-size: clamp(1.3rem, 2.6vw, 1.8rem);
+  font-size: clamp(1.2rem, 2.4vw, 1.6rem);
   margin: 0 0 32px;
   text-align: center;
 }
@@ -195,9 +196,9 @@ a { color: var(--accent-dark); }
   display: inline-block;
   margin-top: 34px;
   font-family: var(--font-display);
-  font-style: italic;
-  font-size: 1.15rem;
-  color: var(--olive);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--navy);
 }
 
 /* Hero gallery */
@@ -258,14 +259,14 @@ a { color: var(--accent-dark); }
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--olive);
+  font-weight: 700;
+  color: var(--green);
   margin-bottom: 12px;
 }
 
 .section-heading h2 {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 800;
   font-size: clamp(2rem, 4vw, 2.7rem);
   margin: 0 0 16px;
 }
@@ -301,8 +302,8 @@ a { color: var(--accent-dark); }
 .step-number {
   font-family: var(--font-display);
   font-size: 1rem;
-  font-weight: 600;
-  color: #fff;
+  font-weight: 700;
+  color: var(--bg);
   background: var(--accent);
   width: 38px;
   height: 38px;
@@ -315,8 +316,8 @@ a { color: var(--accent-dark); }
 
 .step-content h3 {
   font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.6rem;
+  font-weight: 700;
+  font-size: 1.5rem;
   margin: 0 0 14px;
 }
 
@@ -384,17 +385,49 @@ a { color: var(--accent-dark); }
   background: var(--bg-soft);
 }
 
+.footer-lockup {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
 .footer-logo {
   width: 44px;
   height: 44px;
-  margin: 0 auto 20px;
-  opacity: 0.85;
+  margin-bottom: 12px;
+}
+
+.footer-wordmark {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.4rem;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  word-spacing: -0.1em;
+}
+
+.footer-divider {
+  width: 60px;
+  height: 2px;
+  background: var(--gold);
+  border: none;
+  margin: 10px 0;
+}
+
+.footer-payoff {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--navy);
 }
 
 .site-footer .closing {
   font-family: var(--font-display);
-  font-style: italic;
-  font-size: 1.6rem;
+  font-weight: 700;
+  font-size: 1.5rem;
   color: var(--accent-dark);
   margin: 0 0 18px;
   text-align: center;
@@ -415,6 +448,6 @@ a { color: var(--accent-dark); }
 
 .site-footer .fine {
   font-size: 0.82rem;
-  color: #a39a90;
+  color: #a3927a;
   margin-top: 28px;
 }
