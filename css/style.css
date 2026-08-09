@@ -359,13 +359,14 @@ a { color: var(--accent-dark); }
 @media (max-width: 860px) {
   .step {
     grid-template-columns: 1fr;
-    gap: 18px;
+    gap: 20px;
   }
   .step-content {
     display: contents;
   }
   .step-header {
     order: 1;
+    margin-bottom: 4px;
   }
   .step-media {
     order: 2;
