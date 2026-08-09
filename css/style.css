@@ -78,6 +78,11 @@ a { color: var(--accent-dark); }
   display: block;
 }
 
+.brand-text {
+  word-spacing: -0.12em;
+}
+
+.accent,
 .brand span {
   color: var(--accent);
 }
@@ -192,20 +197,6 @@ a { color: var(--accent-dark); }
   font-style: italic;
   font-size: 1.15rem;
   color: var(--olive);
-  position: relative;
-  padding-bottom: 6px;
-}
-
-.stay-tuned::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  width: 60px;
-  transform: translateX(-50%);
-  height: 2px;
-  background: var(--accent);
-  border-radius: 2px;
 }
 
 /* Hero gallery */
@@ -367,11 +358,19 @@ a { color: var(--accent-dark); }
 @media (max-width: 860px) {
   .step {
     grid-template-columns: 1fr;
-    gap: 22px;
+    gap: 18px;
   }
-  .step:nth-child(even) .step-media,
-  .step:nth-child(even) .step-content {
-    order: initial;
+  .step-content {
+    display: contents;
+  }
+  .step-header {
+    order: 1;
+  }
+  .step-media {
+    order: 2;
+  }
+  .step-text {
+    order: 3;
   }
 }
 
