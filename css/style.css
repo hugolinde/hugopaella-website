@@ -64,15 +64,15 @@ a { color: var(--accent-dark); }
 
 .brand {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
   color: var(--text);
   text-decoration: none;
 }
 
 .brand-logo {
-  width: 49px;
-  height: 49px;
+  width: 47px;
+  height: 47px;
   display: block;
 }
 
