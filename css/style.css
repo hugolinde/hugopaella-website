@@ -80,6 +80,7 @@ a { color: var(--accent-dark); }
   display: flex;
   flex-direction: column;
   line-height: 1.2;
+  text-align: left;
 }
 
 .brand-text {
