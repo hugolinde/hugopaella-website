@@ -71,8 +71,8 @@ a { color: var(--accent-dark); }
 }
 
 .brand-logo {
-  width: 38px;
-  height: 38px;
+  width: 49px;
+  height: 49px;
   display: block;
 }
 
@@ -97,7 +97,7 @@ a { color: var(--accent-dark); }
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--navy);
-  margin-top: 3px;
+  margin-top: 8px;
 }
 
 .accent,
@@ -364,7 +364,7 @@ a { color: var(--accent-dark); }
 /* Footer */
 .site-footer {
   border-top: 1px solid var(--line);
-  padding: 56px 0 40px;
+  padding: 28px 0 20px;
   text-align: center;
   background: var(--bg-soft);
 }
@@ -377,8 +377,8 @@ a { color: var(--accent-dark); }
 }
 
 .footer-logo {
-  width: 44px;
-  height: 44px;
+  width: 57px;
+  height: 57px;
   margin-bottom: 12px;
 }
 
@@ -396,7 +396,7 @@ a { color: var(--accent-dark); }
   height: 2px;
   background: var(--gold);
   border: none;
-  margin: 10px 0;
+  margin: 3px 0;
 }
 
 .footer-payoff {
