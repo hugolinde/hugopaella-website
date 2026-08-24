@@ -93,7 +93,7 @@ a { color: var(--accent-dark); }
 .brand-payoff {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 0.62rem;
+  font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--navy);
@@ -376,38 +376,6 @@ a { color: var(--accent-dark); }
   margin-bottom: 28px;
 }
 
-.footer-logo {
-  width: 57px;
-  height: 57px;
-  margin-bottom: 12px;
-}
-
-.footer-wordmark {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.4rem;
-  letter-spacing: -0.01em;
-  color: var(--text);
-  word-spacing: -0.1em;
-}
-
-.footer-divider {
-  width: 60px;
-  height: 2px;
-  background: var(--gold);
-  border: none;
-  margin: 3px 0;
-}
-
-.footer-payoff {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--navy);
-}
-
 .site-footer p {
   color: var(--text-soft);
   max-width: 560px;
@@ -415,6 +383,9 @@ a { color: var(--accent-dark); }
 }
 
 .site-footer .domains {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
   font-weight: 600;
   letter-spacing: 0.02em;
   color: var(--text);
