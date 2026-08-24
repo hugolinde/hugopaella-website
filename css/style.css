@@ -66,10 +66,6 @@ a { color: var(--accent-dark); }
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.3rem;
-  letter-spacing: -0.01em;
   color: var(--text);
   text-decoration: none;
 }
@@ -80,8 +76,27 @@ a { color: var(--accent-dark); }
   display: block;
 }
 
+.brand-text-group {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
 .brand-text {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.3rem;
+  letter-spacing: -0.01em;
   word-spacing: -0.1em;
+}
+
+.brand-payoff {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--navy);
 }
 
 .accent,
@@ -390,15 +405,6 @@ a { color: var(--accent-dark); }
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--navy);
-}
-
-.site-footer .closing {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.5rem;
-  color: var(--accent-dark);
-  margin: 0 0 18px;
-  text-align: center;
 }
 
 .site-footer p {
