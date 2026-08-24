@@ -95,21 +95,6 @@ a { color: var(--accent-dark); }
   gap: 16px;
 }
 
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--accent-dark);
-  background: rgba(241, 90, 36, 0.12);
-  border: 1px solid rgba(241, 90, 36, 0.32);
-  padding: 7px 14px;
-  border-radius: 999px;
-}
-
 .lang-switch {
   display: flex;
   align-items: center;
@@ -136,23 +121,6 @@ a { color: var(--accent-dark); }
 
 .lang-switch .sep {
   color: var(--line);
-}
-
-@media (max-width: 560px) {
-  .badge { display: none; }
-}
-
-.badge .dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--accent);
-  animation: pulse 1.8s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.75); }
 }
 
 /* Intro / Hero text */
@@ -444,6 +412,20 @@ a { color: var(--accent-dark); }
   letter-spacing: 0.02em;
   color: var(--text);
   margin-bottom: 6px;
+}
+
+.site-footer .contact-kvk {
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.site-footer .contact-kvk a {
+  color: var(--text-soft);
+  text-decoration: underline;
+}
+
+.site-footer .contact-kvk a:hover {
+  color: var(--accent-dark);
 }
 
 .site-footer .fine {
