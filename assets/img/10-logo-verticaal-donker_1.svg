@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" width="800" height="820" viewBox="0 0 800 820"><style>text{font-family:'Montserrat','Nimbus Sans',Arial,sans-serif}</style><rect width="800" height="820" fill="#24211F"/><g transform="translate(238 70) scale(1)">
+    <path d="M49 92C7 92 7 150 49 150" fill="none" stroke="#FFF5E6" stroke-width="9" stroke-linecap="round"/>
+    <path d="M275 92C317 92 317 150 275 150" fill="none" stroke="#FFF5E6" stroke-width="9" stroke-linecap="round"/>
+    <circle cx="162" cy="121" r="124" fill="#F15A24" stroke="#FFF5E6" stroke-width="7"/>
+    <circle cx="162" cy="121" r="101" fill="none" stroke="#FFF5E6" stroke-width="8"/>
+    <g fill="#FFF5E6">
+      <circle cx="112" cy="83" r="7"/><circle cx="150" cy="75" r="7"/><circle cx="91" cy="112" r="7"/>
+      <circle cx="130" cy="112" r="7"/><circle cx="168" cy="108" r="7"/><circle cx="211" cy="97" r="7"/>
+      <circle cx="102" cy="145" r="7"/><circle cx="145" cy="143" r="7"/><circle cx="189" cy="141" r="7"/>
+      <circle cx="224" cy="131" r="7"/><circle cx="126" cy="171" r="7"/><circle cx="177" cy="172" r="7"/>
+    </g>
+    <circle cx="198" cy="116" r="8" fill="#F4B942"/><circle cx="158" cy="139" r="8" fill="#39734D"/>
+    <circle cx="212" cy="151" r="8" fill="#18324A"/>
+  </g><text x="72" y="465" font-size="96" font-weight="700" letter-spacing="-3" fill="#FFF5E6">HUGO</text><text x="363" y="465" font-size="96" font-weight="700" letter-spacing="-3" fill="#F15A24">PAELLA</text><text x="400" y="550" text-anchor="middle" font-size="42" font-weight="600" letter-spacing="8" fill="#FFF5E6">EL PAELLERO HOLANDÉS</text><text x="370" y="620" text-anchor="end" font-size="29" font-weight="600" fill="#FFF5E6">hugopaella<tspan fill="#F15A24">.nl</tspan></text><text x="430" y="620" text-anchor="start" font-size="29" font-weight="600" fill="#FFF5E6">hugopaella<tspan fill="#F15A24">.es</tspan></text></svg>
