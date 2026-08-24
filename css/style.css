@@ -71,8 +71,8 @@ a { color: var(--accent-dark); }
 }
 
 .brand-logo {
-  width: 32px;
-  height: 32px;
+  width: 38px;
+  height: 38px;
   display: block;
 }
 
@@ -97,6 +97,7 @@ a { color: var(--accent-dark); }
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--navy);
+  margin-top: 3px;
 }
 
 .accent,
