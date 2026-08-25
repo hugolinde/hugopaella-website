@@ -72,7 +72,13 @@ a { color: var(--accent-dark); }
 .logo-header {
   display: block;
   width: auto;
-  height: 56px;
+  height: 112px;
+}
+
+@media (max-width: 760px) {
+  .logo-header {
+    height: 84px;
+  }
 }
 
 .accent,
@@ -350,10 +356,16 @@ a { color: var(--accent-dark); }
 
 .footer-logo {
   display: block;
-  width: 300px;
+  width: 600px;
   max-width: 80vw;
   height: auto;
   margin: 0 auto;
+}
+
+@media (max-width: 760px) {
+  .footer-logo {
+    width: 360px;
+  }
 }
 
 .site-footer p {
