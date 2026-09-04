@@ -756,6 +756,19 @@ a.dish-card:hover {
 
 .faq-item .faq-answer p { margin: 0 0 10px; }
 .faq-item .faq-answer p:last-child { margin-bottom: 0; }
+.faq-item .faq-answer ul { margin: 0 0 10px; padding-left: 20px; }
+.faq-item .faq-answer li { margin-bottom: 4px; }
+
+.faq-category {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-dark);
+  margin: 40px 0 2px;
+}
+.faq-category:first-child { margin-top: 0; }
 
 /* Timeline (Over Hugo) */
 .timeline {
