@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Hugo Paella</title>
+<meta name="description" content="Vraag beschikbaarheid of een offerte aan voor paella op locatie. Stuur je datum, locatie, aantal gasten en eventuele voorkeur door.">
+
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#f15a24">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="hugopaella">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<link rel="stylesheet" href="/css/style.css?v14">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/">
+      <img class="logo-header" src="/assets/img/logo-header.svg" alt="Hugo Paella — El Paellero Holandés">
+    </a>
+    <nav class="main-nav" aria-label="Hoofdmenu">
+      <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+      <label for="nav-toggle" class="nav-toggle-label" aria-label="Menu"><span></span></label>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/paella-op-locatie/">Paella op locatie</a></li>
+        <li><a href="/de-paella/">De Paella</a></li>
+        <li><a href="/over-hugo/">Over Hugo</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/calculator/">Calculator</a></li>
+        <li><a href="/contact/" class="is-active nav-cta">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-right">
+      <nav class="lang-switch">
+        <a href="/" class="active">NL</a>
+        <span class="sep">/</span>
+        <a href="/es/">ES</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+
+<section class="page-hero no-image">
+  <div class="wrap">
+    <div class="hero-text" style="text-align:center;">
+      <span class="kicker">Contact</span>
+      <h1>Zullen we een paella plannen?</h1>
+      <p>Wil je weten of ik beschikbaar ben of een prijs voor jouw gezelschap ontvangen? Stuur me je aanvraag met in ieder geval de gewenste datum, locatie, het aantal gasten en (als je al een voorkeur hebt) welke paella je wilt. Ik reageer in principe binnen 24 uur.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section no-border" style="padding-top:0;">
+  <div class="wrap" style="max-width:760px;">
+
+    <!--
+      TODO (Hugo): dit formulier verstuurt nog nergens naartoe. Zodra je een
+      verzendoplossing hebt gekozen (bijvoorbeeld Formspree, of iets anders),
+      hoef je hier alleen het <form>-element aan te passen: geef het een
+      action="https://..." en method="POST", en verwijder het onsubmit-scriptje
+      hieronder (dat toont nu alleen een nette melding i.p.v. echt te versturen).
+    -->
+    <form class="contact-form" id="contact-form" onsubmit="event.preventDefault(); document.getElementById('form-placeholder-note').hidden = false; this.hidden = true;">
+      <div class="form-grid">
+        <div class="field">
+          <label for="naam">Naam</label>
+          <input type="text" id="naam" name="naam" required>
+        </div>
+        <div class="field">
+          <label for="email">E-mailadres</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="field">
+          <label for="telefoon">Telefoonnummer <span class="optional">(optioneel)</span></label>
+          <input type="tel" id="telefoon" name="telefoon">
+        </div>
+        <div class="field">
+          <label for="datum">Datum</label>
+          <input type="date" id="datum" name="datum" required>
+        </div>
+        <div class="field">
+          <label for="locatie">Locatie / postcode</label>
+          <input type="text" id="locatie" name="locatie" required>
+        </div>
+        <div class="field">
+          <label for="gasten">Aantal gasten</label>
+          <input type="number" id="gasten" name="gasten" min="1" required>
+        </div>
+        <div class="field full">
+          <label for="gerecht">Voorkeur gerecht <span class="optional">(optioneel)</span></label>
+          <select id="gerecht" name="gerecht">
+            <option value="">Nog geen voorkeur</option>
+            <option value="valenciana">Paella Valenciana</option>
+            <option value="marisco">Paella de Marisco</option>
+            <option value="verduras">Paella de Verduras</option>
+            <option value="fideua">Fideuà</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="opmerkingen">Aanvullende wensen / opmerkingen <span class="optional">(optioneel)</span></label>
+          <textarea id="opmerkingen" name="opmerkingen"></textarea>
+        </div>
+      </div>
+      <div class="form-submit-row">
+        <button type="submit" class="btn btn-primary">Verstuur mijn aanvraag</button>
+      </div>
+    </form>
+
+    <div id="form-placeholder-note" hidden>
+      <p style="font-weight:700;">Bedankt voor je aanvraag!</p>
+      <p style="color:var(--text-soft);">Het formulier is op deze testversie van de site nog niet gekoppeld aan e-mail. Mail je aanvraag voor nu rechtstreeks naar <a href="mailto:megusta@hugopaella.nl">megusta@hugopaella.nl</a>, dan reageer ik in principe binnen 24 uur.</p>
+    </div>
+
+    <p class="form-note">Je reservering is pas definitief nadat de afspraken zijn bevestigd en de aanbetaling van 20% is ontvangen.</p>
+
+    <div class="contact-direct">
+      <p>Liever direct mailen? Dat kan natuurlijk ook: <a href="mailto:megusta@hugopaella.nl">megusta@hugopaella.nl</a></p>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-lockup">
+      <a href="/">
+        <img class="footer-logo" src="/assets/img/logo-footer.svg" alt="Hugo Paella — El Paellero Holandés — hugopaella.nl / hugopaella.es">
+      </a>
+    </div>
+    <ul class="footer-nav">
+      <li><a href="/">Home</a></li>
+      <li><a href="/paella-op-locatie/">Paella op locatie</a></li>
+      <li><a href="/de-paella/">De Paella</a></li>
+      <li><a href="/over-hugo/">Over Hugo</a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/calculator/">Calculator</a></li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
+    <p class="contact-kvk">Contact: <a href="mailto:megusta@hugopaella.nl">megusta@hugopaella.nl</a><br>KvK: 24280255</p>
+    <p class="fine">2026 Hugo Paella</p>
+  </div>
+</footer>
+
+</body>
+</html>
