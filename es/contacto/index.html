@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact — Hugo Paella</title>
-<meta name="description" content="Vraag beschikbaarheid of een offerte aan voor paella op locatie. Stuur je datum, locatie, aantal gasten en eventuele voorkeur door.">
+<title>Contacto — Hugo Paella</title>
+<meta name="description" content="Consulta disponibilidad o pide presupuesto para paella a domicilio. Indica la fecha, la ubicación, el número de invitados y tu preferencia.">
 
-<link rel="canonical" href="https://hugopaella.nl/contact/">
+<link rel="canonical" href="https://hugopaella.nl/es/contacto/">
 <link rel="alternate" hreflang="nl" href="https://hugopaella.nl/contact/">
 <link rel="alternate" hreflang="es" href="https://hugopaella.nl/es/contacto/">
 <link rel="alternate" hreflang="x-default" href="https://hugopaella.nl/contact/">
@@ -27,27 +27,27 @@
 
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="/">
+    <a class="brand" href="/es/">
       <img class="logo-header" src="/assets/img/logo-header.svg" alt="Hugo Paella — El Paellero Holandés">
     </a>
-    <nav class="main-nav" aria-label="Hoofdmenu">
+    <nav class="main-nav" aria-label="Menú principal">
       <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
       <label for="nav-toggle" class="nav-toggle-label" aria-label="Menu"><span></span></label>
       <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/paella-op-locatie/">Paella op locatie</a></li>
-        <li><a href="/de-paella/">De Paella</a></li>
-        <li><a href="/over-hugo/">Over Hugo</a></li>
-        <li><a href="/blog/">Blog</a></li>
-        <li><a href="/calculator/">Calculator</a></li>
-        <li><a href="/contact/" class="is-active nav-cta">Contact</a></li>
+        <li><a href="/es/">Home</a></li>
+        <li><a href="/es/paella-a-domicilio/">Paella a domicilio</a></li>
+        <li><a href="/es/la-paella/">La Paella</a></li>
+        <li><a href="/es/sobre-hugo/">Sobre Hugo</a></li>
+        <li><a href="/es/blog/">Blog</a></li>
+        <li><a href="/es/calculadora/">Calculadora</a></li>
+        <li><a href="/es/contacto/" class="is-active nav-cta">Contacto</a></li>
       </ul>
     </nav>
     <div class="header-right">
       <nav class="lang-switch">
-        <a href="/contact/" class="active">NL</a>
+        <a href="/contact/">NL</a>
         <span class="sep">/</span>
-        <a href="/es/contacto/">ES</a>
+        <a href="/es/contacto/" class="active">ES</a>
       </nav>
     </div>
   </div>
@@ -57,9 +57,9 @@
 <section class="page-hero no-image">
   <div class="wrap">
     <div class="hero-text" style="text-align:center;">
-      <span class="kicker">Contact</span>
-      <h1>Zullen we een paella plannen?</h1>
-      <p>Wil je weten of ik beschikbaar ben of een prijs voor jouw gezelschap ontvangen? Stuur me je aanvraag met in ieder geval de gewenste datum, locatie, het aantal gasten en (als je al een voorkeur hebt) welke paella je wilt. Ik reageer in principe binnen 24 uur.</p>
+      <span class="kicker">Contacto</span>
+      <h1>¿Organizamos una paella?</h1>
+      <p>¿Quieres saber si estoy disponible o recibir un presupuesto para tu grupo? Envíame tu solicitud indicando al menos la fecha deseada, la ubicación, el número de invitados y, si ya lo tienes claro, qué paella prefieres. En principio respondo en menos de 24 horas.</p>
     </div>
   </div>
 </section>
@@ -68,42 +68,42 @@
   <div class="wrap" style="max-width:760px;">
 
     <!--
-      TODO (Hugo): dit formulier verstuurt nog nergens naartoe. Zodra je een
-      verzendoplossing hebt gekozen (bijvoorbeeld Formspree, of iets anders),
-      hoef je hier alleen het <form>-element aan te passen: geef het een
-      action="https://..." en method="POST", en verwijder het onsubmit-scriptje
-      hieronder (dat toont nu alleen een nette melding i.p.v. echt te versturen).
+      TODO (Hugo): este formulario todavía no envía nada a ningún sitio.
+      En cuanto elijas una solución de envío (por ejemplo Formspree, u otra),
+      solo tienes que ajustar el elemento <form>: dale un action="https://..."
+      y method="POST", y elimina el script onsubmit de abajo (que ahora solo
+      muestra un aviso, en lugar de enviar de verdad).
     -->
     <form class="contact-form" id="contact-form" onsubmit="event.preventDefault(); document.getElementById('form-placeholder-note').hidden = false; this.hidden = true;">
       <div class="form-grid">
         <div class="field">
-          <label for="naam">Naam</label>
+          <label for="naam">Nombre</label>
           <input type="text" id="naam" name="naam" required>
         </div>
         <div class="field">
-          <label for="email">E-mailadres</label>
+          <label for="email">Correo electrónico</label>
           <input type="email" id="email" name="email" required>
         </div>
         <div class="field">
-          <label for="telefoon">Telefoonnummer <span class="optional">(optioneel)</span></label>
+          <label for="telefoon">Teléfono <span class="optional">(opcional)</span></label>
           <input type="tel" id="telefoon" name="telefoon">
         </div>
         <div class="field">
-          <label for="datum">Datum</label>
+          <label for="datum">Fecha</label>
           <input type="date" id="datum" name="datum" required>
         </div>
         <div class="field">
-          <label for="locatie">Locatie / postcode</label>
+          <label for="locatie">Ubicación / código postal</label>
           <input type="text" id="locatie" name="locatie" required>
         </div>
         <div class="field">
-          <label for="gasten">Aantal gasten</label>
+          <label for="gasten">Número de invitados</label>
           <input type="number" id="gasten" name="gasten" min="1" required>
         </div>
         <div class="field full">
-          <label for="gerecht">Voorkeur gerecht <span class="optional">(optioneel)</span></label>
+          <label for="gerecht">Plato preferido <span class="optional">(opcional)</span></label>
           <select id="gerecht" name="gerecht">
-            <option value="">Nog geen voorkeur</option>
+            <option value="">Todavía sin preferencia</option>
             <option value="valenciana">Paella Valenciana</option>
             <option value="marisco">Paella de Marisco</option>
             <option value="verduras">Paella de Verduras</option>
@@ -111,24 +111,24 @@
           </select>
         </div>
         <div class="field full">
-          <label for="opmerkingen">Aanvullende wensen / opmerkingen <span class="optional">(optioneel)</span></label>
+          <label for="opmerkingen">Peticiones o comentarios adicionales <span class="optional">(opcional)</span></label>
           <textarea id="opmerkingen" name="opmerkingen"></textarea>
         </div>
       </div>
       <div class="form-submit-row">
-        <button type="submit" class="btn btn-primary">Verstuur mijn aanvraag</button>
+        <button type="submit" class="btn btn-primary">Enviar mi solicitud</button>
       </div>
     </form>
 
     <div id="form-placeholder-note" hidden>
-      <p style="font-weight:700;">Bedankt voor je aanvraag!</p>
-      <p style="color:var(--text-soft);">Het formulier is op deze testversie van de site nog niet gekoppeld aan e-mail. Mail je aanvraag voor nu rechtstreeks naar <a href="mailto:hugo@hugopaella.nl">hugo@hugopaella.nl</a>, dan reageer ik in principe binnen 24 uur.</p>
+      <p style="font-weight:700;">¡Gracias por tu solicitud!</p>
+      <p style="color:var(--text-soft);">En esta versión de prueba de la web, el formulario todavía no está conectado al correo. Por ahora, envía tu solicitud directamente a <a href="mailto:hugo@hugopaella.nl">hugo@hugopaella.nl</a>; en principio respondo en menos de 24 horas.</p>
     </div>
 
-    <p class="form-note">Je reservering is pas definitief nadat de afspraken zijn bevestigd en de aanbetaling van 20% is ontvangen.</p>
+    <p class="form-note">Tu reserva no es definitiva hasta que se confirmen los acuerdos y se reciba la señal del 20%.</p>
 
     <div class="contact-direct">
-      <p>Liever direct mailen? Dat kan natuurlijk ook: <a href="mailto:hugo@hugopaella.nl">hugo@hugopaella.nl</a></p>
+      <p>¿Prefieres escribir directamente? También puedes: <a href="mailto:hugo@hugopaella.nl">hugo@hugopaella.nl</a></p>
     </div>
 
   </div>
@@ -137,20 +137,20 @@
 <footer class="site-footer">
   <div class="wrap">
     <div class="footer-lockup">
-      <a href="/">
+      <a href="/es/">
         <img class="footer-logo" src="/assets/img/logo-footer.svg" alt="Hugo Paella — El Paellero Holandés — hugopaella.nl / hugopaella.es">
       </a>
     </div>
     <ul class="footer-nav">
-      <li><a href="/">Home</a></li>
-      <li><a href="/paella-op-locatie/">Paella op locatie</a></li>
-      <li><a href="/de-paella/">De Paella</a></li>
-      <li><a href="/over-hugo/">Over Hugo</a></li>
-      <li><a href="/blog/">Blog</a></li>
-      <li><a href="/calculator/">Calculator</a></li>
-      <li><a href="/contact/">Contact</a></li>
+      <li><a href="/es/">Home</a></li>
+      <li><a href="/es/paella-a-domicilio/">Paella a domicilio</a></li>
+      <li><a href="/es/la-paella/">La Paella</a></li>
+      <li><a href="/es/sobre-hugo/">Sobre Hugo</a></li>
+      <li><a href="/es/blog/">Blog</a></li>
+      <li><a href="/es/calculadora/">Calculadora</a></li>
+      <li><a href="/es/contacto/">Contacto</a></li>
     </ul>
-    <p class="contact-kvk">Contact: <a href="mailto:hugo@hugopaella.nl">hugo@hugopaella.nl</a><br>KvK: 24280255</p>
+    <p class="contact-kvk">Contacto: <a href="mailto:hugo@hugopaella.nl">hugo@hugopaella.nl</a><br>CIF/KvK: 24280255</p>
     <p class="fine">2026 Hugo Paella</p>
   </div>
 </footer>

@@ -3,8 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hugo Paella — muy pronto más</title>
-<meta name="description" content="Hugo Paella — paellas auténticas a domicilio, recetas y consejos desde España y los Países Bajos. La web está en construcción.">
+<title>Hugo Paella — Paella auténtica, preparada al momento a domicilio</title>
+<meta name="description" content="Hugo Paella prepara paellas auténticas totalmente al momento a domicilio, con buenos ingredientes, técnicas tradicionales y mucha atención al sabor.">
+
+<link rel="canonical" href="https://hugopaella.nl/es/">
+<link rel="alternate" hreflang="nl" href="https://hugopaella.nl/">
+<link rel="alternate" hreflang="es" href="https://hugopaella.nl/es/">
+<link rel="alternate" hreflang="x-default" href="https://hugopaella.nl/">
 
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -16,15 +21,28 @@
 <meta name="apple-mobile-web-app-title" content="hugopaella">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
-<link rel="stylesheet" href="../css/style.css?v=13">
+<link rel="stylesheet" href="/css/style.css?v15">
 </head>
 <body>
 
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="/es/">
-      <img class="logo-header" src="../assets/img/logo-header.svg" alt="Hugo Paella — El Paellero Holandés">
+      <img class="logo-header" src="/assets/img/logo-header.svg" alt="Hugo Paella — El Paellero Holandés">
     </a>
+    <nav class="main-nav" aria-label="Menú principal">
+      <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+      <label for="nav-toggle" class="nav-toggle-label" aria-label="Menu"><span></span></label>
+      <ul>
+        <li><a href="/es/" class="is-active">Home</a></li>
+        <li><a href="/es/paella-a-domicilio/">Paella a domicilio</a></li>
+        <li><a href="/es/la-paella/">La Paella</a></li>
+        <li><a href="/es/sobre-hugo/">Sobre Hugo</a></li>
+        <li><a href="/es/blog/">Blog</a></li>
+        <li><a href="/es/calculadora/">Calculadora</a></li>
+        <li><a href="/es/contacto/" class="nav-cta">Contacto</a></li>
+      </ul>
+    </nav>
     <div class="header-right">
       <nav class="lang-switch">
         <a href="/">NL</a>
@@ -35,242 +53,80 @@
   </div>
 </header>
 
-<section class="intro">
+
+<section class="page-hero">
   <div class="wrap">
-    <h1>Hugo <span class="accent">Paella</span></h1>
-    <p class="subtitle">Muy pronto más&hellip;</p>
-    <p>La página web de Hugo Paella todavía está en construcción. Pero, ¿empezar una web sobre paella sin enseñar antes una paella? Eso, evidentemente, no puede ser.</p>
-    <p class="teaser">Por eso, aquí abajo un adelanto: una auténtica Paella Valenciana, preparada por mí mismo aquí en España.</p>
-    <span class="stay-tuned">Continuará&hellip;</span>
+    <div class="hero-text">
+      <span class="kicker">Hugo's Paella</span>
+      <h1>Paella auténtica,<br>preparada al momento a domicilio</h1>
+      <p>Bienvenido, soy Hugo, el paellero holandés. Preparo paellas auténticas totalmente al momento, allí donde estés, con buenos ingredientes, técnicas tradicionales y, sobre todo, mucha atención al sabor.</p>
+      <p>Para mí la paella es mucho más que comer. La gran paellera se coloca en medio de los invitados y se convierte, sin buscarlo, en un lugar de encuentro: la gente se junta, mira, habla y ya disfruta de lo que está por llegar a la mesa.</p>
+      <p>No hago concesiones en la calidad. Por eso mantengo la capa de arroz en la paellera deliberadamente fina, incluso cuando cocino para un grupo grande. Eso da mejor textura y sabor. Para cuidar esa calidad, cocino para grupos de hasta un máximo de 50 personas.</p>
+      <a class="btn btn-primary btn-arrow" href="/es/paella-a-domicilio/">Descubre la paella a domicilio</a>
+    </div>
+    <div class="hero-media">
+      <img src="/assets/img/home-hero-zeevruchten.jpg" alt="Primer plano de una paella con marisco">
+    </div>
   </div>
 </section>
 
-<section class="hero-gallery">
+<section class="section">
   <div class="wrap">
-    <div class="hero-grid">
-      <div class="media-box video-cell">
-        <video src="../assets/video/hero-rijst.mp4" poster="../assets/img/hero-1-poster.jpg" controls playsinline preload="metadata"></video>
+    <div class="split">
+      <div class="split-media">
+        <img src="/assets/img/home-rijst-closeup.jpg" alt="Primer plano del arroz y los ingredientes en la paellera">
       </div>
-      <div class="media-box photo1-cell">
-        <img src="../assets/img/hero-2-hugo-met-paella.jpg" alt="Hugo con la paella">
-      </div>
-      <div class="media-box photo2-cell">
-        <img src="../assets/img/hero-3-paella-met-priorat-wijn.jpg" alt="Paella con vino Priorat">
+      <div class="split-content">
+        <h2>La paella</h2>
+        <p>La paella nació en Valencia, pero se ha convertido en mucho más que un famoso plato de arroz español. Es también una forma de comer en compañía: una gran paellera, en el centro de la mesa, para disfrutar con familia y amigos.</p>
+        <p>En esta web cuento el origen, los ingredientes y las técnicas detrás de una buena paella. Y sobre todo te animo a probarlo tú mismo. Con una buena paellera, la proporción correcta entre arroz y líquido y un poco de paciencia, puedes hacer en casa una paella estupenda.</p>
+        <p><a class="btn btn-secondary btn-arrow" href="/es/la-paella/">Lee todo sobre la paella</a></p>
+        <p style="margin-top:28px;">¿Te animas a hacerla tú mismo? Deja que la Calculadora de Recetas de Paella calcule la paellera, la cantidad de arroz y de líquido, y la receta completa para tu grupo.</p>
+        <p><a class="btn btn-primary btn-arrow" href="/es/calculadora/">Calcula tu receta a medida</a></p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="recipe-intro">
+<section class="section">
+  <div class="wrap">
+    <div class="split reverse">
+      <div class="split-media portrait">
+        <img src="/assets/img/hugo-met-paella-staand.jpg" alt="Hugo con una paella">
+      </div>
+      <div class="split-content">
+        <h2>De niño holandés a paellero</h2>
+        <p>Mi vínculo con España empezó ya de niño y nunca ha desaparecido. Y una paella simboliza para mí ese cariño. Llevo más de 30 años haciendo paellas. Viví y trabajé allí, hice paella para amigos y vecinos españoles muy exigentes, y no he dejado de estudiar recetas, ingredientes y técnicas.</p>
+        <p>Un momento especial fue cocinar en la cocina del restaurante Bon Aire en El Palmar, en pleno corazón de la Albufera de Valencia, junto al campeón del mundo de paella Raúl Magraner. Esa experiencia simboliza lo que me mueve: seguir aprendiendo y tomarme en serio la tradición de la paella, sin perder de vista la diversión.</p>
+        <p><a class="btn btn-secondary btn-arrow" href="/es/sobre-hugo/">Lee mi historia</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="split">
+      <div class="split-media">
+        <img src="/assets/img/mini-paellas-15cm.jpg" alt="Mini-paellas en paelleras de 15 centímetros">
+      </div>
+      <div class="split-content">
+        <h2>Bonitas historias de paella</h2>
+        <p>La paella da para muchas historias. Sobre cocinar en España, restaurantes especiales, gente que lleva toda la vida haciendo paella y experimentos que a veces salen sorprendentemente bien.</p>
+        <p>En mi blog comparto esas experiencias: desde una visita al mundo de la paella valenciana hasta hacer paellas de verdad en paelleras de tan solo 15 centímetros.</p>
+        <p><a class="btn btn-secondary btn-arrow" href="/es/blog/">Lee las historias</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
   <div class="wrap">
     <div class="section-heading">
-      <span class="kicker">Adelanto</span>
-      <h2>Paella Valenciana &ndash; paso a paso</h2>
-      <p>Acabo de preparar aquí en España una auténtica, pero sencilla, Paella Valenciana. Como adelanto, te enseño paso a paso cómo la he hecho.</p>
+      <h2>¿Te apetece una paella?</h2>
+      <p>¿Quieres saber si estoy disponible en tu fecha, o prefieres consultar antes qué encaja mejor con tu grupo? Envíame un mensaje. En principio respondo en menos de 24 horas.</p>
+      <p style="margin-top:24px;"><a class="btn btn-primary btn-arrow" href="/es/contacto/">Consulta disponibilidad o pide presupuesto</a></p>
     </div>
-  </div>
-</section>
-
-<section class="steps">
-  <div class="wrap">
-
-    <div class="step">
-      <div class="step-media count-1 tall">
-        <div class="media-item"><img src="../assets/img/00-rekening-boodschappen.jpg" alt="Tique de la compra"></div>
-      </div>
-      <div class="step-content">
-        <div class="step-header">
-          <span class="step-number">1</span>
-        <h3>Primero, ir a comprar</h3>
-        </div>
-        <div class="step-text">
-          <p>Hoy quería mantenerlo sencillo, así que simplemente al Spar del barrio, aquí en Tarragona.</p>
-        <p>Los ingredientes para esta paella, para al menos cuatro personas, me costaron al final unos <strong>25 €</strong>. O sea, unos 6,25 € por persona. Comer bien no tiene por qué ser caro, aunque debo reconocer que los precios en España son bastante más bajos que en los Países Bajos. En el tique también verás algún que otro artículo más, como pastillas para el lavavajillas, etc. Por desgracia&hellip; no todo el dinero puede ir a la buena comida. 😉</p>
-        <p>El carnicero me cortó allí mismo el medio conejo y el pollo en trozos bonitos. <strong>Con hueso</strong>, como debe ser.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-media count-1">
-        <div class="media-item"><img src="../assets/img/01-ingredienten.jpg" alt="Todos los ingredientes preparados"></div>
-      </div>
-      <div class="step-content">
-        <div class="step-header">
-          <span class="step-number">2</span>
-        <h3>Preparar todo</h3>
-        </div>
-        <div class="step-text">
-          <p>Primero lo dejo todo listo, lavado y cortado. Una buena preparación hace que luego todo sea mucho más fácil.</p>
-        <p>Mientras la paella está al fuego, solo quiero poder concentrarme en los tiempos justos y tener tiempo para charlar con amigos y familia.</p>
-        <p>Y, por supuesto: una cervecita para el cocinero.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-media count-1 tall">
-        <div class="media-item"><img src="../assets/img/02-paella-brander.jpg" alt="El quemador de paella"></div>
-      </div>
-      <div class="step-content">
-        <div class="step-header">
-          <span class="step-number">3</span>
-        <h3>El quemador de paella</h3>
-        </div>
-        <div class="step-text">
-          <p>Después preparo el quemador de paella. Siempre reviso primero los dos anillos del quemador antes de poner la paellera encima.</p>
-        <p>El calor adecuado es fundamental para hacer una buena paella. Durante las distintas fases necesitas poder subir o bajar el fuego rápidamente.</p>
-        <p>Asegúrate también de que la paellera quede bien nivelada sobre el quemador. Lo compruebo echando el aceite de oliva en la paellera y viendo si se queda bien centrado.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-media count-2 tall">
-        <div class="media-item"><img src="../assets/img/03-vlees-in-de-pan.jpg" alt="Pollo y conejo en la paellera"></div>
-        <div class="media-item"><img src="../assets/img/04-vlees-gebraden.jpg" alt="Pollo y conejo bien dorados"></div>
-      </div>
-      <div class="step-content">
-        <div class="step-header">
-          <span class="step-number">4</span>
-        <h3>Dorar bien el pollo y el conejo</h3>
-        </div>
-        <div class="step-text">
-          <p>Vierte el aceite de oliva en la paellera y luego los trozos de pollo y conejo (de nuevo, con hueso).</p>
-        <p>Doro la carne a fuego medio-alto y le doy su tiempo. Cuenta con unos <strong>20 a 25 minutos</strong>, para que quede bien dorada por todos los lados.</p>
-        <p>No hay que tener prisa. Aquí es donde empieza el sabor de tu paella.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-media count-2 tall">
-        <div class="media-item"><img src="../assets/img/05-groenten-in-de-pan.jpg" alt="Verduras en la paellera"></div>
-        <div class="media-item"><img src="../assets/img/06-groenten-gekleurd.jpg" alt="Verduras con buen color"></div>
-      </div>
-      <div class="step-content">
-        <div class="step-header">
-          <span class="step-number">5</span>
-        <h3>Ahora las verduras</h3>
-        </div>
-        <div class="step-text">
-          <p>Aparto la carne hacia los bordes de la paellera y añado las verduras en el centro.</p>
-        <p>Las sofrío unos <strong>5 minutos</strong>, hasta que las verduras también empiecen a coger algo de color.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-media count-1 tall">
-        <div class="media-item"><img src="../assets/img/07-tomaten-in-de-pan.jpg" alt="Tomate en la paellera"></div>
-      </div>
-      <div class="step-content">
-        <div class="step-header">
-          <span class="step-number">6</span>
-        <h3>El turno del tomate</h3>
-        </div>
-        <div class="step-text">
-          <p>Aparto también un poco las verduras y añado el tomate.</p>
-        <p>Formalmente el tomate debería estar pelado, pero, sinceramente, yo casi siempre dejo la piel.</p>
-        <p>Sofrío bien el tomate en el aceite de oliva y en todos los jugos que ya se han formado en la paellera.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-media count-3">
-        <div class="media-item"><img src="../assets/img/08-pimiento.jpg" alt="Pimentón dulce"></div>
-        <div class="media-item"><img src="../assets/img/09-pimiento-in-de-pan.jpg" alt="Pimentón en la paellera"></div>
-        <div class="media-item"><img src="../assets/img/10-pimiento-gekarameliseerd.jpg" alt="Pimentón caramelizado"></div>
-      </div>
-      <div class="step-content">
-        <div class="step-header">
-          <span class="step-number">7</span>
-        <h3>Pimentón: y ahora, atención</h3>
-        </div>
-        <div class="step-text">
-          <p>Añado el pimentón dulce y lo remuevo rápido con el aceite y los jugos de la paellera.</p>
-        <p>Dejo que se caramelice un momento, pero sin esperar demasiado antes de añadir el agua. El pimentón se quema con facilidad y entonces amarga.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-media count-3">
-        <div class="media-item"><img src="../assets/img/11-water-in-de-pan.jpg" alt="Agua en la paellera"></div>
-        <div class="media-item"><img src="../assets/img/12-water-kookt-foto.jpg" alt="El agua hierve"></div>
-        <div class="media-item"><video src="../assets/video/13-water-kookt.mp4" poster="../assets/img/13-water-kookt-poster.jpg" controls playsinline preload="metadata"></video></div>
-      </div>
-      <div class="step-content">
-        <div class="step-header">
-          <span class="step-number">8</span>
-        <h3>Ahora hacemos el caldo</h3>
-        </div>
-        <div class="step-text">
-          <p>Añado el agua. Y sí: es bastante cantidad.</p>
-        <p>Para unos <strong>500 gramos de arroz</strong> uso entre <strong>2,5 y 3 litros de agua</strong>. Puede parecer exagerado, pero buena parte se evaporará.</p>
-        <p>Dejo que todo hierva tranquilamente unos <strong>25 minutos</strong>.</p>
-        <p>Esta es una fase importante: el agua va cogiendo el sabor del pollo, el conejo, las verduras y todo lo que hemos ido construyendo en la paellera. Así, en realidad, hacemos el caldo directamente en la propia paellera.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-media count-2">
-        <div class="media-item"><img src="../assets/img/14-rijst-in-de-pan-foto.jpg" alt="Arroz en la paellera"></div>
-        <div class="media-item"><video src="../assets/video/15-rijst-in-de-pan.mp4" poster="../assets/img/15-rijst-poster.jpg" controls playsinline preload="metadata"></video></div>
-      </div>
-      <div class="step-content">
-        <div class="step-header">
-          <span class="step-number">9</span>
-        <h3>Ahora el arroz</h3>
-        </div>
-        <div class="step-text">
-          <p>Cuando el caldo lleva unos 25 minutos hirviendo, ya puede entrar el arroz.</p>
-        <p>Reparto el arroz de la forma más uniforme posible por toda la paellera. Para esto uso arroz <strong>Bomba</strong>: el típico grano español, corto y redondo, que absorbe mucho caldo y, por tanto, mucho sabor.</p>
-        <p>Dejo que el arroz cueza primero unos <strong>8 minutos a fuego alto</strong> y después otros <strong>8 minutos a fuego bajo</strong>.</p>
-        <p>Esta vez salió perfecto. Si el caldo desaparece y el arroz todavía no está en su punto, siempre puedes añadir un poco más de agua.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-media count-1">
-        <div class="media-item"><img src="../assets/img/16-paella-klaar.jpg" alt="La paella está lista"></div>
-      </div>
-      <div class="step-content">
-        <div class="step-header">
-          <span class="step-number">10</span>
-        <h3>Paciencia&hellip;</h3>
-        </div>
-        <div class="step-text">
-          <p>Fuego apagado.</p>
-        <p>Y ahora, sobre todo, no hacer nada.</p>
-        <p>Deja reposar la paella al menos <strong>5 minutos</strong>. Diez tampoco está de más.</p>
-        <p>Ese reposo es parte del proceso y le da al arroz la oportunidad de asentarse bien.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-media count-2">
-        <div class="media-item"><img src="../assets/img/17-hugo-met-paella.jpg" alt="Hugo con la paella terminada"></div>
-        <div class="media-item"><img src="../assets/img/18-paella-met-priorat-wijn.jpg" alt="Paella con una copa de vino Priorat"></div>
-      </div>
-      <div class="step-content">
-        <div class="step-header">
-          <span class="step-number">11</span>
-        <h3>¡Buen provecho!</h3>
-        </div>
-        <div class="step-text">
-          <p>Y ya está lista la paella.</p>
-        <p>Solo falta entonces una cosa: un buen vino. Esta vez abrimos un precioso <strong>Priorat</strong>, del interior de aquí, cerca de Tarragona.</p>
-        <p>Tradicionalmente la paella se come en compañía, directamente de la paellera y cada uno con su propia cuchara. Pero servírtela ordenadamente en tu propio plato también vale, claro.</p>
-        <p>Lo más importante es disfrutarla juntos.</p>
-        </div>
-      </div>
-    </div>
-
   </div>
 </section>
 
@@ -278,10 +134,19 @@
   <div class="wrap">
     <div class="footer-lockup">
       <a href="/es/">
-        <img class="footer-logo" src="../assets/img/logo-footer.svg" alt="Hugo Paella — El Paellero Holandés — hugopaella.nl / hugopaella.es">
+        <img class="footer-logo" src="/assets/img/logo-footer.svg" alt="Hugo Paella — El Paellero Holandés — hugopaella.nl / hugopaella.es">
       </a>
     </div>
-    <p class="contact-kvk">Contacto: <a href="mailto:megusta@hugopaella.nl">megusta@hugopaella.nl</a><br>CIF/KvK: 24280255</p>
+    <ul class="footer-nav">
+      <li><a href="/es/">Home</a></li>
+      <li><a href="/es/paella-a-domicilio/">Paella a domicilio</a></li>
+      <li><a href="/es/la-paella/">La Paella</a></li>
+      <li><a href="/es/sobre-hugo/">Sobre Hugo</a></li>
+      <li><a href="/es/blog/">Blog</a></li>
+      <li><a href="/es/calculadora/">Calculadora</a></li>
+      <li><a href="/es/contacto/">Contacto</a></li>
+    </ul>
+    <p class="contact-kvk">Contacto: <a href="mailto:hugo@hugopaella.nl">hugo@hugopaella.nl</a><br>CIF/KvK: 24280255</p>
     <p class="fine">2026 Hugo Paella</p>
   </div>
 </footer>
