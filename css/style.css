@@ -75,12 +75,12 @@ a { color: var(--accent-dark); }
 .logo-header {
   display: block;
   width: auto;
-  height: 118px;
+  height: 71px;
 }
 
 @media (max-width: 760px) {
   .logo-header {
-    height: 86px;
+    height: 76px;
   }
 }
 
@@ -228,6 +228,14 @@ a { color: var(--accent-dark); }
   .main-nav ul a { display: block; padding: 12px 6px; }
   .nav-toggle-checkbox:checked ~ ul {
     display: flex;
+  }
+}
+
+/* Mobile only: logo is bigger (see .logo-header above) and sits closer to
+   the hamburger/language row beneath it than on tablet widths. */
+@media (max-width: 760px) {
+  .site-header .wrap {
+    row-gap: 2px;
   }
 }
 
