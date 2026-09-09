@@ -1077,6 +1077,13 @@ a.blog-card:hover {
 
 .form-grid .full { grid-column: 1 / -1; }
 
+/* Calculator form: fall back to 1 column on phones (contact form keeps 2 columns) */
+@media (max-width: 600px) {
+  .calc-form .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .field label {
   display: block;
   font-weight: 600;
