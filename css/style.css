@@ -23,6 +23,11 @@
 
 * { box-sizing: border-box; }
 
+/* Guarantee [hidden] always hides, even on elements whose own class sets
+   display:grid/flex (e.g. .calc-results) — without this, that class wins
+   the cascade over the UA default and the "hidden" element stays visible. */
+[hidden] { display: none !important; }
+
 html { scroll-behavior: smooth; }
 
 body {
@@ -1019,6 +1024,50 @@ a.blog-card:hover {
   .calc-fields { grid-template-columns: 1fr; }
 }
 
+/* Live calculator: bigger result values than the static preview cards */
+.calc-results {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.calc-results .calc-field { text-align: center; }
+
+.calc-results strong {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent-dark);
+}
+
+@media (max-width: 860px) {
+  .calc-results { grid-template-columns: repeat(2, 1fr); }
+}
+
+.calc-form { margin-bottom: 8px; }
+
+.calc-notice {
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin: 20px 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.calc-notice-error {
+  background: rgba(194, 67, 26, 0.1);
+  color: var(--accent-dark);
+  border: 1px solid rgba(194, 67, 26, 0.3);
+  font-weight: 600;
+}
+
+.calc-notice-info {
+  background: rgba(244, 185, 66, 0.16);
+  color: var(--text);
+  border: 1px solid rgba(244, 185, 66, 0.4);
+}
+
+#calc-placeholder {
+  padding: 28px 0;
+}
+
 /* Forms (contact) */
 .form-grid {
   display: grid;
@@ -1064,6 +1113,12 @@ a.blog-card:hover {
 .field textarea:focus {
   outline: none;
   border-color: var(--accent);
+}
+
+.field select:disabled {
+  background: var(--bg-soft);
+  color: var(--text-soft);
+  cursor: not-allowed;
 }
 
 .form-submit-row {
