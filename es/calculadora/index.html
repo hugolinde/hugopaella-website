@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora de Recetas de Paella — próximamente | Hugo Paella</title>
-<meta name="description" content="La Calculadora de Recetas de Paella calculará la paellera adecuada, la cantidad de arroz y de líquido, y la receta completa para tu grupo. Disponible próximamente.">
+<title>Calculadora de Recetas de Paella | Hugo Paella</title>
+<meta name="description" content="Calcula al instante la cantidad exacta de arroz y líquido, y la paellera y el quemador de gas recomendados para tu grupo.">
 
 <link rel="canonical" href="https://hugopaella.nl/es/calculadora/">
 <link rel="alternate" hreflang="nl" href="https://hugopaella.nl/calculator/">
@@ -30,7 +30,7 @@
     <a class="brand" href="/es/">
       <img class="logo-header" src="/assets/img/logo-header.svg" alt="Hugo Paella — El Paellero Holandés">
     </a>
-    <label for="nav-toggle" class="nav-toggle-label" aria-label="Menu"><span></span></label>
+    <label for="nav-toggle" class="nav-toggle-label" aria-label="Menú"><span></span></label>
     <nav class="main-nav" aria-label="Menú principal">
       <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
       <ul>
@@ -60,8 +60,7 @@
       <span class="kicker">La Calculadora de Recetas de Paella</span>
       <h1>¿Cuánto necesitas?</h1>
       <p>Una buena paella depende sobre todo de las proporciones correctas. Indica a la calculadora qué paella quieres hacer, para cuántos invitados cocinas y de qué tamaño quieres las raciones.</p>
-      <p>Recibirás al instante un consejo sobre el diámetro de la paellera y del quemador de gas, además de la cantidad exacta de arroz crudo y de líquido. ¿Ya tienes tu propia paellera? Indica el diámetro y la calculadora comprobará si encaja con tu situación.</p>
-      <p>Después, con solo pulsar un botón, podrás generar la receta completa con las cantidades ajustadas a tu propia información.</p>
+      <p>Recibirás al instante un consejo sobre el diámetro de la paellera y del quemador de gas, además de la cantidad exacta de arroz crudo y de líquido. ¿Ya tienes tu propia paellera? Indica el diámetro y la calculadora comprobará si encaja.</p>
     </div>
     <div class="hero-media">
       <img src="/assets/img/calculator-ingredienten.jpg" alt="Ingredientes listos para la elaboración">
@@ -69,27 +68,108 @@
   </div>
 </section>
 
-<section class="section no-border">
-  <div class="wrap">
-    <div class="coming-soon" style="padding-top:0;">
-      <span class="kicker">Disponible próximamente</span>
-      <h1>La calculadora se está construyendo</h1>
-      <p>Aquí tienes un adelanto de lo que podrás rellenar y calcular:</p>
+<section class="section no-border" style="padding-top:0;">
+  <div class="wrap" style="max-width:900px;">
+
+    <form class="calc-form" id="calc-form" onsubmit="return false;">
+      <div class="form-grid">
+        <div class="field">
+          <label for="calc-dish">Qué paella</label>
+          <select id="calc-dish" name="dish">
+            <option value="valencia">Paella Valenciana</option>
+            <option value="marisco">Paella de Marisco</option>
+            <option value="verduras">Paella de Verduras</option>
+            <option value="fideua">Fideuà</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="calc-portie">Tamaño de la ración</label>
+          <select id="calc-portie" name="portie">
+            <option value="klein">Pequeña (80 g de arroz p.p.)</option>
+            <option value="normaal" selected>Normal (100 g de arroz p.p.)</option>
+            <option value="groot">Grande (120 g de arroz p.p.)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="calc-gasten">Número de invitados <span class="optional" id="calc-gasten-hint">(de 4 a 50)</span></label>
+          <input type="number" id="calc-gasten" name="gasten" min="4" max="50" placeholder="p. ej. 10">
+        </div>
+        <div class="field">
+          <label for="calc-locatie">Preparación</label>
+          <select id="calc-locatie" name="locatie">
+            <option value="buiten" selected>Exterior</option>
+            <option value="binnen">Interior</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="calc-wind">Viento</label>
+          <select id="calc-wind" name="wind">
+            <option value="geen">Ninguno</option>
+            <option value="weinig" selected>Poco</option>
+            <option value="veel">Mucho</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="calc-pan">Paellera preferida</label>
+          <select id="calc-pan" name="voorkeurPan">
+            <option value="">Sin preferencia</option>
+            <option value="15">15 cm</option>
+            <option value="20">20 cm</option>
+            <option value="22">22 cm</option>
+            <option value="24">24 cm</option>
+            <option value="26">26 cm</option>
+            <option value="28">28 cm</option>
+            <option value="30">30 cm</option>
+            <option value="32">32 cm</option>
+            <option value="34">34 cm</option>
+            <option value="36">36 cm</option>
+            <option value="38">38 cm</option>
+            <option value="40">40 cm</option>
+            <option value="42">42 cm</option>
+            <option value="46">46 cm</option>
+            <option value="50">50 cm</option>
+            <option value="55">55 cm</option>
+            <option value="60">60 cm</option>
+            <option value="65">65 cm</option>
+            <option value="70">70 cm</option>
+            <option value="75">75 cm</option>
+            <option value="80">80 cm</option>
+            <option value="85">85 cm</option>
+            <option value="90">90 cm</option>
+            <option value="100">100 cm</option>
+            <option value="115">115 cm</option>
+            <option value="130">130 cm</option>
+          </select>
+        </div>
+      </div>
+    </form>
+
+    <div id="calc-error" class="calc-notice calc-notice-error" hidden></div>
+
+    <div id="calc-results" class="calc-fields calc-results" hidden>
+      <div class="calc-field"><span>Arroz</span><strong id="calc-out-rijst">–</strong></div>
+      <div class="calc-field"><span>Caldo / agua</span><strong id="calc-out-vocht">–</strong></div>
+      <div class="calc-field"><span>Paellera</span><strong id="calc-out-pan">–</strong></div>
+      <div class="calc-field"><span>Quemador de gas</span><strong id="calc-out-brander">–</strong></div>
     </div>
 
-    <div class="calc-fields">
-      <div class="calc-field"><span>Qué paella</span><strong>Valenciana / Marisco / Verduras / Fideuà</strong></div>
-      <div class="calc-field"><span>Número de invitados</span><strong>De 4 a 50 personas</strong></div>
-      <div class="calc-field"><span>Tamaño de la ración</span><strong>Pequeña / normal / grande</strong></div>
-      <div class="calc-field"><span>Preparación</span><strong>Interior / exterior</strong></div>
-      <div class="calc-field"><span>Paellera y quemador recomendados</span><strong>Diámetro en cm</strong></div>
-      <div class="calc-field"><span>Arroz y líquido</span><strong>Gramos de arroz / litros de líquido</strong></div>
-    </div>
+    <div id="calc-pref-notice" class="calc-notice calc-notice-error" hidden></div>
 
-    <p style="text-align:center; color:var(--text-soft);">En cuanto estén listas las reglas de cálculo, aquí podrás calcular tu propia paella a medida y abrir la receta completa.</p>
+    <p id="calc-placeholder" style="text-align:center; color:var(--text-soft);">Indica el número de invitados para calcular tu paella.</p>
+
+    <p style="text-align:center; color:var(--text-soft); margin-top:8px;">La receta completa con los ingredientes ajustados a tu medida y un PDF para imprimir llegarán aquí próximamente.</p>
     <p style="text-align:center; margin-top:24px;"><a class="btn btn-secondary btn-arrow" href="/es/la-paella/">Lee antes más sobre la paella</a></p>
+
   </div>
 </section>
+
+<script src="/js/calculator.js?v1"></script>
+<script src="/js/calculator-ui.js?v1"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    PaellaCalculatorUI.init({ lang: 'es' });
+  });
+</script>
 
 <footer class="site-footer">
   <div class="wrap">
