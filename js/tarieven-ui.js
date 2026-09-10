@@ -18,10 +18,7 @@
       placeholder: "Vul het aantal gasten in voor een prijsindicatie.",
       inclLabel: "Totaal incl. 9% btw",
       exclLabel: "Totaal excl. btw",
-      travelIncludedNote: function (fee, locale) {
-        return "Inclusief " + formatEuro(fee, "nl", locale) + " voorrijkosten (binnen de Randstad).";
-      },
-      travelOnRequestNote: "Voorrijkosten buiten de Randstad zijn op aanvraag en zitten niet in dit bedrag.",
+      outsideRandstadNote: "Aanvullende voorrijkosten voor buiten de Randstad zijn op aanvraag en zitten niet in dit bedrag.",
     },
     es: {
       errors: {
@@ -33,10 +30,7 @@
       placeholder: "Indica el número de invitados para ver una indicación de precio.",
       inclLabel: "Total incl. 9% IVA",
       exclLabel: "Total sin IVA",
-      travelIncludedNote: function (fee, locale) {
-        return "Incluye " + formatEuro(fee, "es", locale) + " de desplazamiento (dentro del Randstad).";
-      },
-      travelOnRequestNote: "Los gastos de desplazamiento fuera del Randstad son bajo consulta y no están incluidos en este importe.",
+      outsideRandstadNote: "Los gastos de desplazamiento adicionales fuera del Randstad son bajo consulta y no están incluidos en este importe.",
     },
   };
 
@@ -78,7 +72,7 @@
       els.error.hidden = section !== "error";
       els.results.hidden = section !== "results";
       els.placeholder.hidden = section !== "placeholder";
-      if (section !== "results") els.travelNotice.hidden = true;
+      if (section !== "results" && els.travelNotice) els.travelNotice.hidden = true;
     }
 
     function recalc() {
@@ -110,13 +104,10 @@
 
       showOnly("results");
 
-      els.travelNotice.hidden = false;
-      els.travelNotice.className = result.travelIncluded
-        ? "calc-notice calc-notice-info"
-        : "calc-notice calc-notice-error";
-      els.travelNotice.textContent = result.travelIncluded
-        ? t.travelIncludedNote(result.calloutFee, locale)
-        : t.travelOnRequestNote;
+      if (els.travelNotice) {
+        els.travelNotice.hidden = !result.outsideRandstad;
+        els.travelNotice.textContent = result.outsideRandstad ? t.outsideRandstadNote : "";
+      }
     }
 
     els.dish.addEventListener("change", recalc);

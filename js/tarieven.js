@@ -4,9 +4,10 @@
  *
  * Prijzen per gast zijn inclusief 9% btw, zelfde bedragen als de prijstabel:
  * Paella Valenciana € 18, Paella de Marisco € 20, Paella de Verduras € 16,
- * Fideuà € 18. Voorrijkosten binnen de Randstad: € 100 (inclusief btw),
- * ook conform de bestaande prijsinformatie. Buiten de Randstad zijn de
- * voorrijkosten op aanvraag en worden niet meegerekend.
+ * Fideuà € 18. De vaste voorrijkosten van € 100 (inclusief btw) worden
+ * altijd meegerekend, ook bij "buiten de Randstad" — daar kunnen namelijk
+ * nog aanvullende voorrijkosten bovenop komen, die op aanvraag zijn en dus
+ * niet in dit bedrag zitten (zie de "outsideRandstad"-vlag in het resultaat).
  */
 
 (function (global) {
@@ -48,16 +49,15 @@
     }
 
     var subtotal = perGuest * guests;
-    var callout = randstad ? CALLOUT_FEE_RANDSTAD : 0;
-    var totalIncl = subtotal + callout;
+    var totalIncl = subtotal + CALLOUT_FEE_RANDSTAD;
     var totalExcl = totalIncl / (1 + VAT_RATE);
 
     return {
       ok: true,
       totalIncl: totalIncl,
       totalExcl: totalExcl,
-      travelIncluded: randstad,
-      calloutFee: callout,
+      outsideRandstad: !randstad,
+      calloutFee: CALLOUT_FEE_RANDSTAD,
     };
   }
 
