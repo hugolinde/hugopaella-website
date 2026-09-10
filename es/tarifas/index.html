@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarifas paella a domicilio — Hugo Paella</title>
+<meta name="description" content="Consulta el precio por persona según el plato y calcula al momento una indicación del importe total para tu grupo, con y sin IVA.">
+
+<link rel="canonical" href="https://hugopaella.nl/es/tarifas/">
+<link rel="alternate" hreflang="nl" href="https://hugopaella.nl/tarieven/">
+<link rel="alternate" hreflang="es" href="https://hugopaella.nl/es/tarifas/">
+<link rel="alternate" hreflang="x-default" href="https://hugopaella.nl/tarieven/">
+
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#f15a24">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="hugopaella">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<link rel="stylesheet" href="/css/style.css?v23">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/es/">
+      <img class="logo-header" src="/assets/img/logo-header.svg" alt="Hugo Paella — El Paellero Holandés">
+    </a>
+    <label for="nav-toggle" class="nav-toggle-label" aria-label="Menu"><span></span></label>
+    <nav class="main-nav" aria-label="Menú principal">
+      <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+      <ul>
+        <li><a href="/es/">Home</a></li>
+        <li><a href="/es/paella-a-domicilio/">Paella a domicilio</a></li>
+        <li><a href="/es/tarifas/" class="is-active">Tarifas</a></li>
+        <li><a href="/es/sobre-hugo/">Sobre Hugo</a></li>
+        <li><a href="/es/la-paella/">La Paella</a></li>
+        <li><a href="/es/blog/">Blog</a></li>
+        <li><a href="/es/calculadora/">Calculadora</a></li>
+        <li><a href="/es/contacto/">Contacto</a></li>
+      </ul>
+    </nav>
+    <div class="header-right">
+      <nav class="lang-switch">
+        <a href="/tarieven/">NL</a>
+        <span class="sep">/</span>
+        <a href="/es/tarifas/" class="active">ES</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="hero-text">
+      <span class="kicker">Tarifas</span>
+      <h1>¿Cuánto cuesta la paella a domicilio?</h1>
+      <p>Aquí encontrarás el precio por persona según el plato y un indicador de precios con el que, en unos pocos clics, calculas una indicación del importe total para tu grupo, con y sin IVA.</p>
+      <p>El precio definitivo depende del plato elegido, el número de invitados, la ubicación y posibles peticiones adicionales. Para el precio exacto siempre elaboro un presupuesto a medida.</p>
+    </div>
+    <div class="hero-media">
+      <img src="/assets/img/paella-samen-eten.jpg" alt="Paella a domicilio, en medio de los invitados">
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-heading">
+      <span class="kicker">Precio por persona</span>
+      <h2>Precio por plato</h2>
+      <p>Los siguientes importes son el precio por persona, IVA incluido. El precio definitivo depende del plato elegido, la ubicación y posibles peticiones adicionales.</p>
+    </div>
+    <table class="price-table">
+      <thead>
+        <tr><th>Plato</th><th>Precio por persona</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Paella Valenciana</td><td class="price">18 €</td></tr>
+        <tr><td>Paella de Marisco</td><td class="price">20 €</td></tr>
+        <tr><td>Paella de Verduras</td><td class="price">16 €</td></tr>
+        <tr><td>Fideuà</td><td class="price">18 €</td></tr>
+      </tbody>
+    </table>
+    <p class="price-note">Gastos de desplazamiento dentro del Randstad (Países Bajos): 100 €. Para otras ubicaciones: bajo consulta. Todos los precios indicados incluyen IVA.<br>No hay un número mínimo de invitados. Cocino para grupos de hasta un máximo de 50 personas.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap" style="max-width:900px;">
+    <div class="section-heading">
+      <span class="kicker">Calcula una indicación</span>
+      <h2>Calcula el importe total indicativo</h2>
+      <p>Indica el plato, el número de invitados y la ubicación para obtener al momento una indicación del importe total, con y sin el 9% de IVA.</p>
+    </div>
+
+    <form class="calc-form" id="tarifas-form" onsubmit="return false;">
+      <div class="form-grid">
+        <div class="field">
+          <label for="tar-dish">Qué paella</label>
+          <select id="tar-dish" name="dish">
+            <option value="valencia">Paella Valenciana — 18 € p.p.</option>
+            <option value="marisco">Paella de Marisco — 20 € p.p.</option>
+            <option value="verduras">Paella de Verduras — 16 € p.p.</option>
+            <option value="fideua">Fideuà — 18 € p.p.</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="tar-gasten">Número de invitados <span class="optional">(de 1 a 50)</span></label>
+          <input type="number" id="tar-gasten" name="gasten" min="1" max="50" placeholder="p. ej. 10">
+        </div>
+        <div class="field">
+          <label for="tar-randstad">Ubicación</label>
+          <select id="tar-randstad" name="randstad">
+            <option value="ja" selected>Dentro del Randstad</option>
+            <option value="nee">Fuera del Randstad</option>
+          </select>
+        </div>
+      </div>
+    </form>
+
+    <div id="tar-error" class="calc-notice calc-notice-error" hidden></div>
+
+    <div id="tar-results" class="calc-fields calc-results cols-2" hidden>
+      <div class="calc-field"><span id="tar-incl-label">Total incl. 9% IVA</span><strong id="tar-out-incl">–</strong></div>
+      <div class="calc-field"><span id="tar-excl-label">Total sin IVA</span><strong id="tar-out-excl">–</strong></div>
+    </div>
+
+    <div id="tar-travel-notice" class="calc-notice calc-notice-info" hidden></div>
+
+    <p id="tar-placeholder" style="text-align:center; color:var(--text-soft);">Indica el número de invitados para ver una indicación de precio.</p>
+
+    <p class="price-note" style="text-align:center;">Esto es una indicación. El precio exacto para tu grupo y ubicación lo recibes siempre mediante un presupuesto a medida.</p>
+    <p style="text-align:center; margin-top:20px;"><a class="btn btn-primary btn-arrow" href="/es/contacto/">Pide presupuesto</a></p>
+
+  </div>
+</section>
+
+<script src="/js/tarieven.js?v1"></script>
+<script src="/js/tarieven-ui.js?v1"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    PaellaTarievenUI.init({ lang: 'es' });
+  });
+</script>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-lockup">
+      <a href="/es/">
+        <img class="footer-logo" src="/assets/img/logo-footer.svg" alt="Hugo Paella — El Paellero Holandés — hugopaella.nl / hugopaella.es">
+      </a>
+    </div>
+    <ul class="footer-nav">
+      <li><a href="/es/">Home</a></li>
+      <li><a href="/es/paella-a-domicilio/">Paella a domicilio</a></li>
+      <li><a href="/es/tarifas/">Tarifas</a></li>
+      <li><a href="/es/sobre-hugo/">Sobre Hugo</a></li>
+      <li><a href="/es/la-paella/">La Paella</a></li>
+      <li><a href="/es/blog/">Blog</a></li>
+      <li><a href="/es/calculadora/">Calculadora</a></li>
+      <li><a href="/es/contacto/">Contacto</a></li>
+    </ul>
+    <p class="contact-kvk">Contacto: <a href="mailto:hugo@hugopaella.nl">hugo@hugopaella.nl</a><br>CIF/KvK: 24280255</p>
+    <p class="footer-social"><a href="https://www.instagram.com/hugo.paella/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c-2.72 0-3.06.01-4.12.06-1.06.05-1.79.22-2.43.47-.66.26-1.22.6-1.77 1.16-.56.55-.9 1.11-1.16 1.77-.25.64-.42 1.37-.47 2.43C2 8.94 2 9.28 2 12s.01 3.06.06 4.12c.05 1.06.22 1.79.47 2.43.26.66.6 1.22 1.16 1.77.55.56 1.11.9 1.77 1.16.64.25 1.37.42 2.43.47C8.94 22 9.28 22 12 22s3.06-.01 4.12-.06c1.06-.05 1.79-.22 2.43-.47.66-.26 1.22-.6 1.77-1.16.56-.55.9-1.11 1.16-1.77.25-.64.42-1.37.47-2.43.05-1.06.06-1.4.06-4.12s-.01-3.06-.06-4.12c-.05-1.06-.22-1.79-.47-2.43-.26-.66-.6-1.22-1.16-1.77-.55-.56-1.11-.9-1.77-1.16-.64-.25-1.37-.42-2.43-.47C15.06 2.01 14.72 2 12 2zm0 1.8c2.67 0 2.99.01 4.04.06.98.04 1.5.21 1.86.35.47.18.8.4 1.15.75.35.35.57.68.75 1.15.14.36.31.88.35 1.86.05 1.05.06 1.37.06 4.04s-.01 2.99-.06 4.04c-.04.98-.21 1.5-.35 1.86-.18.47-.4.8-.75 1.15-.35.35-.68.57-1.15.75-.36.14-.88.31-1.86.35-1.05.05-1.37.06-4.04.06s-2.99-.01-4.04-.06c-.98-.04-1.5-.21-1.86-.35-.47-.18-.8-.4-1.15-.75-.35-.35-.57-.68-.75-1.15-.14-.36-.31-.88-.35-1.86C3.81 14.99 3.8 14.67 3.8 12s.01-2.99.06-4.04c.04-.98.21-1.5.35-1.86.18-.47.4-.8.75-1.15.35-.35.68-.57 1.15-.75.36-.14.88-.31 1.86-.35C9.01 3.81 9.33 3.8 12 3.8zm0 3.05a5.15 5.15 0 1 0 0 10.3 5.15 5.15 0 0 0 0-10.3zm0 8.5a3.35 3.35 0 1 1 0-6.7 3.35 3.35 0 0 1 0 6.7zm5.36-8.7a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg></a></p>
+    <p class="fine">2026 Hugo Paella</p>
+  </div>
+</footer>
+
+</body>
+</html>

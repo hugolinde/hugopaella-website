@@ -1041,6 +1041,12 @@ a.blog-card:hover {
   .calc-results { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* Modifier for result rows with only 2 fields (e.g. Tarieven-prijsindicator),
+   so they don't leave two empty columns next to them on desktop. */
+.calc-results.cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
 .calc-form { margin-bottom: 8px; }
 
 .calc-notice {
@@ -1216,6 +1222,27 @@ a.blog-card:hover {
 
 .site-footer .contact-kvk a:hover {
   color: var(--accent-dark);
+}
+
+.footer-social {
+  margin: 14px 0 20px;
+}
+
+.footer-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-soft);
+  transition: color 0.15s;
+}
+
+.footer-social a:hover {
+  color: var(--accent-dark);
+}
+
+.footer-social svg {
+  width: 22px;
+  height: 22px;
 }
 
 .site-footer .fine {
