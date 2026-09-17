@@ -158,12 +158,19 @@
 
     <p id="calc-placeholder" style="text-align:center; color:var(--text-soft);">Indica el número de invitados para calcular tu paella.</p>
 
-    <p style="text-align:center; color:var(--text-soft); margin-top:8px;">La receta completa con los ingredientes ajustados a tu medida y un PDF para imprimir llegarán aquí próximamente.</p>
+    <div id="calc-pdf-actions" style="text-align:center; margin-top:20px;" hidden>
+      <button type="button" class="btn btn-primary" id="calc-pdf-btn">Crear PDF de esta receta</button>
+      <p id="calc-pdf-error" class="calc-notice calc-notice-error" style="margin-top:10px;" hidden></p>
+    </div>
+
     <p style="text-align:center; margin-top:24px;"><a class="btn btn-secondary btn-arrow" href="/es/la-paella/">Lee antes más sobre la paella</a></p>
 
   </div>
 </section>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+<script src="/js/recipe-data.js?v1"></script>
+<script src="/js/recipe-pdf.js?v1"></script>
 <script src="/js/calculator.js?v1"></script>
 <script src="/js/calculator-ui.js?v1"></script>
 <script>

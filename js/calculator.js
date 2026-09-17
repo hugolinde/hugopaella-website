@@ -23,7 +23,7 @@
 
   // Vocht (liter) per 100 g rijst, per gerecht — vóór correctie.
   var LIQUID_BASE_PER_100G = {
-    valencia: 0.7,
+    valencia: 0.52,
     marisco: 0.3,
     verduras: 0.3,
     fideua: 0.3,

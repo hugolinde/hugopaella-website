@@ -25,6 +25,8 @@
         },
       },
       placeholder: "Vul het aantal gasten in om je paella te berekenen.",
+      pdfError: "Het maken van de PDF is niet gelukt. Probeer het opnieuw.",
+      pdfBusy: "Bezig...",
       prefFailed: function (requested, pan, brander) {
         return (
           "Voorkeur pangrootte lukt niet bij dit aantal gasten: ik gebruik " +
@@ -59,6 +61,8 @@
         },
       },
       placeholder: "Indica el número de invitados para calcular tu paella.",
+      pdfError: "No se ha podido crear el PDF. Inténtalo de nuevo.",
+      pdfBusy: "Un momento...",
       prefFailed: function (requested, pan, brander) {
         return (
           "La paellera preferida no encaja con este número de invitados: uso " +
@@ -110,11 +114,15 @@
       outBrander: document.getElementById("calc-out-brander"),
       prefNotice: document.getElementById("calc-pref-notice"),
       placeholder: document.getElementById("calc-placeholder"),
+      pdfActions: document.getElementById("calc-pdf-actions"),
+      pdfBtn: document.getElementById("calc-pdf-btn"),
+      pdfError: document.getElementById("calc-pdf-error"),
     };
 
     if (!els.dish || !els.gasten) return; // markup niet aanwezig op deze pagina
 
     var windBeforeBinnen = els.wind.value;
+    var lastCalc = null; // { dish, gasten, riceGrams, pan, brander } van de laatst geldige berekening
 
     function updateGastenHint() {
       var range = global.PaellaCalculator.GASTEN_RANGE[els.portie.value];
@@ -143,6 +151,13 @@
       els.results.hidden = section !== "results";
       els.placeholder.hidden = section !== "placeholder";
       if (section !== "results") els.prefNotice.hidden = true;
+      if (els.pdfActions) {
+        els.pdfActions.hidden = section !== "results";
+        if (section !== "results") {
+          lastCalc = null;
+          els.pdfError.hidden = true;
+        }
+      }
     }
 
     function recalc() {
@@ -183,6 +198,16 @@
 
       showOnly("results");
 
+      lastCalc = {
+        dish: input.dish,
+        gasten: Number(input.gasten),
+        riceGrams: result.riceGrams,
+        pan: result.pan,
+        brander: result.brander,
+        liquidLiters: result.liquidLiters,
+      };
+      els.pdfError.hidden = true;
+
       if (result.preferenceFailed) {
         els.prefNotice.hidden = false;
         els.prefNotice.textContent = t.prefFailed(
@@ -204,6 +229,34 @@
     els.wind.addEventListener("change", recalc);
     els.voorkeurPan.addEventListener("change", recalc);
     els.gasten.addEventListener("input", recalc);
+
+    if (els.pdfBtn) {
+      els.pdfBtn.addEventListener("click", function () {
+        if (!lastCalc || !global.PaellaRecipePDF) return;
+        els.pdfError.hidden = true;
+        els.pdfBtn.disabled = true;
+        var originalLabel = els.pdfBtn.textContent;
+        els.pdfBtn.textContent = t.pdfBusy;
+        global.PaellaRecipePDF.generate({
+          dish: lastCalc.dish,
+          lang: lang,
+          gasten: lastCalc.gasten,
+          riceGrams: lastCalc.riceGrams,
+          pan: lastCalc.pan,
+          brander: lastCalc.brander,
+          liquidLiters: lastCalc.liquidLiters,
+        })
+          .catch(function (err) {
+            els.pdfError.hidden = false;
+            els.pdfError.textContent = t.pdfError;
+            if (global.console && global.console.error) global.console.error(err);
+          })
+          .then(function () {
+            els.pdfBtn.disabled = false;
+            els.pdfBtn.textContent = originalLabel;
+          });
+      });
+    }
 
     syncWindLock();
     recalc();

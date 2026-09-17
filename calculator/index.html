@@ -158,12 +158,19 @@
 
     <p id="calc-placeholder" style="text-align:center; color:var(--text-soft);">Vul het aantal gasten in om je paella te berekenen.</p>
 
-    <p style="text-align:center; color:var(--text-soft); margin-top:8px;">Het volledige recept met ingrediënten op maat en een PDF om af te drukken volgen hier binnenkort.</p>
+    <div id="calc-pdf-actions" style="text-align:center; margin-top:20px;" hidden>
+      <button type="button" class="btn btn-primary" id="calc-pdf-btn">Maak PDF van dit recept</button>
+      <p id="calc-pdf-error" class="calc-notice calc-notice-error" style="margin-top:10px;" hidden></p>
+    </div>
+
     <p style="text-align:center; margin-top:24px;"><a class="btn btn-secondary btn-arrow" href="/de-paella/">Lees eerst meer over de paella</a></p>
 
   </div>
 </section>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+<script src="/js/recipe-data.js?v1"></script>
+<script src="/js/recipe-pdf.js?v1"></script>
 <script src="/js/calculator.js?v1"></script>
 <script src="/js/calculator-ui.js?v1"></script>
 <script>
