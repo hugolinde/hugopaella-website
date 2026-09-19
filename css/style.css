@@ -822,6 +822,23 @@ a.dish-card:hover {
   object-fit: cover;
 }
 
+/* D3 (studentenpas): heel brede foto, niet bijsnijden — eigen (lagere) beeldverhouding i.p.v. de standaard 4:3 */
+.timeline-media.uncropped img {
+  aspect-ratio: 1800 / 783;
+  object-fit: cover;
+}
+
+/* D6 (afsluitfoto): losse 'sticker' zonder kaart/schaduw — de PNG heeft een transparante achtergrond
+   die de paginakleur laat doorschijnen, dus geen kader of bijsnijden */
+.timeline-media.sticker {
+  background: transparent;
+  box-shadow: none;
+}
+
+.timeline-media.sticker img {
+  object-fit: contain;
+}
+
 .timeline-text p {
   color: var(--text-soft);
   margin: 0 0 14px;
