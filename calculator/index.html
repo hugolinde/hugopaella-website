@@ -159,11 +159,13 @@
     <p id="calc-placeholder" style="text-align:center; color:var(--text-soft);">Vul het aantal gasten in om je paella te berekenen.</p>
 
     <div id="calc-pdf-actions" style="text-align:center; margin-top:20px;" hidden>
-      <button type="button" class="btn btn-primary" id="calc-pdf-btn">Maak PDF van dit recept</button>
+      <button type="button" class="btn btn-primary" id="calc-pdf-btn">Maak PDF van het hele recept</button>
       <p id="calc-pdf-error" class="calc-notice calc-notice-error" style="margin-top:10px;" hidden></p>
     </div>
 
     <p style="text-align:center; margin-top:24px;"><a class="btn btn-secondary btn-arrow" href="/de-paella/">Lees eerst meer over de paella</a></p>
+
+    <p class="calc-disclaimer" style="text-align:center; max-width:680px; margin:28px auto 0; font-size:0.85rem; line-height:1.5; color:var(--text-soft);">Alle uitkomsten en adviezen van deze calculator zijn richtlijnen en worden gegeven onder voorbehoud. Koken met gas en grote paellapannen vraagt ervaring: we raden je aan om altijd te koken onder begeleiding van een ervaren paellador.</p>
 
   </div>
 </section>
@@ -173,7 +175,7 @@
 <script src="/js/recipe-pdf.js?v1"></script>
 <script src="/js/calculator-config.js?v4"></script>
 <script src="/js/calculator.js?v7"></script>
-<script src="/js/calculator-ui.js?v7"></script>
+<script src="/js/calculator-ui.js?v8"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     PaellaCalculatorUI.init({ lang: 'nl' });

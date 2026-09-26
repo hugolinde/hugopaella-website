@@ -27,6 +27,7 @@
       placeholder: "Vul het aantal gasten in om je paella te berekenen.",
       pdfError: "Het maken van de PDF is niet gelukt. Probeer het opnieuw.",
       pdfBusy: "Bezig...",
+      pdfNeedInput: "Vul eerst alle velden in, dan maken we de PDF van je recept.",
       windLockedTitle: "Bij binnen reken ik altijd zonder windcorrectie.",
       typeLockedTitle: "Binnen is een professionele brander nodig.",
       status: {
@@ -122,6 +123,7 @@
       placeholder: "Indica el número de invitados para calcular tu paella.",
       pdfError: "No se ha podido crear el PDF. Inténtalo de nuevo.",
       pdfBusy: "Un momento...",
+      pdfNeedInput: "Rellena primero todos los campos para crear el PDF de tu receta.",
       windLockedTitle: "En interior siempre calculo sin corrección de viento.",
       typeLockedTitle: "En interior hace falta un quemador profesional.",
       status: {
@@ -345,7 +347,9 @@
       els.placeholder.hidden = section !== "placeholder";
       if (section !== "results") els.notices.innerHTML = "";
       if (els.pdfActions) {
-        els.pdfActions.hidden = section !== "results";
+        // De PDF-knop is altijd zichtbaar; zonder geldige berekening meldt
+        // een klik dat eerst alle velden ingevuld moeten worden.
+        els.pdfActions.hidden = false;
         if (section !== "results") {
           lastCalc = null;
           els.pdfError.hidden = true;
@@ -485,7 +489,12 @@
 
     if (els.pdfBtn) {
       els.pdfBtn.addEventListener("click", function () {
-        if (!lastCalc || !global.PaellaRecipePDF) return;
+        if (!lastCalc) {
+          els.pdfError.hidden = false;
+          els.pdfError.textContent = t.pdfNeedInput;
+          return;
+        }
+        if (!global.PaellaRecipePDF) return;
         els.pdfError.hidden = true;
         els.pdfBtn.disabled = true;
         var originalLabel = els.pdfBtn.textContent;
