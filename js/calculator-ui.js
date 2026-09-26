@@ -82,9 +82,8 @@
               ? "Je pan van " + n.pan + " cm is geschikt voor deze hoeveelheid, maar je brander van " + n.own + " cm is te groot voor deze pan"
               : "Je brander van " + n.own + " cm is te groot voor een pan van " + n.pan + " cm";
           return (
-            lead + ": de vlammen komen dan tegen de schuine rand in plaats van onder de bodem. " +
-            "Voor deze pan past een brander van maximaal " + n.max + " cm. " +
-            "Heeft je brander een binnenring die je apart kunt aansteken en regelen? Vul dan de diameter van die ring in; de calculator rekent dan met die ring."
+            lead + ". Voor deze pan past een brander van maximaal " + n.max + " cm. " +
+            "Heeft je brander een binnenring die je apart kunt aansteken en regelen? Vul dan die diameter in de calculator."
           );
         },
         proNeeded: function (n) {
@@ -181,9 +180,8 @@
               ? "Tu paellera de " + n.pan + " cm es adecuada para esta cantidad, pero tu quemador de " + n.own + " cm es demasiado grande para ella"
               : "Tu quemador de " + n.own + " cm es demasiado grande para una paellera de " + n.pan + " cm";
           return (
-            lead + ": las llamas darían en el borde inclinado en lugar de bajo el fondo. " +
-            "Para esta paellera sirve un quemador de como máximo " + n.max + " cm. " +
-            "¿Tu quemador tiene un anillo interior que se enciende y regula por separado? Indica entonces el diámetro de ese anillo; la calculadora calculará con él."
+            lead + ". Para esta paellera sirve un quemador de como máximo " + n.max + " cm. " +
+            "¿Tu quemador tiene un anillo interior que se enciende y regula por separado? Indica entonces ese diámetro en la calculadora."
           );
         },
         proNeeded: function (n) {
