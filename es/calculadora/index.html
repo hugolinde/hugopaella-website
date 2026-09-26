@@ -21,7 +21,7 @@
 <meta name="apple-mobile-web-app-title" content="hugopaella">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
-<link rel="stylesheet" href="/css/style.css?v24">
+<link rel="stylesheet" href="/css/style.css?v25">
 </head>
 <body>
 
@@ -61,7 +61,7 @@
       <span class="kicker">La Calculadora de Recetas de Paella</span>
       <h1>¿Cuánto necesitas?</h1>
       <p>Una buena paella depende sobre todo de las proporciones correctas. Indica a la calculadora qué paella quieres hacer, para cuántos invitados cocinas y de qué tamaño quieres las raciones.</p>
-      <p>Recibirás al instante un consejo sobre el diámetro de la paellera y del quemador de gas, además de la cantidad exacta de arroz crudo y de líquido. ¿Ya tienes tu propia paellera? Indica el diámetro y la calculadora comprobará si encaja.</p>
+      <p>Recibirás al instante un consejo sobre el diámetro de la paellera y del quemador de gas, además de la cantidad exacta de arroz crudo y de líquido. ¿Ya tienes paellera o quemador propios? Indícalo y la calculadora comprobará si tu material es adecuado.</p>
     </div>
     <div class="hero-media">
       <img src="/assets/img/calculator-ingredienten.jpg" alt="Ingredientes listos para la elaboración">
@@ -111,36 +111,36 @@
           </select>
         </div>
         <div class="field">
-          <label for="calc-pan">Paellera preferida</label>
-          <select id="calc-pan" name="voorkeurPan">
-            <option value="">Sin preferencia</option>
-            <option value="15">15 cm</option>
-            <option value="20">20 cm</option>
-            <option value="22">22 cm</option>
-            <option value="24">24 cm</option>
-            <option value="26">26 cm</option>
-            <option value="28">28 cm</option>
-            <option value="30">30 cm</option>
-            <option value="32">32 cm</option>
-            <option value="34">34 cm</option>
-            <option value="36">36 cm</option>
-            <option value="38">38 cm</option>
-            <option value="40">40 cm</option>
-            <option value="42">42 cm</option>
-            <option value="46">46 cm</option>
-            <option value="50">50 cm</option>
-            <option value="55">55 cm</option>
-            <option value="60">60 cm</option>
-            <option value="65">65 cm</option>
-            <option value="70">70 cm</option>
-            <option value="75">75 cm</option>
-            <option value="80">80 cm</option>
-            <option value="85">85 cm</option>
-            <option value="90">90 cm</option>
-            <option value="100">100 cm</option>
-            <option value="115">115 cm</option>
-            <option value="130">130 cm</option>
+          <label for="calc-existing">¿Quieres usar material propio?</label>
+          <select id="calc-existing" name="existing">
+            <option value="nee" selected>No, aconséjame</option>
+            <option value="pan">Sí, mi paellera</option>
+            <option value="brander">Sí, mi quemador</option>
+            <option value="beide">Sí, mi paellera y mi quemador</option>
           </select>
+        </div>
+      </div>
+
+      <div class="calc-existing" id="calc-existing-block" hidden>
+        <span class="calc-existing-title">Tu material</span>
+        <div class="calc-existing-grid">
+          <div class="field" id="calc-own-pan-field">
+            <label for="calc-own-pan">Diámetro de tu paellera</label>
+            <select id="calc-own-pan" name="ownPan"></select>
+          </div>
+          <div class="field" id="calc-own-burner-field">
+            <label for="calc-own-burner">Diámetro del anillo exterior</label>
+            <select id="calc-own-burner" name="ownBurner" aria-describedby="calc-own-burner-help"></select>
+            <small class="field-help" id="calc-own-burner-help">ⓘ Mide el diámetro del anillo exterior del quemador.</small>
+          </div>
+          <div class="field" id="calc-burner-type-field">
+            <label for="calc-burner-type">Tipo de quemador</label>
+            <select id="calc-burner-type" name="burnerType">
+              <option value="standaard">Quemador de paella estándar</option>
+              <option value="professioneel">Quemador profesional / plano</option>
+              <option value="onbekend">No lo sé</option>
+            </select>
+          </div>
         </div>
       </div>
     </form>
@@ -150,11 +150,11 @@
     <div id="calc-results" class="calc-fields calc-results" hidden>
       <div class="calc-field"><span>Arroz</span><strong id="calc-out-rijst">–</strong></div>
       <div class="calc-field"><span>Caldo / agua</span><strong id="calc-out-vocht">–</strong></div>
-      <div class="calc-field"><span>Paellera</span><strong id="calc-out-pan">–</strong></div>
-      <div class="calc-field"><span>Quemador</span><strong id="calc-out-brander">–</strong></div>
+      <div class="calc-field"><span>Paellera</span><strong id="calc-out-pan">–</strong><small class="calc-status" id="calc-status-pan"></small></div>
+      <div class="calc-field"><span>Quemador</span><strong id="calc-out-brander">–</strong><small class="calc-status" id="calc-status-brander"></small></div>
     </div>
 
-    <div id="calc-pref-notice" class="calc-notice calc-notice-error" hidden></div>
+    <div id="calc-notices" aria-live="polite"></div>
 
     <p id="calc-placeholder" style="text-align:center; color:var(--text-soft);">Indica el número de invitados para calcular tu paella.</p>
 
@@ -171,8 +171,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="/js/recipe-data.js?v1"></script>
 <script src="/js/recipe-pdf.js?v1"></script>
-<script src="/js/calculator.js?v1"></script>
-<script src="/js/calculator-ui.js?v1"></script>
+<script src="/js/calculator-config.js?v1"></script>
+<script src="/js/calculator.js?v2"></script>
+<script src="/js/calculator-ui.js?v2"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     PaellaCalculatorUI.init({ lang: 'es' });

@@ -1087,9 +1087,78 @@ a.blog-card:hover {
   border: 1px solid rgba(244, 185, 66, 0.4);
 }
 
+.calc-notice-ok {
+  background: rgba(57, 115, 77, 0.1);
+  color: var(--green);
+  border: 1px solid rgba(57, 115, 77, 0.3);
+  font-weight: 600;
+}
+
+#calc-notices .calc-notice { margin: 12px 0; }
+
 #calc-placeholder {
   padding: 28px 0;
 }
+
+/* Calculator: blok "Bestaand materiaal" (alleen zichtbaar als de bezoeker
+   eigen pan en/of brander opgeeft) */
+.calc-existing {
+  margin-top: 22px;
+  padding: 18px 20px 20px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.calc-existing-title {
+  display: block;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--green);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.calc-existing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* Alleen de pan: zelfde breedte als een veld in het formulier erboven */
+.calc-existing.is-pan-only .calc-existing-grid { grid-template-columns: 1fr 1fr; }
+/* Alleen de brander: diameter + type naast elkaar */
+.calc-existing.is-burner-only .calc-existing-grid { grid-template-columns: 1fr 1fr; }
+
+.field-help {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--text-soft);
+}
+
+@media (max-width: 600px) {
+  .calc-existing-grid,
+  .calc-existing.is-pan-only .calc-existing-grid,
+  .calc-existing.is-burner-only .calc-existing-grid { grid-template-columns: 1fr; }
+}
+
+/* Calculator: statusregel onder pan/brander in de resultaatkaarten */
+.calc-results .calc-status {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-soft);
+}
+
+.calc-results .calc-field.is-ok { box-shadow: var(--shadow-sm), inset 0 0 0 2px rgba(57, 115, 77, 0.45); }
+.calc-results .calc-field.is-ok .calc-status { color: var(--green); }
+.calc-results .calc-field.is-bad { box-shadow: var(--shadow-sm), inset 0 0 0 2px rgba(194, 67, 26, 0.45); }
+.calc-results .calc-field.is-bad .calc-status { color: var(--accent-dark); }
 
 /* Forms (contact) */
 .form-grid {

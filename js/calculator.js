@@ -1,176 +1,113 @@
 /*
- * Hugo Paella — Paella Receptencalculator
+ * Hugo Paella — Paella Receptencalculator (rekenlogica)
  *
- * Rekenregels, tabellen en testwaarden komen uit "SUMM Paella calculator.xlsx"
- * (tabbladen: Rekenregels, Rijst pan brander, Pangrootte). Zie de 15 testcases
- * in dat bestand — dezelfde cases staan (met dezelfde uitkomsten) hieronder in
- * calculatorSelfTest() als regressietest.
+ * Taalonafhankelijk: dit bestand rekent en geeft statuscodes terug; de
+ * teksten staan in calculator-ui.js. Alle tabellen en grenswaarden komen uit
+ * calculator-config.js (window.PaellaCalculatorConfig).
  *
- * Reikwijdte van dit bestand: alleen de 4 officiële uitvoervelden (rijst,
- * bouillon/water, paellapan, gasbrander) + validatie. De ingrediëntenlijsten
- * en het recept-PDF horen bij een latere stap.
+ * Volgorde van de berekening:
+ *   gasten × gram rijst p.p. -> rijst -> ideale standaard panmaat
+ *   -> (eventueel toetsen aan bestaande pan en/of brander) -> branderadvies.
+ *
+ * Bestaand materiaal (input.existing):
+ *   "nee"     pan berekenen, brander adviseren
+ *   "pan"     pan controleren (ideaal ± tolerantie), brander adviseren bij die pan
+ *   "brander" binnen de panbandbreedte een pan zoeken die op de brander past;
+ *             pas als geen enkele past volgt een advies voor een grotere brander
+ *   "beide"   A: hoeveelheid <-> pan en B: pan <-> brander afzonderlijk
  */
 
 (function (global) {
   "use strict";
 
-  // ---- Brondata uit de spreadsheet -----------------------------------
+  var C = global.PaellaCalculatorConfig;
 
-  var PORTIE_GRAM = { klein: 80, normaal: 100, groot: 120 };
-
-  // [min, max] aantal gasten per portiegrootte.
-  var GASTEN_RANGE = { klein: [6, 50], normaal: [4, 50], groot: [4, 40] };
-
-  // Vocht (liter) per 100 g rijst, per gerecht — vóór correctie.
-  var LIQUID_BASE_PER_100G = {
-    valencia: 0.52,
-    marisco: 0.3,
-    verduras: 0.3,
-    fideua: 0.3,
-  };
-
-  var WIND_FACTOR = { geen: 0, weinig: 0.05, veel: 0.1 };
-  var BINNEN_FACTOR = 0.95;
-
-  // Volledige lijst beschikbare paellapan-diameters (voor de voorkeur-select
-  // en de "één maat groter/kleiner"-tolerantie).
-  var PANGROOTTE_LIST = [
-    15, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 46, 50, 55, 60, 65, 70,
-    75, 80, 85, 90, 100, 115, 130,
-  ];
-
-  // Rijst (g) -> aanbevolen pan (cm) + gasbrander (cm). Rechtstreeks
-  // overgenomen uit tabblad "Rijst pan brander" (kolommen D/E), niet
-  // herberekend — die tabel is de bron van waarheid, niet de geometrische
-  // vuistformule die er ter controle naast staat.
-  var RIJST_PAN_BRANDER = [
-    { rijst: 400, pan: 46, brander: 30 },
-    { rijst: 500, pan: 50, brander: 35 },
-    { rijst: 600, pan: 55, brander: 40 },
-    { rijst: 700, pan: 60, brander: 45 },
-    { rijst: 800, pan: 60, brander: 45 },
-    { rijst: 900, pan: 65, brander: 45 },
-    { rijst: 1000, pan: 70, brander: 50 },
-    { rijst: 1100, pan: 70, brander: 50 },
-    { rijst: 1200, pan: 75, brander: 60 },
-    { rijst: 1300, pan: 80, brander: 60 },
-    { rijst: 1400, pan: 80, brander: 60 },
-    { rijst: 1500, pan: 85, brander: 60 },
-    { rijst: 1600, pan: 85, brander: 60 },
-    { rijst: 1700, pan: 90, brander: 70 },
-    { rijst: 1800, pan: 90, brander: 70 },
-    { rijst: 1900, pan: 90, brander: 70 },
-    { rijst: 2000, pan: 100, brander: 70 },
-    { rijst: 2100, pan: 100, brander: 70 },
-    { rijst: 2200, pan: 100, brander: 70 },
-    { rijst: 2300, pan: 100, brander: 70 },
-    { rijst: 2400, pan: 100, brander: 70 },
-    { rijst: 2500, pan: 100, brander: 70 },
-    { rijst: 2600, pan: 100, brander: 70 },
-    { rijst: 2700, pan: 115, brander: 80 },
-    { rijst: 2800, pan: 115, brander: 80 },
-    { rijst: 2900, pan: 115, brander: 80 },
-    { rijst: 3000, pan: 115, brander: 80 },
-    { rijst: 3100, pan: 115, brander: 80 },
-    { rijst: 3200, pan: 115, brander: 80 },
-    { rijst: 3300, pan: 115, brander: 80 },
-    { rijst: 3400, pan: 130, brander: 90 },
-    { rijst: 3500, pan: 130, brander: 90 },
-    { rijst: 3600, pan: 130, brander: 90 },
-    { rijst: 3700, pan: 130, brander: 90 },
-    { rijst: 3800, pan: 130, brander: 90 },
-    { rijst: 3900, pan: 130, brander: 90 },
-    { rijst: 4000, pan: 130, brander: 90 },
-    { rijst: 4100, pan: 130, brander: 90 },
-    { rijst: 4200, pan: 130, brander: 90 },
-    { rijst: 4300, pan: 130, brander: 90 },
-    { rijst: 4400, pan: 130, brander: 90 },
-    { rijst: 4500, pan: 130, brander: 90 },
-    { rijst: 4600, pan: 130, brander: 90 },
-    { rijst: 4700, pan: 130, brander: 90 },
-    { rijst: 4800, pan: 130, brander: 90 },
-    { rijst: 4900, pan: 130, brander: 90 },
-    { rijst: 5000, pan: 130, brander: 90 },
-  ];
-
-  // ---- Rekenlogica ------------------------------------------------------
-
-  function computeRiceGrams(gasten, portie) {
-    return gasten * PORTIE_GRAM[portie];
-  }
+  // ---- Recept: rijst en vocht --------------------------------------------
 
   function validateGasten(portie, gasten, messages) {
-    var range = GASTEN_RANGE[portie];
+    var range = C.GASTEN_RANGE[portie];
     var min = range[0];
     var max = range[1];
     if (!Number.isFinite(gasten) || gasten <= 0) {
       return { ok: false, message: messages.empty };
     }
     if (gasten < min || gasten > max) {
-      if (portie === "klein" && gasten < min) {
-        return { ok: false, message: messages.kleinMin(min) };
-      }
-      if (portie === "groot" && gasten > max) {
-        return { ok: false, message: messages.grootMax(max) };
-      }
+      if (portie === "klein" && gasten < min) return { ok: false, message: messages.kleinMin(min) };
+      if (portie === "groot" && gasten > max) return { ok: false, message: messages.grootMax(max) };
       return { ok: false, message: messages.range(min, max) };
     }
     return { ok: true };
   }
 
-  function lookupPanBrander(riceGrams) {
-    for (var i = 0; i < RIJST_PAN_BRANDER.length; i++) {
-      if (RIJST_PAN_BRANDER[i].rijst >= riceGrams) {
-        return { pan: RIJST_PAN_BRANDER[i].pan, brander: RIJST_PAN_BRANDER[i].brander };
-      }
-    }
-    var last = RIJST_PAN_BRANDER[RIJST_PAN_BRANDER.length - 1];
-    return { pan: last.pan, brander: last.brander };
-  }
-
-  function findBranderForPan(panCm) {
-    for (var i = 0; i < RIJST_PAN_BRANDER.length; i++) {
-      if (RIJST_PAN_BRANDER[i].pan === panCm) return RIJST_PAN_BRANDER[i].brander;
-    }
-    return null;
-  }
-
-  // Past een voorkeur-pangrootte toe: geaccepteerd als hij maximaal één stap
-  // (in de Pangrootte-lijst) van de standaardpan afligt EN er een bijpassende
-  // brander bekend is voor die maat. Anders: standaardpan/-brander behouden
-  // en preferenceFailed=true.
-  function applyPreference(defaultPan, defaultBrander, voorkeur) {
-    if (!voorkeur) {
-      return { pan: defaultPan, brander: defaultBrander, failed: false };
-    }
-    var idxDefault = PANGROOTTE_LIST.indexOf(defaultPan);
-    var idxPref = PANGROOTTE_LIST.indexOf(voorkeur);
-    if (idxPref === -1 || Math.abs(idxPref - idxDefault) > 1) {
-      return { pan: defaultPan, brander: defaultBrander, failed: true };
-    }
-    var brander = findBranderForPan(voorkeur);
-    if (brander === null) {
-      return { pan: defaultPan, brander: defaultBrander, failed: true };
-    }
-    return { pan: voorkeur, brander: brander, failed: false };
-  }
-
   function computeLiquidLiters(dish, riceGrams, buitenBinnen, wind) {
-    var base = LIQUID_BASE_PER_100G[dish];
-    var factor;
-    if (buitenBinnen === "binnen") {
-      // Binnen: altijd -5%, windinvoer wordt genegeerd (windmeter is dan
-      // sowieso al vergrendeld op "geen" in de UI).
-      factor = BINNEN_FACTOR;
-    } else {
-      factor = 1 + (WIND_FACTOR[wind] || 0);
-    }
+    var base = C.LIQUID_BASE_PER_100G[dish];
+    // Binnen: altijd -5%, wind wordt genegeerd (de UI zet wind dan op "geen").
+    var factor = buitenBinnen === "binnen" ? C.BINNEN_FACTOR : 1 + (C.WIND_FACTOR[wind] || 0);
     return base * (riceGrams / 100) * factor;
   }
 
   function roundToStep(value, step) {
     return Math.round(value / step) * step;
   }
+
+  // ---- Pan ---------------------------------------------------------------
+
+  function idealPanFor(riceGrams) {
+    for (var i = 0; i < C.RICE_TO_PAN.length; i++) {
+      if (C.RICE_TO_PAN[i].riceMax >= riceGrams) return C.RICE_TO_PAN[i].pan;
+    }
+    return C.RICE_TO_PAN[C.RICE_TO_PAN.length - 1].pan;
+  }
+
+  // Toegestane panmaten: ideaal ± PAN_TOLERANCE_STEPS posities in PAN_SIZES.
+  function panBand(idealPan) {
+    var sizes = C.PAN_SIZES;
+    var idx = sizes.indexOf(idealPan);
+    var lo = Math.max(0, idx - C.PAN_TOLERANCE_STEPS);
+    var hi = Math.min(sizes.length - 1, idx + C.PAN_TOLERANCE_STEPS);
+    return sizes.slice(lo, hi + 1);
+  }
+
+  // ---- Brander -----------------------------------------------------------
+
+  // Staffelregel voor een pan binnen een profiel, of null als de pan groter is
+  // dan wat dat profiel ondersteunt.
+  function profileRow(pan, profile) {
+    var rows = C.BURNER_PROFILES[profile];
+    for (var i = 0; i < rows.length; i++) {
+      if (pan <= rows[i].panMax) return rows[i];
+    }
+    return null;
+  }
+
+  // Branderadvies voor een pan. Past de pan niet op het standaardprofiel, dan
+  // wordt een professionele brander geadviseerd (geen fictieve grotere
+  // standaardbrander).
+  function adviseBurner(pan, profile) {
+    var row = profileRow(pan, profile);
+    if (row) return { size: row.burner, profile: profile, forcedPro: false };
+    var pro = profileRow(pan, "professional");
+    var last = C.BURNER_PROFILES.professional[C.BURNER_PROFILES.professional.length - 1];
+    return { size: (pro || last).burner, profile: "professional", forcedPro: profile !== "professional" };
+  }
+
+  // Past een bestaande brander onder een pan?
+  function checkBurner(pan, burnerSize, profile) {
+    var row = profileRow(pan, profile);
+    var advice = adviseBurner(pan, profile);
+    if (!row) {
+      return { fits: false, reason: "profileLimit", advice: advice, oversize: false };
+    }
+    var min = row.minBurner || row.burner;
+    return {
+      fits: burnerSize >= min,
+      reason: burnerSize >= min ? null : "tooSmall",
+      advice: advice,
+      oversize: burnerSize > row.burner + C.BURNER_OVERSIZE_CM,
+    };
+  }
+
+  // ---- Hoofdberekening ---------------------------------------------------
 
   /**
    * @param {Object} input
@@ -179,48 +116,165 @@
    * @param {number} input.gasten
    * @param {'buiten'|'binnen'} input.buitenBinnen
    * @param {'geen'|'weinig'|'veel'} input.wind
-   * @param {number|null} input.voorkeurPan
-   * @param {Object} messages  vertaalde foutmeldingen (zie NL/ES wiring)
+   * @param {'nee'|'pan'|'brander'|'beide'} [input.existing]
+   * @param {number} [input.ownPan]         diameter bestaande pan (cm)
+   * @param {number} [input.ownBurner]      diameter buitenste branderring (cm)
+   * @param {'standaard'|'professioneel'|'onbekend'} [input.burnerType]
+   * @param {Object} messages  vertaalde validatiemeldingen (zie calculator-ui.js)
+   *
+   * Resultaat (ok=true):
+   *   riceGrams, liquidLiters, idealPan, band[]
+   *   pan:     { size, status, own }   status: recommended | ok | fitsBurner | tooSmall | tooLarge
+   *   burner:  { size, status, own, professional }
+   *                                    status: minimum | ok | tooSmall | notIndoor
+   *   notices: [{ code, type: ok|info|warn, ...data }]
+   *   pan.size en burner.size zijn de uiteindelijk te gebruiken maten (ook voor de PDF).
    */
   function calculate(input, messages) {
-    var gastenNum = Number(input.gasten);
-    var validation = validateGasten(input.portie, gastenNum, messages);
-    if (!validation.ok) {
-      return { ok: false, message: validation.message };
+    var gasten = Number(input.gasten);
+    var validation = validateGasten(input.portie, gasten, messages);
+    if (!validation.ok) return { ok: false, message: validation.message };
+
+    var riceGrams = gasten * C.PORTIE_GRAM[input.portie];
+    var liquidExact = computeLiquidLiters(input.dish, riceGrams, input.buitenBinnen, input.wind);
+
+    var existing = input.existing || "nee";
+    var usesPan = existing === "pan" || existing === "beide";
+    var usesBurner = existing === "brander" || existing === "beide";
+    var binnen = input.buitenBinnen === "binnen";
+
+    var idealPan = idealPanFor(riceGrams);
+    var band = panBand(idealPan);
+    var adviceProfile = C.PROFILE_BY_LOCATION[input.buitenBinnen] || "standard";
+
+    var notices = [];
+    var pan = { size: idealPan, status: "recommended", own: null };
+    var burner = null;
+
+    // -- Pan: controle A (hoeveelheid <-> pan) --
+    var panOk = true;
+    if (usesPan) {
+      var ownPan = Number(input.ownPan);
+      panOk = band.indexOf(ownPan) !== -1;
+      if (panOk) {
+        pan = { size: ownPan, status: "ok", own: ownPan };
+      } else {
+        pan = { size: idealPan, status: ownPan < idealPan ? "tooSmall" : "tooLarge", own: ownPan };
+        notices.push({
+          code: "panOutOfBand",
+          type: "warn",
+          own: ownPan,
+          ideal: idealPan,
+          bandMin: band[0],
+          bandMax: band[band.length - 1],
+          tooSmall: ownPan < idealPan,
+        });
+      }
     }
 
-    var riceGrams = computeRiceGrams(gastenNum, input.portie);
-    var liquidLitersExact = computeLiquidLiters(
-      input.dish,
-      riceGrams,
-      input.buitenBinnen,
-      input.wind
-    );
-    var defaultPanBrander = lookupPanBrander(riceGrams);
-    var pref = applyPreference(
-      defaultPanBrander.pan,
-      defaultPanBrander.brander,
-      input.voorkeurPan
-    );
+    // -- Brander --
+    if (!usesBurner) {
+      var adv = adviseBurner(pan.size, adviceProfile);
+      burner = { size: adv.size, status: "minimum", own: null, professional: adv.profile === "professional" };
+      if (adv.forcedPro) notices.push({ code: "proNeeded", type: "info", pan: pan.size, burner: adv.size });
+      if (usesPan && panOk) notices.push({ code: "panOk", type: "ok", own: pan.size });
+    } else {
+      var ownBurner = Number(input.ownBurner);
+      var type = input.burnerType || "onbekend";
+      var ownProfile = type === "professioneel" ? "professional" : "standard";
+
+      if (type === "onbekend") notices.push({ code: "unknownType", type: "info" });
+
+      if (binnen && ownProfile !== "professional") {
+        // Binnen + (mogelijk) buitenbrander: geen positief geschiktheidsadvies.
+        var proAdv = adviseBurner(pan.size, "professional");
+        burner = { size: proAdv.size, status: "notIndoor", own: ownBurner, professional: true };
+        notices.push({ code: "indoorUnsafe", type: "warn", burner: proAdv.size, pan: pan.size });
+      } else if (existing === "brander") {
+        // Zoek binnen de bandbreedte de pan die past en het dichtst bij ideaal ligt.
+        var best = null;
+        band.forEach(function (size) {
+          var chk = checkBurner(size, ownBurner, ownProfile);
+          if (!chk.fits) return;
+          var dist = Math.abs(size - idealPan);
+          if (!best || dist < best.dist) best = { size: size, dist: dist, chk: chk };
+        });
+        if (best) {
+          pan = { size: best.size, status: best.size === idealPan ? "recommended" : "fitsBurner", own: null };
+          burner = { size: ownBurner, status: "ok", own: ownBurner, professional: ownProfile === "professional" };
+          if (best.size !== idealPan) {
+            notices.push({ code: "panAdjusted", type: "info", pan: best.size, ideal: idealPan, own: ownBurner });
+          }
+          if (best.chk.oversize) notices.push({ code: "burnerOversize", type: "info", own: ownBurner, pan: best.size });
+        } else {
+          var need = checkBurner(idealPan, ownBurner, ownProfile).advice;
+          burner = { size: need.size, status: "tooSmall", own: ownBurner, professional: need.profile === "professional" };
+          notices.push({
+            code: "burnerTooSmall",
+            type: "warn",
+            own: ownBurner,
+            pan: idealPan,
+            need: need.size,
+            pro: need.profile === "professional" && ownProfile !== "professional",
+            viaIdeal: false,
+          });
+        }
+      } else {
+        // "beide" — controle B (pan <-> brander). Is de eigen pan niet geschikt,
+        // dan toetsen we de brander aan de geadviseerde pan: daar gaat hij
+        // immers op staan.
+        var chkB = checkBurner(pan.size, ownBurner, ownProfile);
+        if (chkB.fits) {
+          burner = { size: ownBurner, status: "ok", own: ownBurner, professional: ownProfile === "professional" };
+          if (chkB.oversize) notices.push({ code: "burnerOversize", type: "info", own: ownBurner, pan: pan.size });
+          if (panOk) notices.push({ code: "comboOk", type: "ok" });
+          else notices.push({ code: "burnerFitsIdeal", type: "info", own: ownBurner, pan: pan.size });
+        } else {
+          burner = {
+            size: chkB.advice.size,
+            status: "tooSmall",
+            own: ownBurner,
+            professional: chkB.advice.profile === "professional",
+          };
+          notices.push({
+            code: "burnerTooSmall",
+            type: "warn",
+            own: ownBurner,
+            pan: pan.size,
+            need: chkB.advice.size,
+            pro: chkB.advice.profile === "professional" && ownProfile !== "professional",
+            panOk: panOk,
+            viaIdeal: !panOk,
+          });
+        }
+      }
+    }
+
+    var hasIndoorWarning = notices.some(function (n) { return n.code === "indoorUnsafe"; });
+    if (binnen && !hasIndoorWarning) notices.push({ code: "indoorInfo", type: "info" });
 
     return {
       ok: true,
       riceGrams: riceGrams,
-      liquidLiters: roundToStep(liquidLitersExact, 0.1),
-      liquidLitersExact: liquidLitersExact,
-      pan: pref.pan,
-      brander: pref.brander,
-      preferenceFailed: !!input.voorkeurPan && pref.failed,
+      liquidLiters: roundToStep(liquidExact, 0.1),
+      liquidLitersExact: liquidExact,
+      idealPan: idealPan,
+      band: band,
+      pan: pan,
+      burner: burner,
+      notices: notices,
     };
   }
 
-  var PaellaCalculator = {
-    PORTIE_GRAM: PORTIE_GRAM,
-    GASTEN_RANGE: GASTEN_RANGE,
-    PANGROOTTE_LIST: PANGROOTTE_LIST,
-    RIJST_PAN_BRANDER: RIJST_PAN_BRANDER,
+  global.PaellaCalculator = {
+    config: C,
+    GASTEN_RANGE: C.GASTEN_RANGE,
+    PAN_SIZES: C.PAN_SIZES,
+    BURNER_SIZES: C.BURNER_SIZES,
+    idealPanFor: idealPanFor,
+    panBand: panBand,
+    adviseBurner: adviseBurner,
+    checkBurner: checkBurner,
     calculate: calculate,
   };
-
-  global.PaellaCalculator = PaellaCalculator;
 })(typeof window !== "undefined" ? window : globalThis);
