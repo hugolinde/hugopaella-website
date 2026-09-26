@@ -114,13 +114,9 @@
           <label for="tar-gasten">Aantal gasten <span class="optional">(1 t/m 50)</span></label>
           <input type="number" id="tar-gasten" name="gasten" min="1" max="50" placeholder="bijv. 10">
         </div>
-        <div class="field">
+        <div class="field full">
           <label for="tar-postcode">Postcode</label>
           <input type="text" id="tar-postcode" name="postcode" placeholder="bijv. 1234 AB" autocomplete="postal-code">
-        </div>
-        <div class="field">
-          <label for="tar-huisnummer">Huisnummer</label>
-          <input type="text" id="tar-huisnummer" name="huisnummer" placeholder="bijv. 12 of 12A" autocomplete="off">
         </div>
       </div>
     </form>
@@ -135,7 +131,7 @@
 
     <p id="tar-travel-notice" class="price-note" style="text-align:center;" hidden></p>
 
-    <p id="tar-placeholder" style="text-align:center; color:var(--text-soft);">Vul het aantal gasten, je postcode en huisnummer in voor een prijsindicatie.</p>
+    <p id="tar-placeholder" style="text-align:center; color:var(--text-soft);">Vul het aantal gasten en je postcode in voor een prijsindicatie.</p>
 
     <p class="price-note" style="text-align:center;">Dit is een indicatie. De exacte prijs voor jouw gezelschap en locatie ontvang je altijd via een offerte op maat.</p>
     <p style="text-align:center; margin-top:20px;"><a class="btn btn-primary btn-arrow" href="/contact/">Vraag een offerte aan</a></p>
@@ -143,9 +139,9 @@
   </div>
 </section>
 
-<script src="/js/afstand.js?v1"></script>
+<script src="/js/afstand.js?v2"></script>
 <script src="/js/tarieven.js?v2"></script>
-<script src="/js/tarieven-ui.js?v2"></script>
+<script src="/js/tarieven-ui.js?v3"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     PaellaTarievenUI.init({ lang: 'nl' });

@@ -17,10 +17,10 @@
         range: function (min, max) {
           return "Kies een aantal tussen " + min + " en " + max + " gasten.";
         },
-        addressNotFound: "Dit adres kon ik niet vinden. Controleer de postcode en het huisnummer.",
+        addressNotFound: "Deze postcode kon ik niet vinden. Controleer of hij klopt.",
         addressGeneric: "Er ging iets mis bij het berekenen van de rijafstand. Probeer het later opnieuw, of vraag direct een offerte aan.",
       },
-      placeholder: "Vul het aantal gasten, je postcode en huisnummer in voor een prijsindicatie.",
+      placeholder: "Vul het aantal gasten en je postcode in voor een prijsindicatie.",
       addressLoading: "Bezig met de rijafstand berekenen…",
       inclLabel: "Totaal incl. 9% btw",
       exclLabel: "Totaal excl. btw",
@@ -34,10 +34,10 @@
         range: function (min, max) {
           return "Elige un número entre " + min + " y " + max + " invitados.";
         },
-        addressNotFound: "No he podido encontrar esta dirección. Comprueba el código postal y el número.",
+        addressNotFound: "No he podido encontrar este código postal. Comprueba que sea correcto.",
         addressGeneric: "Ha habido un problema al calcular la distancia en coche. Inténtalo de nuevo más tarde o solicita directamente un presupuesto.",
       },
-      placeholder: "Indica el número de invitados, tu código postal y el número para ver una indicación de precio.",
+      placeholder: "Indica el número de invitados y tu código postal para ver una indicación de precio.",
       addressLoading: "Calculando la distancia en coche…",
       inclLabel: "Total incl. 9% IVA",
       exclLabel: "Total sin IVA",
@@ -68,10 +68,6 @@
     return /^[1-9][0-9]{3}\s?[A-Za-z]{2}$/.test(String(value || "").trim());
   }
 
-  function looksLikeHuisnummer(value) {
-    return /^[1-9][0-9]*[A-Za-z]*$/.test(String(value || "").trim());
-  }
-
   function init(config) {
     var lang = config.lang || "nl";
     var locale = lang === "es" ? "es-ES" : "nl-NL";
@@ -81,7 +77,6 @@
       dish: document.getElementById("tar-dish"),
       gasten: document.getElementById("tar-gasten"),
       postcode: document.getElementById("tar-postcode"),
-      huisnummer: document.getElementById("tar-huisnummer"),
       error: document.getElementById("tar-error"),
       info: document.getElementById("tar-info"),
       results: document.getElementById("tar-results"),
@@ -93,7 +88,7 @@
       placeholder: document.getElementById("tar-placeholder"),
     };
 
-    if (!els.dish || !els.gasten || !els.postcode || !els.huisnummer) return; // markup niet aanwezig op deze pagina
+    if (!els.dish || !els.gasten || !els.postcode) return; // markup niet aanwezig op deze pagina
 
     if (els.inclLabel) els.inclLabel.textContent = t.inclLabel;
     if (els.exclLabel) els.exclLabel.textContent = t.exclLabel;
@@ -162,9 +157,8 @@
 
     function resolveAddress() {
       var pc = els.postcode.value;
-      var hn = els.huisnummer.value;
 
-      if (!looksLikePostcode(pc) || !looksLikeHuisnummer(hn)) {
+      if (!looksLikePostcode(pc)) {
         addressState = "idle";
         addressKey = null;
         distanceKm = null;
@@ -172,7 +166,7 @@
         return;
       }
 
-      var key = pc.trim().toUpperCase().replace(/\s+/g, "") + "|" + hn.trim().toUpperCase();
+      var key = pc.trim().toUpperCase().replace(/\s+/g, "");
       if (key === addressKey && (addressState === "resolved" || addressState === "loading")) {
         recalc();
         return;
@@ -185,7 +179,7 @@
 
       if (!global.PaellaAfstand) return;
 
-      global.PaellaAfstand.getDistanceForAddress(pc, hn).then(function (result) {
+      global.PaellaAfstand.getDistanceForAddress(pc).then(function (result) {
         if (addressKey !== key) return; // gebruiker heeft ondertussen iets anders ingevuld
         addressState = "resolved";
         distanceKm = result.km;
@@ -207,7 +201,6 @@
     els.dish.addEventListener("change", recalc);
     els.gasten.addEventListener("input", recalc);
     els.postcode.addEventListener("input", onAddressInput);
-    els.huisnummer.addEventListener("input", onAddressInput);
 
     recalc();
   }

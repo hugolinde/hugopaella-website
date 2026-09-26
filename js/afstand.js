@@ -3,8 +3,11 @@
  * Tarieven-pagina. Draait volledig client-side (deze site heeft geen
  * server/build-stap), met twee gratis, CORS-vriendelijke API's:
  *
- * - PDOK Locatieserver (Kadaster/BZK) zet een postcode + huisnummer om
- *   naar coördinaten. Gratis, geen sleutel nodig.
+ * - PDOK Locatieserver (Kadaster/BZK) zet een postcode om naar de
+ *   coördinaten van het midden van dat postcodegebied. Gratis, geen
+ *   sleutel nodig. Er wordt bewust alleen om de postcode gevraagd (geen
+ *   huisnummer) — voor een prijsindicatie is dat nauwkeurig genoeg, en
+ *   het is voor de bezoeker anoniemer.
  * - OpenRouteService (gehost via HeiGIT) berekent de rijafstand over de
  *   weg vanaf Hugo's vaste vertrekpunt naar die coördinaten. Gebruikt een
  *   gratis API-sleutel (2000 aanvragen/dag, geen betaalmethode gekoppeld).
@@ -32,15 +35,15 @@
     return { lon: parseFloat(match[1]), lat: parseFloat(match[2]) };
   }
 
-  // Zoekt het adres op en controleert dat de gevonden postcode én het
-  // huisnummer exact overeenkomen met de invoer — de vrije-tekst-zoekopdracht
-  // van PDOK geeft anders soms het dichtstbijzijnde adres terug in plaats
-  // van een foutmelding, wat tot een misleidende prijsindicatie zou leiden.
-  function geocode(postcode, huisnummer) {
+  // Zoekt het midden van het postcodegebied op en controleert dat de
+  // gevonden postcode exact overeenkomt met de invoer — de vrije-tekst-
+  // zoekopdracht van PDOK geeft anders soms de dichtstbijzijnde postcode
+  // terug in plaats van een foutmelding, wat tot een misleidende
+  // prijsindicatie zou leiden.
+  function geocode(postcode) {
     var pc = String(postcode || "").trim();
-    var hn = String(huisnummer || "").trim();
-    var q = encodeURIComponent(pc + " " + hn);
-    var url = PDOK_URL + "?q=" + q + "&fq=type:adres&rows=1";
+    var q = encodeURIComponent(pc);
+    var url = PDOK_URL + "?q=" + q + "&fq=type:postcode&rows=1";
 
     return fetch(url)
       .then(function (res) {
@@ -54,11 +57,6 @@
         var wantedPostcode = pc.replace(/\s+/g, "").toUpperCase();
         var actualPostcode = String(doc.postcode || "").replace(/\s+/g, "").toUpperCase();
         if (wantedPostcode && actualPostcode && wantedPostcode !== actualPostcode) {
-          throw new Error("not-found");
-        }
-
-        var wantedNumber = parseInt(hn, 10);
-        if (isFinite(wantedNumber) && doc.huisnummer !== wantedNumber) {
           throw new Error("not-found");
         }
 
@@ -89,11 +87,11 @@
       });
   }
 
-  // Belooft { km: <rijafstand enkele reis, in km>, label: <gevonden adres> }.
-  // Verwerpt met een Error waarvan .message "not-found" is (adres/huisnummer
-  // klopt niet) of "service-error" (netwerk- of API-probleem).
-  function getDistanceForAddress(postcode, huisnummer) {
-    return geocode(postcode, huisnummer).then(function (dest) {
+  // Belooft { km: <rijafstand enkele reis, in km>, label: <gevonden postcodegebied> }.
+  // Verwerpt met een Error waarvan .message "not-found" is (postcode klopt
+  // niet) of "service-error" (netwerk- of API-probleem).
+  function getDistanceForAddress(postcode) {
+    return geocode(postcode).then(function (dest) {
       return getDistanceKm(dest).then(function (km) {
         return { km: km, label: dest.label };
       });
