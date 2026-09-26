@@ -13,8 +13,8 @@
  *   "nee"     pan berekenen, brander adviseren
  *   "pan"     pan controleren (ideaal ± tolerantie), brander adviseren bij die pan
  *   "brander" binnen de panbandbreedte een pan zoeken die op de brander past
- *             (liefst binnen het bereik van de volle brander); pas als geen
- *             enkele past volgt een advies voor een grotere brander
+ *             (niet te klein, niet te groot); pas als geen enkele past volgt
+ *             een advies voor een andere brander
  *   "beide"   A: hoeveelheid <-> pan en B: pan <-> brander afzonderlijk
  */
 
@@ -82,23 +82,30 @@
     return best || rows[0];
   }
 
-  // Kleinste geadviseerde (gangbare) brander van een profiel waar de pan
-  // onder past, of null als de pan groter is dan dat profiel aankan.
-  function adviceInProfile(pan, profile) {
+  // Kleinste brander van een profiel die niet te klein (panMax >= pan) en
+  // niet te groot (<= bodem - marge) is. Eerst uit de gangbare maten
+  // ("advice"), anders uit alle maten van het profiel; null als geen enkele
+  // brander van dit profiel de pan aankan.
+  function adviceInProfile(pan, profile, marginKey) {
     var prof = C.BURNER_PROFILES[profile];
-    var best = null;
-    prof.burners.forEach(function (row) {
-      if (prof.advice.indexOf(row.burner) === -1 || row.panMax < pan) return;
-      if (!best || row.burner < best.burner) best = row;
-    });
-    return best;
+    var max = maxBurnerFor(pan, marginKey || profile);
+    var pick = function (onlyAdvice, respectMax) {
+      var best = null;
+      prof.burners.forEach(function (row) {
+        if (onlyAdvice && prof.advice.indexOf(row.burner) === -1) return;
+        if (row.panMax < pan || (respectMax && row.burner > max)) return;
+        if (!best || row.burner < best.burner) best = row;
+      });
+      return best;
+    };
+    return pick(true, true) || pick(false, true) || pick(true, false);
   }
 
   // Branderadvies voor een pan. Past de pan niet op het standaardprofiel, dan
   // wordt een professionele brander geadviseerd (geen fictieve grotere
   // standaardbrander).
-  function adviseBurner(pan, profile) {
-    var row = adviceInProfile(pan, profile);
+  function adviseBurner(pan, profile, marginKey) {
+    var row = adviceInProfile(pan, profile, marginKey);
     if (row) return { size: row.burner, profile: profile, forcedPro: false };
     var pro = adviceInProfile(pan, "professional");
     var proRows = C.BURNER_PROFILES.professional.burners;
@@ -106,19 +113,34 @@
     return { size: size, profile: "professional", forcedPro: profile !== "professional" };
   }
 
+  // Bodemdiameter van een pan (de opgegeven pandiameter is die van de bovenrand).
+  function panBottom(pan) {
+    if (C.PAN_BOTTOM[pan]) return C.PAN_BOTTOM[pan];
+    return Math.round(pan * C.PAN_BOTTOM_RATIO);
+  }
+
+  // Grootste brander die nog onder de bodem past: bodem - marge van het type.
+  function maxBurnerFor(pan, marginKey) {
+    return panBottom(pan) - C.BURNER_MARGIN_CM[marginKey];
+  }
+
   // Past een bestaande brander onder een pan?
-  //   fits      pan <= panMax van de brander
-  //   inRange   ook pan >= panMin (volle brander zonder meer bruikbaar)
-  //   oversize  pan < panMin: alleen binnenste ring(en) gebruiken
-  function checkBurner(pan, burnerSize, profile) {
+  //   tooSmall  pan > panMax van de brander (fabrikantgegevens)
+  //   tooLarge  brander > bodem - marge: de vlam komt tegen de schuine rand
+  //   fits      geen van beide
+  // profile   bepaalt panMax (standard | professional)
+  // marginKey bepaalt de marge onder de bodem (standard | professional)
+  function checkBurner(pan, burnerSize, profile, marginKey) {
     var row = burnerRow(burnerSize, profile);
-    var fits = pan <= row.panMax;
+    var max = maxBurnerFor(pan, marginKey || profile);
+    var tooSmall = pan > row.panMax;
+    var tooLarge = burnerSize > max;
     return {
-      fits: fits,
-      inRange: fits && pan >= row.panMin,
-      oversize: pan < row.panMin,
-      row: row,
-      advice: adviseBurner(pan, profile),
+      fits: !tooSmall && !tooLarge,
+      tooSmall: tooSmall,
+      tooLarge: tooLarge,
+      maxBurner: max,
+      advice: adviseBurner(pan, profile, marginKey),
     };
   }
 
@@ -141,7 +163,7 @@
    *   riceGrams, liquidLiters, idealPan, band[]
    *   pan:     { size, status, own }   status: recommended | ok | fitsBurner | tooSmall | tooLarge
    *   burner:  { size, status, own, professional }
-   *                                    status: minimum | ok | tooSmall | needsPro | notIndoor
+   *                                    status: minimum | ok | tooSmall | tooLarge | needsPro | notIndoor
    *   notices: [{ code, type: ok|info|warn, ...data }]
    *   pan.size en burner.size zijn de uiteindelijk te gebruiken maten (ook voor de PDF).
    */
@@ -196,74 +218,67 @@
     } else {
       var ownBurner = Number(input.ownBurner);
       var type = input.burnerType || "onbekend";
+      // Profiel voor "te klein" (panMax) en marge voor "te groot". Bij
+      // "Weet ik niet" aan beide kanten de strengste: standaard panMax en de
+      // professionele (grootste) marge.
       var ownProfile = type === "professioneel" ? "professional" : "standard";
+      var ownMargin = type === "standaard" ? "standard" : "professional";
+      var ownIsPro = ownProfile === "professional";
 
       if (type === "onbekend") notices.push({ code: "unknownType", type: "info" });
 
-      if (binnen && ownProfile !== "professional") {
+      // Kaart en melding voor een brander die niet past onder een pan.
+      var rejectBurner = function (chk, forPan, context) {
+        if (chk.tooLarge) {
+          burner = { size: chk.advice.size, status: "tooLarge", own: ownBurner, professional: chk.advice.profile === "professional" };
+          notices.push({
+            code: "burnerTooLarge", type: "warn", own: ownBurner, pan: forPan, max: chk.maxBurner,
+            panOk: context.panOk, viaIdeal: context.viaIdeal,
+          });
+          return;
+        }
+        var needsPro = chk.advice.profile === "professional" && !ownIsPro;
+        burner = { size: chk.advice.size, status: needsPro ? "needsPro" : "tooSmall", own: ownBurner, professional: chk.advice.profile === "professional" };
+        notices.push({
+          code: "burnerTooSmall", type: "warn", own: ownBurner, pan: forPan, need: chk.advice.size,
+          pro: needsPro, panOk: context.panOk, viaIdeal: context.viaIdeal,
+        });
+      };
+
+      if (binnen && !ownIsPro) {
         // Binnen + (mogelijk) buitenbrander: geen positief geschiktheidsadvies.
         var proAdv = adviseBurner(pan.size, "professional");
         burner = { size: proAdv.size, status: "notIndoor", own: ownBurner, professional: true };
         notices.push({ code: "indoorUnsafe", type: "warn", burner: proAdv.size, pan: pan.size });
       } else if (existing === "brander") {
-        // Zoek binnen de bandbreedte de pan die past en het dichtst bij ideaal ligt.
-        // Eerst pannen binnen het bereik van de volle brander; alleen als
-        // die er niet zijn een pan waarvoor de brander ruim is.
+        // Zoek binnen de bandbreedte de pan waar de brander niet te klein en
+        // niet te groot voor is en die het dichtst bij ideaal ligt.
         var best = null;
         band.forEach(function (size) {
-          var chk = checkBurner(size, ownBurner, ownProfile);
-          if (!chk.fits) return;
-          var score = (chk.inRange ? 0 : 1000) + Math.abs(size - idealPan);
-          if (!best || score < best.score) best = { size: size, score: score, chk: chk };
+          if (!checkBurner(size, ownBurner, ownProfile, ownMargin).fits) return;
+          var dist = Math.abs(size - idealPan);
+          if (!best || dist < best.dist) best = { size: size, dist: dist };
         });
         if (best) {
           pan = { size: best.size, status: best.size === idealPan ? "recommended" : "fitsBurner", own: null };
-          burner = { size: ownBurner, status: "ok", own: ownBurner, professional: ownProfile === "professional" };
+          burner = { size: ownBurner, status: "ok", own: ownBurner, professional: ownIsPro };
           if (best.size !== idealPan) {
             notices.push({ code: "panAdjusted", type: "info", pan: best.size, ideal: idealPan, own: ownBurner });
           }
-          if (best.chk.oversize) notices.push({ code: "burnerOversize", type: "info", own: ownBurner, pan: best.size, panMin: best.chk.row.panMin });
         } else {
-          var need = checkBurner(idealPan, ownBurner, ownProfile).advice;
-          var needsPro = need.profile === "professional" && ownProfile !== "professional";
-          burner = { size: need.size, status: needsPro ? "needsPro" : "tooSmall", own: ownBurner, professional: need.profile === "professional" };
-          notices.push({
-            code: "burnerTooSmall",
-            type: "warn",
-            own: ownBurner,
-            pan: idealPan,
-            need: need.size,
-            pro: need.profile === "professional" && ownProfile !== "professional",
-            viaIdeal: false,
-          });
+          rejectBurner(checkBurner(idealPan, ownBurner, ownProfile, ownMargin), idealPan, { panOk: false, viaIdeal: false });
         }
       } else {
         // "beide" — controle B (pan <-> brander). Is de eigen pan niet geschikt,
         // dan toetsen we de brander aan de geadviseerde pan: daar gaat hij
         // immers op staan.
-        var chkB = checkBurner(pan.size, ownBurner, ownProfile);
+        var chkB = checkBurner(pan.size, ownBurner, ownProfile, ownMargin);
         if (chkB.fits) {
-          burner = { size: ownBurner, status: "ok", own: ownBurner, professional: ownProfile === "professional" };
-          if (chkB.oversize) notices.push({ code: "burnerOversize", type: "info", own: ownBurner, pan: pan.size, panMin: chkB.row.panMin });
+          burner = { size: ownBurner, status: "ok", own: ownBurner, professional: ownIsPro };
           if (panOk) notices.push({ code: "comboOk", type: "ok" });
           else notices.push({ code: "burnerFitsIdeal", type: "info", own: ownBurner, pan: pan.size });
         } else {
-          burner = {
-            size: chkB.advice.size,
-            status: chkB.advice.profile === "professional" && ownProfile !== "professional" ? "needsPro" : "tooSmall",
-            own: ownBurner,
-            professional: chkB.advice.profile === "professional",
-          };
-          notices.push({
-            code: "burnerTooSmall",
-            type: "warn",
-            own: ownBurner,
-            pan: pan.size,
-            need: chkB.advice.size,
-            pro: chkB.advice.profile === "professional" && ownProfile !== "professional",
-            panOk: panOk,
-            viaIdeal: !panOk,
-          });
+          rejectBurner(chkB, pan.size, { panOk: panOk, viaIdeal: !panOk });
         }
       }
     }
@@ -292,6 +307,8 @@
     idealPanFor: idealPanFor,
     panBand: panBand,
     burnerRow: burnerRow,
+    panBottom: panBottom,
+    maxBurnerFor: maxBurnerFor,
     adviseBurner: adviseBurner,
     checkBurner: checkBurner,
     calculate: calculate,

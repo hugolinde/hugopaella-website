@@ -40,6 +40,7 @@
           minimum: function (pro) { return pro ? "Minimaal · professioneel" : "Minimaal"; },
           ok: "✓ Geschikt",
           tooSmall: function (own) { return "Minimaal · jouw " + own + " cm is te klein"; },
+          tooLarge: function (own) { return "Jouw " + own + " cm is te groot"; },
           notIndoor: "Professioneel · binnen",
           needsPro: "Professionele brander nodig",
         },
@@ -74,11 +75,16 @@
             " cm niet goed. Een pan van " + n.pan + " cm is ook geschikt voor deze hoeveelheid en past wel."
           );
         },
-        burnerOversize: function (n) {
+        burnerTooLarge: function (n) {
+          var lead = n.viaIdeal
+            ? "Je brander van " + n.own + " cm is te groot voor de geadviseerde pan van " + n.pan + " cm"
+            : n.panOk
+              ? "Je pan van " + n.pan + " cm is geschikt voor deze hoeveelheid, maar je brander van " + n.own + " cm is te groot voor deze pan"
+              : "Je brander van " + n.own + " cm is te groot voor een pan van " + n.pan + " cm";
           return (
-            "Je brander van " + n.own + " cm is ruim voor een pan van " + n.pan +
-            " cm (de volle brander is bedoeld voor pannen vanaf " + n.panMin +
-            " cm). Gebruik alleen de binnenste ring(en) of stook wat lager, zodat de vlammen niet langs de rand slaan."
+            lead + ": de vlammen komen dan tegen de schuine rand in plaats van onder de bodem. " +
+            "Voor deze pan past een brander van maximaal " + n.max + " cm. " +
+            "Heeft je brander een binnenring die je apart kunt aansteken en regelen? Vul dan de diameter van die ring in; de calculator rekent dan met die ring."
           );
         },
         proNeeded: function (n) {
@@ -133,6 +139,7 @@
           minimum: function (pro) { return pro ? "Mínimo · profesional" : "Mínimo"; },
           ok: "✓ Adecuado",
           tooSmall: function (own) { return "Mínimo · tus " + own + " cm no bastan"; },
+          tooLarge: function (own) { return "Tus " + own + " cm son demasiado"; },
           notIndoor: "Profesional · interior",
           needsPro: "Hace falta uno profesional",
         },
@@ -167,11 +174,16 @@
             " cm. Una paellera de " + n.pan + " cm también sirve para esta cantidad y sí encaja."
           );
         },
-        burnerOversize: function (n) {
+        burnerTooLarge: function (n) {
+          var lead = n.viaIdeal
+            ? "Tu quemador de " + n.own + " cm es demasiado grande para la paellera recomendada de " + n.pan + " cm"
+            : n.panOk
+              ? "Tu paellera de " + n.pan + " cm es adecuada para esta cantidad, pero tu quemador de " + n.own + " cm es demasiado grande para ella"
+              : "Tu quemador de " + n.own + " cm es demasiado grande para una paellera de " + n.pan + " cm";
           return (
-            "Tu quemador de " + n.own + " cm es amplio para una paellera de " + n.pan +
-            " cm (a pleno rendimiento está pensado para paelleras desde " + n.panMin +
-            " cm). Usa solo el anillo o los anillos interiores, o baja el fuego, para que las llamas no suban por el borde."
+            lead + ": las llamas darían en el borde inclinado en lugar de bajo el fondo. " +
+            "Para esta paellera sirve un quemador de como máximo " + n.max + " cm. " +
+            "¿Tu quemador tiene un anillo interior que se enciende y regula por separado? Indica entonces el diámetro de ese anillo; la calculadora calculará con él."
           );
         },
         proNeeded: function (n) {
@@ -335,6 +347,7 @@
       var s = t.status.burner;
       if (b.status === "minimum") return s.minimum(b.professional);
       if (b.status === "tooSmall") return s.tooSmall(b.own);
+      if (b.status === "tooLarge") return s.tooLarge(b.own);
       return s[b.status];
     }
 

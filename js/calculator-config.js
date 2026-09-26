@@ -63,11 +63,9 @@
     BURNER_SIZES: [20, 25, 30, 35, 38, 40, 45, 50, 55, 60, 65, 70, 80, 90, 120],
     BURNER_SIZE_LABELS: { 45: "45/46" },
 
-    // Branderprofielen: per brandermaat het panbereik van de VOLLE brander
-    // (buitenste ring), zoals de fabrikanten het opgeven.
-    //   panMax   pan groter dan dit -> brander te klein (afkeuring)
-    //   panMin   pan kleiner dan dit -> brander ruim: waarschuwing om alleen
-    //            de binnenste ring(en) te gebruiken (geen afkeuring)
+    // Branderprofielen: per brandermaat de grootste pan (panMax, cm) die de
+    // volle brander nog goed verwarmt, volgens de fabrikanten. Een grotere
+    // pan -> brander te klein.
     //   advice   brandermaten die de calculator zelf mag adviseren
     //            ("gangbare maten"); advies = kleinste daarvan met panMax >= pan
     // Bron: inventarisatie Garcima / Flames / Vaello (26-09-2026).
@@ -77,18 +75,18 @@
       standard: {
         advice: [20, 30, 40, 45, 50, 60, 70],
         burners: [
-          { burner: 20, panMin: 26, panMax: 36 }, // Garcima 200, Vaello
-          { burner: 25, panMin: 32, panMax: 38 }, // Garcima 250
-          { burner: 30, panMin: 36, panMax: 46 }, // Garcima 300
-          { burner: 35, panMin: 40, panMax: 50 }, // Garcima 350
-          { burner: 38, panMin: 50, panMax: 60 }, // Flames T-380
-          { burner: 40, panMin: 46, panMax: 55 }, // Garcima 400
-          { burner: 45, panMin: 50, panMax: 65 }, // Garcima 450-3
-          { burner: 50, panMin: 60, panMax: 70 }, // Garcima 500
-          { burner: 55, panMin: 65, panMax: 75 }, // Garcima 550
-          { burner: 60, panMin: 70, panMax: 80 }, // Garcima 600
-          { burner: 65, panMin: 80, panMax: 85 }, // Garcima 650
-          { burner: 70, panMin: 80, panMax: 90 }, // Garcima 700
+          { burner: 20, panMax: 36 }, // Garcima 200, Vaello
+          { burner: 25, panMax: 38 }, // Garcima 250
+          { burner: 30, panMax: 46 }, // Garcima 300
+          { burner: 35, panMax: 50 }, // Garcima 350
+          { burner: 38, panMax: 60 }, // Flames T-380
+          { burner: 40, panMax: 55 }, // Garcima 400
+          { burner: 45, panMax: 65 }, // Garcima 450-3
+          { burner: 50, panMax: 70 }, // Garcima 500
+          { burner: 55, panMax: 75 }, // Garcima 550
+          { burner: 60, panMax: 80 }, // Garcima 600
+          { burner: 65, panMax: 85 }, // Garcima 650
+          { burner: 70, panMax: 90 }, // Garcima 700
         ],
       },
       // Professionele / binnen-geschikte brander. Voorzichtig gemiddelde van
@@ -96,21 +94,37 @@
       professional: {
         advice: [20, 30, 40, 50, 60, 70, 80, 90],
         burners: [
-          { burner: 20, panMin: 30, panMax: 40 }, // Garcima L-20 PROF
-          { burner: 25, panMin: 35, panMax: 50 }, // Flames GT-250
-          { burner: 30, panMin: 40, panMax: 55 }, // Garcima L-30 PROF (30-P: 36-46)
-          { burner: 38, panMin: 50, panMax: 60 }, // Flames TT-380
-          { burner: 40, panMin: 46, panMax: 65 }, // Garcima 40-P / L-40 PROF
-          { burner: 45, panMin: 56, panMax: 80 }, // Flames TT-460
-          { burner: 50, panMin: 60, panMax: 80 }, // Garcima L-50 PROF, Flames TT-500
-          { burner: 60, panMin: 70, panMax: 90 }, // Flames TT-600, Garcima L-60 PROF
-          { burner: 70, panMin: 70, panMax: 100 }, // Garcima L-70 PROF (Flames TT-700: 90-115)
-          { burner: 80, panMin: 70, panMax: 115 }, // Garcima 80-P, Vaello 7080
-          { burner: 90, panMin: 100, panMax: 130 }, // Flames TT-900, Vaello 7090
-          { burner: 120, panMin: 160, panMax: 200 }, // Flames O-1200
+          { burner: 20, panMax: 40 }, // Garcima L-20 PROF
+          { burner: 25, panMax: 50 }, // Flames GT-250
+          { burner: 30, panMax: 55 }, // Garcima L-30 PROF (30-P: 36-46)
+          { burner: 38, panMax: 60 }, // Flames TT-380
+          { burner: 40, panMax: 65 }, // Garcima 40-P / L-40 PROF
+          { burner: 45, panMax: 80 }, // Flames TT-460
+          { burner: 50, panMax: 80 }, // Garcima L-50 PROF, Flames TT-500
+          { burner: 60, panMax: 90 }, // Flames TT-600, Garcima L-60 PROF
+          { burner: 70, panMax: 100 }, // Garcima L-70 PROF (Flames TT-700: 90-115)
+          { burner: 80, panMax: 115 }, // Garcima 80-P, Vaello 7080
+          { burner: 90, panMax: 130 }, // Flames TT-900, Vaello 7090
+          { burner: 120, panMax: 200 }, // Flames O-1200
         ],
       },
     },
+
+    // "Te groot": de brander moet onder de BODEM van de pan passen, met een
+    // marge rondom, anders verhit de vlam vooral de schuine rand. De opgegeven
+    // pandiameter is die van de bovenrand.
+    //   maximale brander = bodemdiameter - marge
+    // Marge per brandertype; bij "Weet ik niet" geldt de professionele
+    // (strengste) marge.
+    BURNER_MARGIN_CM: { standard: 5, professional: 10 },
+
+    // Pandiameter (bovenrand, cm) -> geschatte bodemdiameter (cm). Inschatting
+    // Hugo, 26-09-2026. Niet in de lijst: pandiameter x PAN_BOTTOM_RATIO.
+    PAN_BOTTOM: {
+      40: 36, 42: 37, 46: 42, 50: 45, 55: 48, 60: 53, 65: 60, 70: 64,
+      75: 69, 80: 73, 85: 77, 90: 81, 100: 91, 115: 104, 130: 114, 150: 137,
+    },
+    PAN_BOTTOM_RATIO: 0.9,
 
     // Welk profiel de calculator gebruikt bij een eigen advies (Bereiding).
     PROFILE_BY_LOCATION: { buiten: "standard", binnen: "professional" },
