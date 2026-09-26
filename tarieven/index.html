@@ -87,7 +87,7 @@
         <tr><td>Fideuà</td><td class="price">€ 18</td></tr>
       </tbody>
     </table>
-    <p class="price-note">Voorrijkosten binnen de Randstad: € 100. Voor locaties buiten de Randstad: op aanvraag. Alle genoemde prijzen zijn inclusief btw.<br>Er geldt geen minimumaantal gasten. Ik kook voor gezelschappen tot maximaal 50 personen.</p>
+    <p class="price-note">Voorrijkosten: € 75 vast, plus € 0,45 per kilometer (heen en terug), op basis van de automatisch berekende rijafstand vanaf Wassenaar naar het opgegeven adres. Alle genoemde prijzen zijn inclusief btw.<br>Er geldt geen minimumaantal gasten. Ik kook voor gezelschappen tot maximaal 50 personen.</p>
   </div>
 </section>
 
@@ -115,16 +115,18 @@
           <input type="number" id="tar-gasten" name="gasten" min="1" max="50" placeholder="bijv. 10">
         </div>
         <div class="field">
-          <label for="tar-randstad">Locatie</label>
-          <select id="tar-randstad" name="randstad">
-            <option value="ja" selected>Binnen de Randstad</option>
-            <option value="nee">Buiten de Randstad</option>
-          </select>
+          <label for="tar-postcode">Postcode</label>
+          <input type="text" id="tar-postcode" name="postcode" placeholder="bijv. 1234 AB" autocomplete="postal-code">
+        </div>
+        <div class="field">
+          <label for="tar-huisnummer">Huisnummer</label>
+          <input type="text" id="tar-huisnummer" name="huisnummer" placeholder="bijv. 12 of 12A" autocomplete="off">
         </div>
       </div>
     </form>
 
     <div id="tar-error" class="calc-notice calc-notice-error" hidden></div>
+    <div id="tar-info" class="calc-notice calc-notice-info" hidden></div>
 
     <div id="tar-results" class="calc-fields calc-results cols-2" hidden>
       <div class="calc-field"><span id="tar-incl-label">Totaal incl. 9% btw</span><strong id="tar-out-incl">–</strong></div>
@@ -133,7 +135,7 @@
 
     <p id="tar-travel-notice" class="price-note" style="text-align:center;" hidden></p>
 
-    <p id="tar-placeholder" style="text-align:center; color:var(--text-soft);">Vul het aantal gasten in voor een prijsindicatie.</p>
+    <p id="tar-placeholder" style="text-align:center; color:var(--text-soft);">Vul het aantal gasten, je postcode en huisnummer in voor een prijsindicatie.</p>
 
     <p class="price-note" style="text-align:center;">Dit is een indicatie. De exacte prijs voor jouw gezelschap en locatie ontvang je altijd via een offerte op maat.</p>
     <p style="text-align:center; margin-top:20px;"><a class="btn btn-primary btn-arrow" href="/contact/">Vraag een offerte aan</a></p>
@@ -141,8 +143,9 @@
   </div>
 </section>
 
-<script src="/js/tarieven.js?v1"></script>
-<script src="/js/tarieven-ui.js?v1"></script>
+<script src="/js/afstand.js?v1"></script>
+<script src="/js/tarieven.js?v2"></script>
+<script src="/js/tarieven-ui.js?v2"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     PaellaTarievenUI.init({ lang: 'nl' });

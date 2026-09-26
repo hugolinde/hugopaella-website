@@ -87,7 +87,7 @@
         <tr><td>Fideuà</td><td class="price">18 €</td></tr>
       </tbody>
     </table>
-    <p class="price-note">Gastos de desplazamiento dentro del Randstad (Países Bajos): 100 €. Para otras ubicaciones: bajo consulta. Todos los precios indicados incluyen IVA.<br>No hay un número mínimo de invitados. Cocino para grupos de hasta un máximo de 50 personas.</p>
+    <p class="price-note">Gastos de desplazamiento: 75 € fijos, más 0,45 € por kilómetro (ida y vuelta), según la distancia en coche calculada automáticamente entre Wassenaar y la dirección indicada. Todos los precios indicados incluyen IVA.<br>No hay un número mínimo de invitados. Cocino para grupos de hasta un máximo de 50 personas.</p>
   </div>
 </section>
 
@@ -115,16 +115,18 @@
           <input type="number" id="tar-gasten" name="gasten" min="1" max="50" placeholder="p. ej. 10">
         </div>
         <div class="field">
-          <label for="tar-randstad">Ubicación</label>
-          <select id="tar-randstad" name="randstad">
-            <option value="ja" selected>Dentro del Randstad</option>
-            <option value="nee">Fuera del Randstad</option>
-          </select>
+          <label for="tar-postcode">Código postal</label>
+          <input type="text" id="tar-postcode" name="postcode" placeholder="p. ej. 1234 AB" autocomplete="postal-code">
+        </div>
+        <div class="field">
+          <label for="tar-huisnummer">Número</label>
+          <input type="text" id="tar-huisnummer" name="huisnummer" placeholder="p. ej. 12 o 12A" autocomplete="off">
         </div>
       </div>
     </form>
 
     <div id="tar-error" class="calc-notice calc-notice-error" hidden></div>
+    <div id="tar-info" class="calc-notice calc-notice-info" hidden></div>
 
     <div id="tar-results" class="calc-fields calc-results cols-2" hidden>
       <div class="calc-field"><span id="tar-incl-label">Total incl. 9% IVA</span><strong id="tar-out-incl">–</strong></div>
@@ -133,7 +135,7 @@
 
     <p id="tar-travel-notice" class="price-note" style="text-align:center;" hidden></p>
 
-    <p id="tar-placeholder" style="text-align:center; color:var(--text-soft);">Indica el número de invitados para ver una indicación de precio.</p>
+    <p id="tar-placeholder" style="text-align:center; color:var(--text-soft);">Indica el número de invitados, tu código postal y el número para ver una indicación de precio.</p>
 
     <p class="price-note" style="text-align:center;">Esto es una indicación. El precio exacto para tu grupo y ubicación lo recibes siempre mediante un presupuesto a medida.</p>
     <p style="text-align:center; margin-top:20px;"><a class="btn btn-primary btn-arrow" href="/es/contacto/">Pide presupuesto</a></p>
@@ -141,8 +143,9 @@
   </div>
 </section>
 
-<script src="/js/tarieven.js?v1"></script>
-<script src="/js/tarieven-ui.js?v1"></script>
+<script src="/js/afstand.js?v1"></script>
+<script src="/js/tarieven.js?v2"></script>
+<script src="/js/tarieven-ui.js?v2"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     PaellaTarievenUI.init({ lang: 'es' });
