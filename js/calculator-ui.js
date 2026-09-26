@@ -41,6 +41,7 @@
           ok: "✓ Geschikt",
           tooSmall: function (own) { return "Minimaal · jouw " + own + " cm is te klein"; },
           notIndoor: "Professioneel · binnen",
+          needsPro: "Professionele brander nodig",
         },
       },
       notices: {
@@ -54,11 +55,12 @@
           );
         },
         burnerTooSmall: function (n) {
+          var bad = n.pro ? "niet geschikt" : "te klein";
           var lead = n.viaIdeal
-            ? "Je brander van " + n.own + " cm is te klein voor de geadviseerde pan van " + n.pan + " cm."
+            ? "Je brander van " + n.own + " cm is " + bad + " voor de geadviseerde pan van " + n.pan + " cm."
             : n.panOk
-              ? "Je pan van " + n.pan + " cm is geschikt voor deze hoeveelheid. Je brander van " + n.own + " cm is echter te klein voor deze pan."
-              : "Je brander van " + n.own + " cm is te klein voor een pan van " + n.pan + " cm.";
+              ? "Je pan van " + n.pan + " cm is geschikt voor deze hoeveelheid. Je brander van " + n.own + " cm is echter " + bad + " voor deze pan."
+              : "Je brander van " + n.own + " cm is " + bad + " voor een pan van " + n.pan + " cm.";
           return lead + (n.pro
             ? " Een standaard paellabrander is voor deze pan niet geschikt; we adviseren een professionele brander van minimaal " + n.need + " cm."
             : " Voor deze combinatie adviseren we minimaal een brander van " + n.need + " cm.");
@@ -75,7 +77,8 @@
         burnerOversize: function (n) {
           return (
             "Je brander van " + n.own + " cm is ruim voor een pan van " + n.pan +
-            " cm. Gebruik alleen de binnenste ring(en) of stook wat lager, zodat de vlammen niet langs de rand slaan."
+            " cm (de volle brander is bedoeld voor pannen vanaf " + n.panMin +
+            " cm). Gebruik alleen de binnenste ring(en) of stook wat lager, zodat de vlammen niet langs de rand slaan."
           );
         },
         proNeeded: function (n) {
@@ -131,6 +134,7 @@
           ok: "✓ Adecuado",
           tooSmall: function (own) { return "Mínimo · tus " + own + " cm no bastan"; },
           notIndoor: "Profesional · interior",
+          needsPro: "Hace falta uno profesional",
         },
       },
       notices: {
@@ -144,11 +148,12 @@
           );
         },
         burnerTooSmall: function (n) {
+          var bad = n.pro ? "no sirve" : "es demasiado pequeño";
           var lead = n.viaIdeal
-            ? "Tu quemador de " + n.own + " cm es demasiado pequeño para la paellera recomendada de " + n.pan + " cm."
+            ? "Tu quemador de " + n.own + " cm " + bad + " para la paellera recomendada de " + n.pan + " cm."
             : n.panOk
-              ? "Tu paellera de " + n.pan + " cm es adecuada para esta cantidad. Sin embargo, tu quemador de " + n.own + " cm es demasiado pequeño para ella."
-              : "Tu quemador de " + n.own + " cm es demasiado pequeño para una paellera de " + n.pan + " cm.";
+              ? "Tu paellera de " + n.pan + " cm es adecuada para esta cantidad. Sin embargo, tu quemador de " + n.own + " cm " + bad + " para ella."
+              : "Tu quemador de " + n.own + " cm " + bad + " para una paellera de " + n.pan + " cm.";
           return lead + (n.pro
             ? " Un quemador de paella estándar no sirve para esta paellera; recomendamos un quemador profesional de al menos " + n.need + " cm."
             : " Para esta combinación recomendamos un quemador de al menos " + n.need + " cm.");
@@ -165,7 +170,8 @@
         burnerOversize: function (n) {
           return (
             "Tu quemador de " + n.own + " cm es amplio para una paellera de " + n.pan +
-            " cm. Usa solo el anillo o los anillos interiores, o baja el fuego, para que las llamas no suban por el borde."
+            " cm (a pleno rendimiento está pensado para paelleras desde " + n.panMin +
+            " cm). Usa solo el anillo o los anillos interiores, o baja el fuego, para que las llamas no suban por el borde."
           );
         },
         proNeeded: function (n) {
@@ -200,12 +206,12 @@
     return value.toLocaleString(locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   }
 
-  function fillSizeSelect(select, sizes) {
+  function fillSizeSelect(select, sizes, labels) {
     select.innerHTML = "";
     sizes.forEach(function (size) {
       var opt = document.createElement("option");
       opt.value = String(size);
-      opt.textContent = size + " cm";
+      opt.textContent = ((labels && labels[size]) || size) + " cm";
       select.appendChild(opt);
     });
   }
@@ -250,7 +256,7 @@
     if (!els.dish || !els.gasten) return; // markup niet aanwezig op deze pagina
 
     fillSizeSelect(els.ownPan, Calc.PAN_SIZES);
-    fillSizeSelect(els.ownBurner, Calc.BURNER_SIZES);
+    fillSizeSelect(els.ownBurner, Calc.BURNER_SIZES, Calc.config.BURNER_SIZE_LABELS);
 
     var windBeforeBinnen = els.wind.value;
     var lastCalc = null; // laatst geldige berekening, voor de PDF
@@ -334,7 +340,7 @@
 
     function toneFor(status) {
       if (status === "ok" || status === "fitsBurner") return "is-ok";
-      if (status === "tooSmall" || status === "tooLarge" || status === "notIndoor") return "is-bad";
+      if (status === "tooSmall" || status === "tooLarge" || status === "notIndoor" || status === "needsPro") return "is-bad";
       return null;
     }
 
