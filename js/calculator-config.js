@@ -56,11 +56,9 @@
       { riceMax: 5000, pan: 130 },
     ],
 
-    // Diameters buitenste branderring (cm) in de keuzelijst "Diameter
-    // buitenste branderring". 45 wordt getoond als "45/46 cm" (Garcima 45,
-    // Flames 46). Een maat die niet in een profiel hieronder staat, wordt
-    // behandeld als de eerstvolgende kleinere maat van dat profiel.
-    BURNER_SIZES: [20, 25, 30, 35, 38, 40, 45, 50, 55, 60, 65, 70, 80, 90, 120],
+    // De keuzelijst "Diameter branderring" toont per brandertype de maten uit
+    // het bijbehorende profiel hieronder ("Weet ik niet": beide samen).
+    // 45 wordt getoond als "45/46 cm" (Garcima 45, Flames 46).
     BURNER_SIZE_LABELS: { 45: "45/46" },
 
     // Branderprofielen: per brandermaat de grootste pan (panMax, cm) die de
@@ -79,7 +77,6 @@
           { burner: 25, panMax: 38 }, // Garcima 250
           { burner: 30, panMax: 46 }, // Garcima 300
           { burner: 35, panMax: 50 }, // Garcima 350
-          { burner: 38, panMax: 60 }, // Flames T-380
           { burner: 40, panMax: 55 }, // Garcima 400
           { burner: 45, panMax: 65 }, // Garcima 450-3
           { burner: 50, panMax: 70 }, // Garcima 500
@@ -97,7 +94,6 @@
           { burner: 20, panMax: 40 }, // Garcima L-20 PROF
           { burner: 25, panMax: 50 }, // Flames GT-250
           { burner: 30, panMax: 55 }, // Garcima L-30 PROF (30-P: 36-46)
-          { burner: 38, panMax: 60 }, // Flames TT-380
           { burner: 40, panMax: 65 }, // Garcima 40-P / L-40 PROF
           { burner: 45, panMax: 80 }, // Flames TT-460
           { burner: 50, panMax: 80 }, // Garcima L-50 PROF, Flames TT-500
@@ -114,8 +110,8 @@
     // marge rondom, anders verhit de vlam vooral de schuine rand. De opgegeven
     // pandiameter is die van de bovenrand.
     //   maximale brander = bodemdiameter - marge
-    // Marge per brandertype; bij "Weet ik niet" geldt de professionele
-    // (strengste) marge.
+    // Marge per brandertype; "Weet ik niet" rekent als standaard (met een
+    // extra waarschuwing als hij met de professionele marge te groot is).
     BURNER_MARGIN_CM: { standard: 5, professional: 10 },
 
     // Pandiameter (bovenrand, cm) -> geschatte bodemdiameter (cm). Inschatting
@@ -127,6 +123,7 @@
     PAN_BOTTOM_RATIO: 0.9,
 
     // Welk profiel de calculator gebruikt bij een eigen advies (Bereiding).
+    // Binnen is het brandertype altijd professioneel (de UI zet het vast).
     PROFILE_BY_LOCATION: { buiten: "standard", binnen: "professional" },
   };
 })(typeof window !== "undefined" ? window : globalThis);

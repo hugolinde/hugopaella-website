@@ -28,6 +28,7 @@
       pdfError: "Het maken van de PDF is niet gelukt. Probeer het opnieuw.",
       pdfBusy: "Bezig...",
       windLockedTitle: "Bij binnen reken ik altijd zonder windcorrectie.",
+      typeLockedTitle: "Binnen is een professionele brander nodig.",
       status: {
         pan: {
           recommended: "Aanbevolen",
@@ -38,10 +39,9 @@
         },
         burner: {
           minimum: function (pro) { return pro ? "Minimaal · professioneel" : "Minimaal"; },
-          ok: "✓ Geschikt",
-          tooSmall: function (own) { return "Minimaal · jouw " + own + " cm is te klein"; },
-          tooLarge: function (own) { return "Jouw " + own + " cm is te groot"; },
-          notIndoor: "Professioneel · binnen",
+          ok: function (pro) { return pro ? "✓ Geschikt · professioneel" : "✓ Geschikt"; },
+          tooSmall: function (own, pro) { return (pro ? "Professioneel" : "Minimaal") + " · jouw " + own + " cm is te klein"; },
+          tooLarge: function (own, pro) { return (pro ? "Professioneel · j" : "J") + "ouw " + own + " cm is te groot"; },
           needsPro: "Professionele brander nodig",
         },
       },
@@ -98,14 +98,8 @@
         unknownMaybeLarge: function (n) {
           return "Is het een vlakke of professionele brander? Dan is hij te groot voor een pan van " + n.pan + " cm; die mag maximaal " + n.max + " cm zijn.";
         },
-        indoorUnsafe: function (n) {
-          return (
-            "Let op: een standaard paellabrander is niet bedoeld voor binnengebruik. We geven daarom geen geschiktheidsadvies voor je brander. " +
-            "Binnen adviseren we een professionele, voor binnen goedgekeurde brander van minimaal " + n.burner + " cm."
-          );
-        },
         indoorInfo: function () {
-          return "Binnen rekenen we met een professionele brander. Gebruik alleen apparatuur die voor binnengebruik is toegestaan en zorg voor goede ventilatie.";
+          return "Binnen koken kan alleen met een professionele brander die geschikt is voor binnengebruik. Zorg ook voor goede ventilatie.";
         },
       },
     },
@@ -129,6 +123,7 @@
       pdfError: "No se ha podido crear el PDF. Inténtalo de nuevo.",
       pdfBusy: "Un momento...",
       windLockedTitle: "En interior siempre calculo sin corrección de viento.",
+      typeLockedTitle: "En interior hace falta un quemador profesional.",
       status: {
         pan: {
           recommended: "Recomendada",
@@ -139,10 +134,9 @@
         },
         burner: {
           minimum: function (pro) { return pro ? "Mínimo · profesional" : "Mínimo"; },
-          ok: "✓ Adecuado",
-          tooSmall: function (own) { return "Mínimo · tus " + own + " cm no bastan"; },
-          tooLarge: function (own) { return "Tus " + own + " cm son demasiado"; },
-          notIndoor: "Profesional · interior",
+          ok: function (pro) { return pro ? "✓ Adecuado · profesional" : "✓ Adecuado"; },
+          tooSmall: function (own, pro) { return (pro ? "Profesional" : "Mínimo") + " · tus " + own + " cm no bastan"; },
+          tooLarge: function (own, pro) { return (pro ? "Profesional · t" : "T") + "us " + own + " cm son demasiado"; },
           needsPro: "Hace falta uno profesional",
         },
       },
@@ -199,14 +193,8 @@
         unknownMaybeLarge: function (n) {
           return "¿Es un quemador plano o profesional? Entonces es demasiado grande para una paellera de " + n.pan + " cm; como máximo puede medir " + n.max + " cm.";
         },
-        indoorUnsafe: function (n) {
-          return (
-            "Atención: un quemador de paella estándar no está pensado para uso en interior, así que no damos un consejo de idoneidad para tu quemador. " +
-            "En interior recomendamos un quemador profesional homologado para interior de al menos " + n.burner + " cm."
-          );
-        },
         indoorInfo: function () {
-          return "En interior calculamos con un quemador profesional. Usa solo equipos autorizados para interior y asegura una buena ventilación.";
+          return "Para cocinar en interior se necesita un quemador profesional apto para uso en interior. Asegura también una buena ventilación.";
         },
       },
     },
@@ -272,9 +260,8 @@
     if (!els.dish || !els.gasten) return; // markup niet aanwezig op deze pagina
 
     fillSizeSelect(els.ownPan, Calc.PAN_SIZES);
-    fillSizeSelect(els.ownBurner, Calc.BURNER_SIZES, Calc.config.BURNER_SIZE_LABELS);
-
     var windBeforeBinnen = els.wind.value;
+    var typeBeforeBinnen = els.burnerType.value;
     var lastCalc = null; // laatst geldige berekening, voor de PDF
     var lastIdeal = null; // om de eigen-materiaal-velden zinnig voor te vullen
     var touched = { pan: false, burner: false };
@@ -299,6 +286,37 @@
       }
     }
 
+    // Binnen: brandertype vast op "professioneel"; terug naar buiten zet de
+    // eerdere keuze terug.
+    function syncBurnerTypeLock() {
+      if (els.locatie.value === "binnen") {
+        if (!els.burnerType.disabled) typeBeforeBinnen = els.burnerType.value;
+        els.burnerType.value = "professioneel";
+        els.burnerType.disabled = true;
+        els.burnerType.title = t.typeLockedTitle;
+      } else {
+        if (els.burnerType.disabled) els.burnerType.value = typeBeforeBinnen;
+        els.burnerType.disabled = false;
+        els.burnerType.title = "";
+      }
+    }
+
+    // Keuzelijst branderring: alleen maten die voor het gekozen type bestaan.
+    // Een maat die niet meer in de lijst staat, wordt de eerstvolgende kleinere.
+    function refreshBurnerOptions() {
+      var sizes = Calc.burnerSizesFor(els.burnerType.value);
+      var current = Number(els.ownBurner.value);
+      fillSizeSelect(els.ownBurner, sizes, Calc.config.BURNER_SIZE_LABELS);
+      if (!current) return;
+      var pick = sizes[0];
+      sizes.forEach(function (size) { if (size <= current) pick = size; });
+      els.ownBurner.value = String(pick);
+    }
+
+    function burnerProfile() {
+      return els.burnerType.value === "professioneel" ? "professional" : "standard";
+    }
+
     // Toon alleen de vervolgvelden die bij de gekozen optie horen. Een veld dat
     // de bezoeker nog niet zelf heeft ingesteld, vullen we voor met de maat die
     // bij de huidige berekening hoort.
@@ -316,9 +334,8 @@
       var ideal = lastIdeal || 60;
       if (showPan && !touched.pan) els.ownPan.value = String(ideal);
       if (showBurner && !touched.burner) {
-        var profile = els.locatie.value === "binnen" ? "professional" : "standard";
-        var adv = Calc.adviseBurner(showPan ? Number(els.ownPan.value) : ideal, profile);
-        if (Calc.BURNER_SIZES.indexOf(adv.size) !== -1) els.ownBurner.value = String(adv.size);
+        var adv = Calc.adviseBurner(showPan ? Number(els.ownPan.value) : ideal, burnerProfile());
+        if (Calc.burnerSizesFor(els.burnerType.value).indexOf(adv.size) !== -1) els.ownBurner.value = String(adv.size);
       }
     }
 
@@ -349,15 +366,15 @@
 
     function burnerStatusText(b) {
       var s = t.status.burner;
-      if (b.status === "minimum") return s.minimum(b.professional);
-      if (b.status === "tooSmall") return s.tooSmall(b.own);
-      if (b.status === "tooLarge") return s.tooLarge(b.own);
-      return s[b.status];
+      var v = s[b.status];
+      if (b.status === "minimum" || b.status === "ok") return v(b.professional);
+      if (b.status === "tooSmall" || b.status === "tooLarge") return v(b.own, b.professional);
+      return v;
     }
 
     function toneFor(status) {
       if (status === "ok" || status === "fitsBurner") return "is-ok";
-      if (status === "tooSmall" || status === "tooLarge" || status === "notIndoor" || status === "needsPro") return "is-bad";
+      if (status === "tooSmall" || status === "tooLarge" || status === "needsPro") return "is-bad";
       return null;
     }
 
@@ -439,6 +456,13 @@
 
     els.locatie.addEventListener("change", function () {
       syncWindLock();
+      syncBurnerTypeLock();
+      refreshBurnerOptions();
+      syncExistingFields();
+      recalc();
+    });
+    els.burnerType.addEventListener("change", function () {
+      refreshBurnerOptions();
       syncExistingFields();
       recalc();
     });
@@ -454,7 +478,7 @@
       touched.burner = true;
       recalc();
     });
-    [els.portie, els.dish, els.wind, els.burnerType].forEach(function (el) {
+    [els.portie, els.dish, els.wind].forEach(function (el) {
       el.addEventListener("change", recalc);
     });
     els.gasten.addEventListener("input", recalc);
@@ -488,6 +512,8 @@
     }
 
     syncWindLock();
+    syncBurnerTypeLock();
+    refreshBurnerOptions();
     syncExistingFields();
     recalc();
   }

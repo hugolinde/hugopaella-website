@@ -145,6 +145,18 @@
     };
   }
 
+  // Brandermaten voor de keuzelijst, per brandertype.
+  function burnerSizesFor(type) {
+    var profiles = type === "professioneel" ? ["professional"] : type === "standaard" ? ["standard"] : ["standard", "professional"];
+    var sizes = [];
+    profiles.forEach(function (prof) {
+      C.BURNER_PROFILES[prof].burners.forEach(function (row) {
+        if (sizes.indexOf(row.burner) === -1) sizes.push(row.burner);
+      });
+    });
+    return sizes.sort(function (x, y) { return x - y; });
+  }
+
   // ---- Hoofdberekening ---------------------------------------------------
 
   /**
@@ -164,7 +176,7 @@
    *   riceGrams, liquidLiters, idealPan, band[]
    *   pan:     { size, status, own }   status: recommended | ok | fitsBurner | tooSmall | tooLarge
    *   burner:  { size, status, own, professional }
-   *                                    status: minimum | ok | tooSmall | tooLarge | needsPro | notIndoor
+   *                                    status: minimum | ok | tooSmall | tooLarge | needsPro
    *   notices: [{ code, type: ok|info|warn, ...data }]
    *   pan.size en burner.size zijn de uiteindelijk te gebruiken maten (ook voor de PDF).
    */
@@ -218,7 +230,8 @@
       if (usesPan && panOk) notices.push({ code: "panOk", type: "ok", own: pan.size });
     } else {
       var ownBurner = Number(input.ownBurner);
-      var type = input.burnerType || "onbekend";
+      // Binnen is alleen een professionele brander toegestaan.
+      var type = binnen ? "professioneel" : input.burnerType || "onbekend";
       // Profiel voor "te klein" (panMax) en marge voor "te groot". "Weet ik
       // niet" rekent als standaardbrander; daarnaast een waarschuwing als hij
       // te groot zou zijn voor het geval het een vlakke/professionele brander is.
@@ -253,12 +266,7 @@
         });
       };
 
-      if (binnen && !ownIsPro) {
-        // Binnen + (mogelijk) buitenbrander: geen positief geschiktheidsadvies.
-        var proAdv = adviseBurner(pan.size, "professional");
-        burner = { size: proAdv.size, status: "notIndoor", own: ownBurner, professional: true };
-        notices.push({ code: "indoorUnsafe", type: "warn", burner: proAdv.size, pan: pan.size });
-      } else if (existing === "brander") {
+      if (existing === "brander") {
         // Zoek binnen de bandbreedte de pan waar de brander niet te klein en
         // niet te groot voor is en die het dichtst bij ideaal ligt.
         // Bij "Weet ik niet" liefst een pan waar hij ook als vlakke brander
@@ -299,8 +307,8 @@
       }
     }
 
-    var hasIndoorWarning = notices.some(function (n) { return n.code === "indoorUnsafe"; });
-    if (binnen && !hasIndoorWarning) notices.push({ code: "indoorInfo", type: "info" });
+    // Binnen: vaste melding bovenaan.
+    if (binnen) notices.unshift({ code: "indoorInfo", type: "info" });
 
     return {
       ok: true,
@@ -319,7 +327,7 @@
     config: C,
     GASTEN_RANGE: C.GASTEN_RANGE,
     PAN_SIZES: C.PAN_SIZES,
-    BURNER_SIZES: C.BURNER_SIZES,
+    burnerSizesFor: burnerSizesFor,
     idealPanFor: idealPanFor,
     panBand: panBand,
     burnerRow: burnerRow,
