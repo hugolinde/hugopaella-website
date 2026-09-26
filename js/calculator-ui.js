@@ -95,6 +95,9 @@
         unknownType: function () {
           return "We gaan voor de zekerheid uit van een standaard paellabrander.";
         },
+        unknownMaybeLarge: function (n) {
+          return "Is het een vlakke of professionele brander? Dan is hij te groot voor een pan van " + n.pan + " cm; die mag maximaal " + n.max + " cm zijn.";
+        },
         indoorUnsafe: function (n) {
           return (
             "Let op: een standaard paellabrander is niet bedoeld voor binnengebruik. We geven daarom geen geschiktheidsadvies voor je brander. " +
@@ -192,6 +195,9 @@
         },
         unknownType: function () {
           return "Por seguridad partimos de un quemador de paella estándar.";
+        },
+        unknownMaybeLarge: function (n) {
+          return "¿Es un quemador plano o profesional? Entonces es demasiado grande para una paellera de " + n.pan + " cm; como máximo puede medir " + n.max + " cm.";
         },
         indoorUnsafe: function (n) {
           return (
