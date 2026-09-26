@@ -145,6 +145,17 @@
     };
   }
 
+  // Grootste bestaande brandermaat van een profiel die niet groter is dan
+  // "max" (voor de melding "maximaal X cm"); valt geen maat eronder, dan de
+  // berekende grens zelf.
+  function largestSizeUpTo(profile, max) {
+    var best = null;
+    C.BURNER_PROFILES[profile].burners.forEach(function (row) {
+      if (row.burner <= max && (best === null || row.burner > best)) best = row.burner;
+    });
+    return best === null ? max : best;
+  }
+
   // Brandermaten voor de keuzelijst, per brandertype.
   function burnerSizesFor(type) {
     var profiles = type === "professioneel" ? ["professional"] : type === "standaard" ? ["standard"] : ["standard", "professional"];
@@ -242,7 +253,7 @@
       var maybeLargeNotice = function (forPan) {
         var proMax = maxBurnerFor(forPan, "professional");
         if (unknownType && ownBurner > proMax) {
-          notices.push({ code: "unknownMaybeLarge", type: "info", own: ownBurner, pan: forPan, max: proMax });
+          notices.push({ code: "unknownMaybeLarge", type: "info", own: ownBurner, pan: forPan, max: largestSizeUpTo("professional", proMax) });
         }
       };
 
@@ -253,7 +264,7 @@
         if (chk.tooLarge) {
           burner = { size: chk.advice.size, status: "tooLarge", own: ownBurner, professional: chk.advice.profile === "professional" };
           notices.push({
-            code: "burnerTooLarge", type: "warn", own: ownBurner, pan: forPan, max: chk.maxBurner,
+            code: "burnerTooLarge", type: "warn", own: ownBurner, pan: forPan, max: largestSizeUpTo(ownProfile, chk.maxBurner),
             panOk: context.panOk, viaIdeal: context.viaIdeal,
           });
           return;
