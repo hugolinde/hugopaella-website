@@ -378,6 +378,10 @@ a { color: var(--accent-dark); }
 /* Steps (blog step-by-step) */
 .steps {
   padding: 20px 0 100px;
+}
+
+/* Ruimte tussen de stappen: de stappen staan binnen .wrap, dus daar de gap */
+.steps > .wrap {
   display: flex;
   flex-direction: column;
   gap: 84px;
@@ -452,6 +456,9 @@ a { color: var(--accent-dark); }
 }
 
 @media (max-width: 860px) {
+  .steps > .wrap {
+    gap: 64px;
+  }
   .step {
     grid-template-columns: 1fr;
     gap: 20px;
