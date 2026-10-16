@@ -8,6 +8,10 @@
  *   sleutel nodig. Er wordt bewust alleen om de postcode gevraagd (geen
  *   huisnummer) — voor een prijsindicatie is dat nauwkeurig genoeg, en
  *   het is voor de bezoeker anoniemer.
+ * - Spaanse postcodes (alleen op de Spaanse pagina) gaan via Nominatim
+ *   (OpenStreetMap), want PDOK kent alleen Nederland. Gratis, geen sleutel,
+ *   CORS-vriendelijk; fair-use-regel: max. 1 aanvraag per seconde (ruim
+ *   voldoende dankzij de debounce in tarieven-ui.js).
  * - OpenRouteService (gehost via HeiGIT) berekent de rijafstand over de
  *   weg vanaf Hugo's vaste vertrekpunt naar die coördinaten. Gebruikt een
  *   gratis API-sleutel (2000 aanvragen/dag, geen betaalmethode gekoppeld).
@@ -21,12 +25,20 @@
 (function (global) {
   "use strict";
 
-  // Vertrekpunt: Cornelis de Wittstraat 42, 2242LW Wassenaar.
-  var ORIGIN = { lon: 4.39984657, lat: 52.14424188 };
+  // Vertrekpunten per land.
+  // NL: Cornelis de Wittstraat 42, 2242LW Wassenaar.
+  // ES: Carrer Joan Fuster (i Ortells) 14, 43007 Tarragona — huisnummer
+  //     staat niet in OpenStreetMap, dus het midden van de straat.
+  var ORIGINS = {
+    nl: { lon: 4.39984657, lat: 52.14424188 },
+    es: { lon: 1.272252, lat: 41.120477 },
+  };
+  var ORIGIN = ORIGINS.nl;
 
   var ORS_API_KEY = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjYxMDBkYjY0NjdiMDQ5OTM4ZjNjN2RhZDJmMzZjOTQ1IiwiaCI6Im11cm11cjY0In0=";
   var ORS_URL = "https://api.heigit.org/openrouteservice/v2/directions/driving-car";
   var PDOK_URL = "https://api.pdok.nl/bzk/locatieserver/search/v3_1/free";
+  var NOMINATIM_URL = "https://nominatim.openstreetmap.org/search";
 
   function parsePoint(wkt) {
     // "POINT(4.399846 52.144241)" -> {lon: 4.399846, lat: 52.144241}
@@ -67,10 +79,34 @@
       });
   }
 
-  function getDistanceKm(dest) {
+  // Spaanse postcode (5 cijfers) -> midden van het postcodegebied via
+  // Nominatim. Alleen een exact overeenkomend postcoderesultaat telt.
+  function geocodeEs(postcode) {
+    var pc = String(postcode || "").replace(/\s+/g, "");
+    var url = NOMINATIM_URL + "?format=jsonv2&countrycodes=es&limit=1&postalcode=" + encodeURIComponent(pc);
+
+    return fetch(url)
+      .then(function (res) {
+        if (!res.ok) throw new Error("service-error");
+        return res.json();
+      })
+      .then(function (data) {
+        var doc = data && data[0];
+        if (!doc || doc.addresstype !== "postcode" || String(doc.name).replace(/\s+/g, "") !== pc) {
+          throw new Error("not-found");
+        }
+        var lat = parseFloat(doc.lat);
+        var lon = parseFloat(doc.lon);
+        if (!isFinite(lat) || !isFinite(lon)) throw new Error("not-found");
+        return { lon: lon, lat: lat, label: doc.display_name };
+      });
+  }
+
+  function getDistanceKm(dest, origin) {
+    origin = origin || ORIGIN;
     var url = ORS_URL +
       "?api_key=" + encodeURIComponent(ORS_API_KEY) +
-      "&start=" + ORIGIN.lon + "," + ORIGIN.lat +
+      "&start=" + origin.lon + "," + origin.lat +
       "&end=" + dest.lon + "," + dest.lat;
 
     return fetch(url)
@@ -90,9 +126,12 @@
   // Belooft { km: <rijafstand enkele reis, in km>, label: <gevonden postcodegebied> }.
   // Verwerpt met een Error waarvan .message "not-found" is (postcode klopt
   // niet) of "service-error" (netwerk- of API-probleem).
-  function getDistanceForAddress(postcode) {
-    return geocode(postcode).then(function (dest) {
-      return getDistanceKm(dest).then(function (km) {
+  // country: "nl" (standaard) of "es".
+  function getDistanceForAddress(postcode, country) {
+    var c = country === "es" ? "es" : "nl";
+    var lookup = c === "es" ? geocodeEs : geocode;
+    return lookup(postcode).then(function (dest) {
+      return getDistanceKm(dest, ORIGINS[c]).then(function (km) {
         return { km: km, label: dest.label };
       });
     });
@@ -101,5 +140,6 @@
   global.PaellaAfstand = {
     getDistanceForAddress: getDistanceForAddress,
     ORIGIN: ORIGIN,
+    ORIGINS: ORIGINS,
   };
 })(typeof window !== "undefined" ? window : globalThis);

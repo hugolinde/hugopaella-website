@@ -87,7 +87,7 @@
         <tr><td>Fideuà</td><td class="price">18 €</td></tr>
       </tbody>
     </table>
-    <p class="price-note">Gastos de desplazamiento: 75 € fijos, más 0,50 € por kilómetro (ida y vuelta), según la distancia en coche calculada automáticamente entre Wassenaar y la dirección indicada. Todos los precios indicados incluyen IVA.<br>No hay un número mínimo de invitados. Cocino para grupos de hasta un máximo de 50 personas.</p>
+    <p class="price-note">Gastos de desplazamiento: 75 € fijos, más 0,50 € por kilómetro (ida y vuelta), según la distancia en coche calculada automáticamente entre Tarragona y el código postal indicado. Todos los precios indicados incluyen IVA.<br>No hay un número mínimo de invitados. Cocino para grupos de hasta un máximo de 50 personas.</p>
   </div>
 </section>
 
@@ -116,7 +116,7 @@
         </div>
         <div class="field full">
           <label for="tar-postcode">Código postal</label>
-          <input type="text" id="tar-postcode" name="postcode" placeholder="p. ej. 1234 AB" autocomplete="postal-code">
+          <input type="text" id="tar-postcode" name="postcode" placeholder="p. ej. 46001" inputmode="numeric" maxlength="5" autocomplete="postal-code">
         </div>
       </div>
     </form>
@@ -139,9 +139,9 @@
   </div>
 </section>
 
-<script src="/js/afstand.js?v2"></script>
+<script src="/js/afstand.js?v3"></script>
 <script src="/js/tarieven.js?v3"></script>
-<script src="/js/tarieven-ui.js?v4"></script>
+<script src="/js/tarieven-ui.js?v5"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     PaellaTarievenUI.init({ lang: 'es' });

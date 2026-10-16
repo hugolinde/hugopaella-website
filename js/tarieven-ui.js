@@ -42,8 +42,9 @@
       inclLabel: "Total incl. IVA",
       exclLabel: "Total sin IVA",
       distanceNote: function (km) {
-        return "Basado en aprox. " + formatKm(km, "es-ES") + " km de distancia en coche (solo ida) desde Wassenaar.";
+        return "Basado en aprox. " + formatKm(km, "es-ES") + " km de distancia en coche (solo ida) desde Tarragona.";
       },
+      extraNote: "Esta es una indicación de precio basada en tu código postal. El precio definitivo se determina según la dirección exacta.",
     },
   };
 
@@ -64,14 +65,18 @@
     return lang === "es" ? formatted + " €" : "€ " + formatted;
   }
 
-  function looksLikePostcode(value) {
-    return /^[1-9][0-9]{3}\s?[A-Za-z]{2}$/.test(String(value || "").trim());
+  // NL: 1234 AB. ES: 5 cijfers, provinciecode 01-52.
+  function looksLikePostcode(value, country) {
+    var v = String(value || "").trim();
+    if (country === "es") return /^(0[1-9]|[1-4][0-9]|5[0-2])[0-9]{3}$/.test(v);
+    return /^[1-9][0-9]{3}\s?[A-Za-z]{2}$/.test(v);
   }
 
   function init(config) {
     var lang = config.lang || "nl";
     var locale = lang === "es" ? "es-ES" : "nl-NL";
     var t = TEXT[lang];
+    var country = lang === "es" ? "es" : "nl";
 
     var els = {
       dish: document.getElementById("tar-dish"),
@@ -90,6 +95,17 @@
 
     if (!els.dish || !els.gasten || !els.postcode) return; // markup niet aanwezig op deze pagina
 
+    // Extra opmerking onder de uitkomst (alleen als de taal er een heeft).
+    els.extraNote = null;
+    if (t.extraNote && els.travelNotice) {
+      els.extraNote = document.createElement("p");
+      els.extraNote.className = "price-note";
+      els.extraNote.style.textAlign = "center";
+      els.extraNote.hidden = true;
+      els.extraNote.textContent = t.extraNote;
+      els.travelNotice.parentNode.insertBefore(els.extraNote, els.travelNotice.nextSibling);
+    }
+
     if (els.inclLabel) els.inclLabel.textContent = t.inclLabel;
     if (els.exclLabel) els.exclLabel.textContent = t.exclLabel;
 
@@ -105,6 +121,7 @@
       els.results.hidden = section !== "results";
       els.placeholder.hidden = section !== "placeholder";
       if (section !== "results" && els.travelNotice) els.travelNotice.hidden = true;
+      if (els.extraNote) els.extraNote.hidden = section !== "results";
     }
 
     function recalc() {
@@ -158,7 +175,7 @@
     function resolveAddress() {
       var pc = els.postcode.value;
 
-      if (!looksLikePostcode(pc)) {
+      if (!looksLikePostcode(pc, country)) {
         addressState = "idle";
         addressKey = null;
         distanceKm = null;
@@ -179,7 +196,7 @@
 
       if (!global.PaellaAfstand) return;
 
-      global.PaellaAfstand.getDistanceForAddress(pc).then(function (result) {
+      global.PaellaAfstand.getDistanceForAddress(pc, country).then(function (result) {
         if (addressKey !== key) return; // gebruiker heeft ondertussen iets anders ingevuld
         addressState = "resolved";
         distanceKm = result.km;
