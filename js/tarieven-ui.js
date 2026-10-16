@@ -44,7 +44,6 @@
       distanceNote: function (km) {
         return "Basado en aprox. " + formatKm(km, "es-ES") + " km de distancia en coche (solo ida) desde Tarragona.";
       },
-      extraNote: "Esta es una indicación de precio basada en tu código postal. El precio definitivo se determina según la dirección exacta.",
     },
   };
 
