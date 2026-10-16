@@ -26,7 +26,9 @@
 
   var CALLOUT_FEE_BASE = 75;
   var PRICE_PER_KM = 0.50;
-  var VAT_RATE = 0.09;
+  var VAT_RATE = 0.09; // NL: 9% btw
+  // ES: 10% IVA (tipo reducido hostelería/catering, art. 91 Ley 37/1992).
+  // Doorgeven via input.vatRate; zonder die waarde geldt VAT_RATE.
   var MIN_GUESTS = 1;
   var MAX_GUESTS = 50;
 
@@ -58,7 +60,8 @@
     var subtotal = perGuest * guests;
     var voorrijkosten = CALLOUT_FEE_BASE + (input.afstandKm * 2 * PRICE_PER_KM);
     var totalIncl = subtotal + voorrijkosten;
-    var totalExcl = totalIncl / (1 + VAT_RATE);
+    var vatRate = typeof input.vatRate === "number" ? input.vatRate : VAT_RATE;
+    var totalExcl = totalIncl / (1 + vatRate);
 
     return {
       ok: true,

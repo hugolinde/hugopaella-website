@@ -77,6 +77,7 @@
     var locale = lang === "es" ? "es-ES" : "nl-NL";
     var t = TEXT[lang];
     var country = lang === "es" ? "es" : "nl";
+    var vatRate = country === "es" ? 0.10 : 0.09;
 
     var els = {
       dish: document.getElementById("tar-dish"),
@@ -135,6 +136,7 @@
         dish: els.dish.value,
         gasten: els.gasten.value,
         afstandKm: distanceKm,
+        vatRate: vatRate,
       };
 
       var result = global.PaellaTarieven.calculate(input, {
