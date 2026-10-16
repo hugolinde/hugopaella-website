@@ -25,7 +25,7 @@
   };
 
   var CALLOUT_FEE_BASE = 75;
-  var PRICE_PER_KM = 0.45;
+  var PRICE_PER_KM = 0.50;
   var VAT_RATE = 0.09;
   var MIN_GUESTS = 1;
   var MAX_GUESTS = 50;

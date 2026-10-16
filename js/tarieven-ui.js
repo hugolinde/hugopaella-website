@@ -22,7 +22,7 @@
       },
       placeholder: "Vul het aantal gasten en je postcode in voor een prijsindicatie.",
       addressLoading: "Bezig met de rijafstand berekenen…",
-      inclLabel: "Totaal incl. 9% btw",
+      inclLabel: "Totaal incl. btw",
       exclLabel: "Totaal excl. btw",
       distanceNote: function (km) {
         return "Op basis van ca. " + formatKm(km, "nl-NL") + " km rijafstand (enkele reis) vanaf Wassenaar.";
@@ -39,7 +39,7 @@
       },
       placeholder: "Indica el número de invitados y tu código postal para ver una indicación de precio.",
       addressLoading: "Calculando la distancia en coche…",
-      inclLabel: "Total incl. 9% IVA",
+      inclLabel: "Total incl. IVA",
       exclLabel: "Total sin IVA",
       distanceNote: function (km) {
         return "Basado en aprox. " + formatKm(km, "es-ES") + " km de distancia en coche (solo ida) desde Wassenaar.";

@@ -87,7 +87,7 @@
         <tr><td>Fideuà</td><td class="price">€ 18</td></tr>
       </tbody>
     </table>
-    <p class="price-note">Voorrijkosten: € 75 vast, plus € 0,45 per kilometer (heen en terug), op basis van de automatisch berekende rijafstand vanaf Wassenaar naar het opgegeven adres. Alle genoemde prijzen zijn inclusief btw.<br>Er geldt geen minimumaantal gasten. Ik kook voor gezelschappen tot maximaal 50 personen.</p>
+    <p class="price-note">Voorrijkosten: € 75 vast, plus € 0,50 per kilometer (heen en terug), op basis van de automatisch berekende rijafstand vanaf Wassenaar naar het opgegeven adres. Alle genoemde prijzen zijn inclusief btw.<br>Er geldt geen minimumaantal gasten. Ik kook voor gezelschappen tot maximaal 50 personen.</p>
   </div>
 </section>
 
@@ -96,7 +96,7 @@
     <div class="section-heading">
       <span class="kicker">Prijsindicatie berekenen</span>
       <h2>Bereken de indicatieve totaalprijs</h2>
-      <p>Vul je gerecht, het aantal gasten en de locatie in voor een directe indicatie van de totaalprijs, met en zonder 9% btw.</p>
+      <p>Vul je gerecht, het aantal gasten en de locatie in voor een directe indicatie van de totaalprijs, met en zonder btw.</p>
     </div>
 
     <form class="calc-form" id="tarieven-form" onsubmit="return false;">
@@ -104,10 +104,10 @@
         <div class="field">
           <label for="tar-dish">Welke paella</label>
           <select id="tar-dish" name="dish">
-            <option value="valencia">Paella Valenciana — € 18 p.p.</option>
-            <option value="marisco">Paella de Marisco — € 20 p.p.</option>
-            <option value="verduras">Paella de Verduras — € 16 p.p.</option>
-            <option value="fideua">Fideuà — € 18 p.p.</option>
+            <option value="valencia">Paella Valenciana</option>
+            <option value="marisco">Paella de Marisco</option>
+            <option value="verduras">Paella de Verduras</option>
+            <option value="fideua">Fideuà</option>
           </select>
         </div>
         <div class="field">
@@ -125,7 +125,7 @@
     <div id="tar-info" class="calc-notice calc-notice-info" hidden></div>
 
     <div id="tar-results" class="calc-fields calc-results cols-2" hidden>
-      <div class="calc-field"><span id="tar-incl-label">Totaal incl. 9% btw</span><strong id="tar-out-incl">–</strong></div>
+      <div class="calc-field"><span id="tar-incl-label">Totaal incl. btw</span><strong id="tar-out-incl">–</strong></div>
       <div class="calc-field"><span id="tar-excl-label">Totaal excl. btw</span><strong id="tar-out-excl">–</strong></div>
     </div>
 
@@ -140,8 +140,8 @@
 </section>
 
 <script src="/js/afstand.js?v2"></script>
-<script src="/js/tarieven.js?v2"></script>
-<script src="/js/tarieven-ui.js?v3"></script>
+<script src="/js/tarieven.js?v3"></script>
+<script src="/js/tarieven-ui.js?v4"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     PaellaTarievenUI.init({ lang: 'nl' });

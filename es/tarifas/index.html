@@ -87,7 +87,7 @@
         <tr><td>Fideuà</td><td class="price">18 €</td></tr>
       </tbody>
     </table>
-    <p class="price-note">Gastos de desplazamiento: 75 € fijos, más 0,45 € por kilómetro (ida y vuelta), según la distancia en coche calculada automáticamente entre Wassenaar y la dirección indicada. Todos los precios indicados incluyen IVA.<br>No hay un número mínimo de invitados. Cocino para grupos de hasta un máximo de 50 personas.</p>
+    <p class="price-note">Gastos de desplazamiento: 75 € fijos, más 0,50 € por kilómetro (ida y vuelta), según la distancia en coche calculada automáticamente entre Wassenaar y la dirección indicada. Todos los precios indicados incluyen IVA.<br>No hay un número mínimo de invitados. Cocino para grupos de hasta un máximo de 50 personas.</p>
   </div>
 </section>
 
@@ -96,7 +96,7 @@
     <div class="section-heading">
       <span class="kicker">Calcula una indicación</span>
       <h2>Calcula el importe total indicativo</h2>
-      <p>Indica el plato, el número de invitados y la ubicación para obtener al momento una indicación del importe total, con y sin el 9% de IVA.</p>
+      <p>Indica el plato, el número de invitados y la ubicación para obtener al momento una indicación del importe total, con y sin IVA.</p>
     </div>
 
     <form class="calc-form" id="tarifas-form" onsubmit="return false;">
@@ -104,10 +104,10 @@
         <div class="field">
           <label for="tar-dish">Qué paella</label>
           <select id="tar-dish" name="dish">
-            <option value="valencia">Paella Valenciana — 18 € p.p.</option>
-            <option value="marisco">Paella de Marisco — 20 € p.p.</option>
-            <option value="verduras">Paella de Verduras — 16 € p.p.</option>
-            <option value="fideua">Fideuà — 18 € p.p.</option>
+            <option value="valencia">Paella Valenciana</option>
+            <option value="marisco">Paella de Marisco</option>
+            <option value="verduras">Paella de Verduras</option>
+            <option value="fideua">Fideuà</option>
           </select>
         </div>
         <div class="field">
@@ -125,7 +125,7 @@
     <div id="tar-info" class="calc-notice calc-notice-info" hidden></div>
 
     <div id="tar-results" class="calc-fields calc-results cols-2" hidden>
-      <div class="calc-field"><span id="tar-incl-label">Total incl. 9% IVA</span><strong id="tar-out-incl">–</strong></div>
+      <div class="calc-field"><span id="tar-incl-label">Total incl. IVA</span><strong id="tar-out-incl">–</strong></div>
       <div class="calc-field"><span id="tar-excl-label">Total sin IVA</span><strong id="tar-out-excl">–</strong></div>
     </div>
 
@@ -140,8 +140,8 @@
 </section>
 
 <script src="/js/afstand.js?v2"></script>
-<script src="/js/tarieven.js?v2"></script>
-<script src="/js/tarieven-ui.js?v3"></script>
+<script src="/js/tarieven.js?v3"></script>
+<script src="/js/tarieven-ui.js?v4"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     PaellaTarievenUI.init({ lang: 'es' });
