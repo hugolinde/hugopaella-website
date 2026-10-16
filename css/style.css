@@ -1169,11 +1169,25 @@ a.blog-card:hover {
 
 .form-grid .full { grid-column: 1 / -1; }
 
-/* Calculator form: fall back to 1 column on phones (contact form keeps 2 columns) */
+/* Calculator + contact form: 1 column on phones */
 @media (max-width: 600px) {
-  .calc-form .form-grid {
+  .calc-form .form-grid,
+  .contact-form .form-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Contact form: input fields in one row always line up, even if a label wraps */
+.contact-form .field {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--text-soft);
+  opacity: 0.8;
 }
 
 .field label {

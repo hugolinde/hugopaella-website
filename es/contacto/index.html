@@ -21,7 +21,7 @@
 <meta name="apple-mobile-web-app-title" content="hugopaella">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
-<link rel="stylesheet" href="/css/style.css?v25">
+<link rel="stylesheet" href="/css/style.css?v26">
 </head>
 <body>
 
@@ -60,7 +60,7 @@
     <div class="hero-text" style="text-align:center;">
       <span class="kicker">Contacto</span>
       <h1>¿Organizamos una paella?</h1>
-      <p>¿Quieres saber si estoy disponible o recibir un presupuesto para tu grupo? Envíame tu solicitud indicando al menos la fecha deseada, la ubicación, el número de invitados y, si ya lo tienes claro, qué paella prefieres. En principio respondo en menos de 24 horas.</p>
+      <p>Envíame tus deseos por correo electrónico a <a href="mailto:hugo@hugopaella.nl">hugo@hugopaella.nl</a> o rellena el formulario de abajo. ¿Quieres saber si estoy disponible o recibir un presupuesto para tu grupo? Indica, si puedes, la fecha deseada, la ubicación, el número de invitados y, si ya lo tienes claro, qué paella prefieres.</p>
     </div>
   </div>
 </section>
@@ -86,23 +86,23 @@
           <input type="email" id="email" name="email" required>
         </div>
         <div class="field">
-          <label for="telefoon">Teléfono <span class="optional">(opcional)</span></label>
-          <input type="tel" id="telefoon" name="telefoon">
+          <label for="telefoon">Teléfono</label>
+          <input type="tel" id="telefoon" name="telefoon" placeholder="opcional">
         </div>
         <div class="field">
           <label for="datum">Fecha</label>
-          <input type="date" id="datum" name="datum" required>
+          <input type="text" id="datum" name="datum" placeholder="opcional" onfocus="this.type='date'" onblur="if(!this.value)this.type='text'">
         </div>
         <div class="field">
           <label for="locatie">Ubicación / código postal</label>
-          <input type="text" id="locatie" name="locatie" required>
+          <input type="text" id="locatie" name="locatie" placeholder="opcional">
         </div>
         <div class="field">
           <label for="gasten">Número de invitados</label>
-          <input type="number" id="gasten" name="gasten" min="1" required>
+          <input type="number" id="gasten" name="gasten" min="1" placeholder="opcional">
         </div>
         <div class="field full">
-          <label for="gerecht">Plato preferido <span class="optional">(opcional)</span></label>
+          <label for="gerecht">Plato preferido</label>
           <select id="gerecht" name="gerecht">
             <option value="">Todavía sin preferencia</option>
             <option value="valenciana">Paella Valenciana</option>
@@ -112,8 +112,8 @@
           </select>
         </div>
         <div class="field full">
-          <label for="opmerkingen">Peticiones o comentarios adicionales <span class="optional">(opcional)</span></label>
-          <textarea id="opmerkingen" name="opmerkingen"></textarea>
+          <label for="opmerkingen">Peticiones o comentarios adicionales</label>
+          <textarea id="opmerkingen" name="opmerkingen" placeholder="opcional"></textarea>
         </div>
       </div>
       <div class="form-submit-row">
@@ -123,13 +123,7 @@
 
     <div id="form-placeholder-note" hidden>
       <p style="font-weight:700;">¡Gracias por tu solicitud!</p>
-      <p style="color:var(--text-soft);">En esta versión de prueba de la web, el formulario todavía no está conectado al correo. Por ahora, envía tu solicitud directamente a <a href="mailto:hugo@hugopaella.nl">hugo@hugopaella.nl</a>; en principio respondo en menos de 24 horas.</p>
-    </div>
-
-    <p class="form-note">Tu reserva no es definitiva hasta que se confirmen los acuerdos y se reciba la señal del 20%.</p>
-
-    <div class="contact-direct">
-      <p>¿Prefieres escribir directamente? También puedes: <a href="mailto:hugo@hugopaella.nl">hugo@hugopaella.nl</a></p>
+      <p style="color:var(--text-soft);">En esta versión de prueba de la web, el formulario todavía no está conectado al correo. Por ahora, envía tu solicitud directamente a <a href="mailto:hugo@hugopaella.nl">hugo@hugopaella.nl</a>.</p>
     </div>
 
   </div>
