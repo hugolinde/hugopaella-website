@@ -2,7 +2,8 @@
  * DOM-koppeling voor de prijsindicator op de Tarieven-pagina. Werkt samen
  * met tarieven.js (de taalonafhankelijke rekenlogica) en afstand.js
  * (geocoding + rijafstand). Eén bestand voor beide talen: geef bij
- * init({lang: 'nl'|'es'}) de taal mee.
+ * init({lang: 'nl'|'es'|'en'}) de taal mee. EN gebruikt de Nederlandse
+ * postcode/afstand en 9% btw, net als NL.
  */
 
 (function (global) {
@@ -11,6 +12,23 @@
   var ADDRESS_DEBOUNCE_MS = 600;
 
   var TEXT = {
+    en: {
+      errors: {
+        empty: "Please enter the number of guests.",
+        range: function (min, max) {
+          return "Choose a number between " + min + " and " + max + " guests.";
+        },
+        addressNotFound: "I couldn't find this postcode. Please check that it is a valid Dutch postcode (e.g. 1234 AB).",
+        addressGeneric: "Something went wrong while calculating the driving distance. Please try again later, or request a quote directly.",
+      },
+      placeholder: "Enter the number of guests and your postcode for a price indication.",
+      addressLoading: "Calculating the driving distance…",
+      inclLabel: "Total incl. VAT",
+      exclLabel: "Total excl. VAT",
+      distanceNote: function (km) {
+        return "Based on approx. " + formatKm(km, "en-GB") + " km driving distance (one way) from Wassenaar.";
+      },
+    },
     nl: {
       errors: {
         empty: "Vul het aantal gasten in.",
@@ -73,8 +91,8 @@
 
   function init(config) {
     var lang = config.lang || "nl";
-    var locale = lang === "es" ? "es-ES" : "nl-NL";
-    var t = TEXT[lang];
+    var locale = lang === "es" ? "es-ES" : lang === "en" ? "en-GB" : "nl-NL";
+    var t = TEXT[lang] || TEXT.nl;
     var country = lang === "es" ? "es" : "nl";
     var vatRate = country === "es" ? 0.10 : 0.09;
 

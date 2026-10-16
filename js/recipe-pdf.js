@@ -54,8 +54,8 @@
   }
 
   function unitLabel(unitNl, quantity, lang) {
-    if (lang !== "es") return unitNl;
-    var map = global.PaellaRecipeData.UNIT_ES;
+    if (lang !== "es" && lang !== "en") return unitNl;
+    var map = lang === "en" ? global.PaellaRecipeData.UNIT_EN : global.PaellaRecipeData.UNIT_ES;
     var entry = map[unitNl];
     if (!entry) return unitNl;
     return quantity === 1 ? entry.one : entry.many;
@@ -292,7 +292,7 @@
   /**
    * @param {Object} opts
    * @param {'valencia'|'marisco'|'verduras'|'fideua'} opts.dish
-   * @param {'nl'|'es'} opts.lang
+   * @param {'nl'|'es'|'en'} opts.lang
    * @param {number} opts.gasten
    * @param {number} opts.riceGrams     resultaat.riceGrams uit PaellaCalculator.calculate()
    * @param {number} opts.pan           resultaat.pan (cm)
@@ -310,7 +310,7 @@
       return Promise.reject(new Error("PaellaRecipeData is niet geladen."));
     }
 
-    var lang = opts.lang === "es" ? "es" : "nl";
+    var lang = opts.lang === "es" || opts.lang === "en" ? opts.lang : "nl";
     var T = data.TEXT[lang];
     var dish = data.DISHES[opts.dish];
     if (!dish) {
@@ -362,7 +362,7 @@
       drawClosing(doc, T.closing, y + 6);
 
       var filename =
-        (lang === "es" ? "receta-" : "recept-") +
+        (lang === "es" ? "receta-" : lang === "en" ? "recipe-" : "recept-") +
         dish.slug +
         "-hugopaella-" +
         opts.gasten +

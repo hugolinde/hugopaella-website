@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prices for paella on location — Hugo Paella</title>
+<meta name="description" content="See the price per guest for each dish and instantly calculate an indication of the total price for your group, including and excluding VAT.">
+
+<link rel="canonical" href="https://hugopaella.nl/en/prices/">
+<link rel="alternate" hreflang="nl" href="https://hugopaella.nl/tarieven/">
+<link rel="alternate" hreflang="es" href="https://hugopaella.nl/es/tarifas/">
+<link rel="alternate" hreflang="en" href="https://hugopaella.nl/en/prices/">
+<link rel="alternate" hreflang="x-default" href="https://hugopaella.nl/tarieven/">
+
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#f15a24">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="hugopaella">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<link rel="stylesheet" href="/css/style.css?v26">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/en/">
+      <img class="logo-header" src="/assets/img/logo-header.svg" alt="Hugo Paella — El Paellero Holandés">
+    </a>
+    <label for="nav-toggle" class="nav-toggle-label" aria-label="Menu"><span></span></label>
+    <nav class="main-nav" aria-label="Main menu">
+      <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+      <ul>
+        <li><a href="/en/">Home</a></li>
+        <li><a href="/en/paella-on-location/">Paella on location</a></li>
+        <li><a href="/en/prices/" class="is-active">Prices</a></li>
+        <li><a href="/en/about-hugo/">About Hugo</a></li>
+        <li><a href="/en/the-paella/">The Paella</a></li>
+        <li><a href="/en/blog/">Blog</a></li>
+        <li><a href="/en/calculator/">Calculator</a></li>
+        <li><a href="/en/contact/">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-right">
+      <nav class="lang-switch">
+        <a href="/tarieven/">NL</a>
+        <span class="sep">/</span>
+        <a href="/es/tarifas/">ES</a>
+        <span class="sep">/</span>
+        <a href="/en/prices/" class="active">EN</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="hero-text">
+      <span class="kicker">Prices</span>
+      <h1>What does paella on location cost?</h1>
+      <p>Below you'll find the price per guest for each dish, plus a price indicator that calculates an indicative total price for your group in just a few clicks, including and excluding VAT.</p>
+      <p>The final price depends on the chosen dish, the number of guests, the location and any extra wishes. For the exact price, I always prepare a tailor-made quote.</p>
+    </div>
+    <div class="hero-media">
+      <img src="/assets/img/tarieven-hero.jpg" alt="Paella de marisco, ready to be served">
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-heading">
+      <span class="kicker">Price per guest</span>
+      <h2>Price per dish</h2>
+      <p>The amounts below are the price per guest, including VAT. The final price depends on the chosen dish, the location and any extra wishes.</p>
+    </div>
+    <table class="price-table">
+      <thead>
+        <tr><th>Dish</th><th>Price per guest</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Paella Valenciana</td><td class="price">€ 18</td></tr>
+        <tr><td>Paella de Marisco</td><td class="price">€ 20</td></tr>
+        <tr><td>Paella de Verduras</td><td class="price">€ 16</td></tr>
+        <tr><td>Fideuà</td><td class="price">€ 18</td></tr>
+      </tbody>
+    </table>
+    <p class="price-note">Call-out fee: € 75 fixed, plus € 0.50 per kilometre (return trip), based on the automatically calculated driving distance from Wassenaar to the postcode you enter. All prices shown include VAT.<br>There is no minimum number of guests. I cook for groups of up to 50 people.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap" style="max-width:900px;">
+    <div class="section-heading">
+      <span class="kicker">Price indication</span>
+      <h2>Calculate the indicative total price</h2>
+      <p>Enter your dish, the number of guests and your postcode for an instant indication of the total price, including and excluding VAT.</p>
+    </div>
+
+    <form class="calc-form" id="tarieven-form" onsubmit="return false;">
+      <div class="form-grid">
+        <div class="field">
+          <label for="tar-dish">Which paella</label>
+          <select id="tar-dish" name="dish">
+            <option value="valencia">Paella Valenciana</option>
+            <option value="marisco">Paella de Marisco</option>
+            <option value="verduras">Paella de Verduras</option>
+            <option value="fideua">Fideuà</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="tar-gasten">Number of guests <span class="optional">(1 to 50)</span></label>
+          <input type="number" id="tar-gasten" name="gasten" min="1" max="50" placeholder="e.g. 10">
+        </div>
+        <div class="field full">
+          <label for="tar-postcode">Dutch postcode</label>
+          <input type="text" id="tar-postcode" name="postcode" placeholder="e.g. 1234 AB" autocomplete="postal-code">
+        </div>
+      </div>
+    </form>
+
+    <p class="price-note" style="text-align:center;">This price indicator works with Dutch postcodes only. Planning a paella in Spain? Please visit the <a href="/es/tarifas/">Spanish version of this website</a>.</p>
+
+    <div id="tar-error" class="calc-notice calc-notice-error" hidden></div>
+    <div id="tar-info" class="calc-notice calc-notice-info" hidden></div>
+
+    <div id="tar-results" class="calc-fields calc-results cols-2" hidden>
+      <div class="calc-field"><span id="tar-incl-label">Total incl. VAT</span><strong id="tar-out-incl">–</strong></div>
+      <div class="calc-field"><span id="tar-excl-label">Total excl. VAT</span><strong id="tar-out-excl">–</strong></div>
+    </div>
+
+    <p id="tar-travel-notice" class="price-note" style="text-align:center;" hidden></p>
+
+    <p id="tar-placeholder" style="text-align:center; color:var(--text-soft);">Enter the number of guests and your postcode for a price indication.</p>
+
+    <p class="price-note" style="text-align:center;">This is an indication. You will always receive the exact price for your group and location in a tailor-made quote.</p>
+    <p style="text-align:center; margin-top:20px;"><a class="btn btn-primary btn-arrow" href="/en/contact/">Request a quote</a></p>
+
+  </div>
+</section>
+
+<script src="/js/afstand.js?v3"></script>
+<script src="/js/tarieven.js?v4"></script>
+<script src="/js/tarieven-ui.js?v8"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    PaellaTarievenUI.init({ lang: 'en' });
+  });
+</script>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-lockup">
+      <a href="/en/">
+        <img class="footer-logo" src="/assets/img/logo-footer.svg" alt="Hugo Paella — El Paellero Holandés — hugopaella.nl / hugopaella.es">
+      </a>
+    </div>
+    <ul class="footer-nav">
+      <li><a href="/en/">Home</a></li>
+      <li><a href="/en/paella-on-location/">Paella on location</a></li>
+      <li><a href="/en/prices/">Prices</a></li>
+      <li><a href="/en/about-hugo/">About Hugo</a></li>
+      <li><a href="/en/the-paella/">The Paella</a></li>
+      <li><a href="/en/blog/">Blog</a></li>
+      <li><a href="/en/calculator/">Calculator</a></li>
+      <li><a href="/en/contact/">Contact</a></li>
+    </ul>
+    <p class="contact-kvk">Contact: <a href="mailto:hugo@hugopaella.nl">hugo@hugopaella.nl</a><br>KvK (Dutch Chamber of Commerce): 24280255</p>
+    <p class="footer-social"><a href="https://www.instagram.com/hugo.paella/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c-2.72 0-3.06.01-4.12.06-1.06.05-1.79.22-2.43.47-.66.26-1.22.6-1.77 1.16-.56.55-.9 1.11-1.16 1.77-.25.64-.42 1.37-.47 2.43C2 8.94 2 9.28 2 12s.01 3.06.06 4.12c.05 1.06.22 1.79.47 2.43.26.66.6 1.22 1.16 1.77.55.56 1.11.9 1.77 1.16.64.25 1.37.42 2.43.47C8.94 22 9.28 22 12 22s3.06-.01 4.12-.06c1.06-.05 1.79-.22 2.43-.47.66-.26 1.22-.6 1.77-1.16.56-.55.9-1.11 1.16-1.77.25-.64.42-1.37.47-2.43.05-1.06.06-1.4.06-4.12s-.01-3.06-.06-4.12c-.05-1.06-.22-1.79-.47-2.43-.26-.66-.6-1.22-1.16-1.77-.55-.56-1.11-.9-1.77-1.16-.64-.25-1.37-.42-2.43-.47C15.06 2.01 14.72 2 12 2zm0 1.8c2.67 0 2.99.01 4.04.06.98.04 1.5.21 1.86.35.47.18.8.4 1.15.75.35.35.57.68.75 1.15.14.36.31.88.35 1.86.05 1.05.06 1.37.06 4.04s-.01 2.99-.06 4.04c-.04.98-.21 1.5-.35 1.86-.18.47-.4.8-.75 1.15-.35.35-.68.57-1.15.75-.36.14-.88.31-1.86.35-1.05.05-1.37.06-4.04.06s-2.99-.01-4.04-.06c-.98-.04-1.5-.21-1.86-.35-.47-.18-.8-.4-1.15-.75-.35-.35-.57-.68-.75-1.15-.14-.36-.31-.88-.35-1.86C3.81 14.99 3.8 14.67 3.8 12s.01-2.99.06-4.04c.04-.98.21-1.5.35-1.86.18-.47.4-.8.75-1.15.35-.35.68-.57 1.15-.75.36-.14.88-.31 1.86-.35C9.01 3.81 9.33 3.8 12 3.8zm0 3.05a5.15 5.15 0 1 0 0 10.3 5.15 5.15 0 0 0 0-10.3zm0 8.5a3.35 3.35 0 1 1 0-6.7 3.35 3.35 0 0 1 0 6.7zm5.36-8.7a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg></a></p>
+    <p class="fine">2026 Hugo Paella</p>
+  </div>
+</footer>
+
+</body>
+</html>

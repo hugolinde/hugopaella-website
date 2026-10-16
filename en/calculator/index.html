@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paella Recipe Calculator | Hugo Paella</title>
+<meta name="description" content="Instantly calculate the right amount of rice and liquid, plus the recommended paella pan and gas burner for your group.">
+
+<link rel="canonical" href="https://hugopaella.nl/en/calculator/">
+<link rel="alternate" hreflang="nl" href="https://hugopaella.nl/calculator/">
+<link rel="alternate" hreflang="es" href="https://hugopaella.nl/es/calculadora/">
+<link rel="alternate" hreflang="en" href="https://hugopaella.nl/en/calculator/">
+<link rel="alternate" hreflang="x-default" href="https://hugopaella.nl/calculator/">
+
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#f15a24">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="hugopaella">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<link rel="stylesheet" href="/css/style.css?v26">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/en/">
+      <img class="logo-header" src="/assets/img/logo-header.svg" alt="Hugo Paella — El Paellero Holandés">
+    </a>
+    <label for="nav-toggle" class="nav-toggle-label" aria-label="Menu"><span></span></label>
+    <nav class="main-nav" aria-label="Main menu">
+      <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+      <ul>
+        <li><a href="/en/">Home</a></li>
+        <li><a href="/en/paella-on-location/">Paella on location</a></li>
+        <li><a href="/en/prices/">Prices</a></li>
+        <li><a href="/en/about-hugo/">About Hugo</a></li>
+        <li><a href="/en/the-paella/">The Paella</a></li>
+        <li><a href="/en/blog/">Blog</a></li>
+        <li><a href="/en/calculator/" class="is-active">Calculator</a></li>
+        <li><a href="/en/contact/">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-right">
+      <nav class="lang-switch">
+        <a href="/calculator/">NL</a>
+        <span class="sep">/</span>
+        <a href="/es/calculadora/">ES</a>
+        <span class="sep">/</span>
+        <a href="/en/calculator/" class="active">EN</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="hero-text">
+      <span class="kicker">The Paella Recipe Calculator</span>
+      <h1>How much do you need?</h1>
+      <p>A good paella depends on the right proportions. Tell the calculator which paella you want to make, how many guests you're cooking for and how big the portions should be.</p>
+      <p>You'll instantly get advice on the diameter of the paella pan and gas burner, plus the right amount of uncooked rice and liquid. Already have a paella pan or gas burner of your own? Let the calculator know and it will check whether your equipment is suitable.</p>
+    </div>
+    <div class="hero-media">
+      <img src="/assets/img/calculator-ingredienten.jpg" alt="Ingredients ready for cooking">
+    </div>
+  </div>
+</section>
+
+<section class="section no-border" style="padding-top:0;">
+  <div class="wrap" style="max-width:900px;">
+
+    <form class="calc-form" id="calc-form" onsubmit="return false;">
+      <div class="form-grid">
+        <div class="field">
+          <label for="calc-dish">Which paella</label>
+          <select id="calc-dish" name="dish">
+            <option value="valencia">Paella Valenciana</option>
+            <option value="marisco">Paella de Marisco</option>
+            <option value="verduras">Paella de Verduras</option>
+            <option value="fideua">Fideuà</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="calc-portie">Portion size</label>
+          <select id="calc-portie" name="portie">
+            <option value="klein">Small (80 g rice p.p.)</option>
+            <option value="normaal" selected>Normal (100 g rice p.p.)</option>
+            <option value="groot">Large (120 g rice p.p.)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="calc-gasten">Number of guests <span class="optional" id="calc-gasten-hint">(4 to 50)</span></label>
+          <input type="number" id="calc-gasten" name="gasten" min="4" max="50" placeholder="e.g. 10">
+        </div>
+        <div class="field">
+          <label for="calc-locatie">Cooking</label>
+          <select id="calc-locatie" name="locatie">
+            <option value="buiten" selected>Outdoors</option>
+            <option value="binnen">Indoors</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="calc-wind">Wind</label>
+          <select id="calc-wind" name="wind">
+            <option value="geen">None</option>
+            <option value="weinig" selected>Light</option>
+            <option value="veel">Strong</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="calc-existing">Use your own equipment?</label>
+          <select id="calc-existing" name="existing">
+            <option value="nee" selected>No, advise me</option>
+            <option value="pan">Yes, my paella pan</option>
+            <option value="brander">Yes, my gas burner</option>
+            <option value="beide">Yes, my pan and gas burner</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="calc-existing" id="calc-existing-block" hidden>
+        <span class="calc-existing-title">Your own equipment</span>
+        <div class="calc-existing-grid">
+          <div class="field" id="calc-own-pan-field">
+            <label for="calc-own-pan">Diameter of your paella pan</label>
+            <select id="calc-own-pan" name="ownPan"></select>
+          </div>
+          <div class="field" id="calc-own-burner-field">
+            <label for="calc-own-burner">Burner ring diameter</label>
+            <select id="calc-own-burner" name="ownBurner" aria-describedby="calc-own-burner-help"></select>
+            <small class="field-help" id="calc-own-burner-help">ⓘ Measure the outermost ring that you light.</small>
+          </div>
+          <div class="field" id="calc-burner-type-field">
+            <label for="calc-burner-type">Burner type</label>
+            <select id="calc-burner-type" name="burnerType">
+              <option value="standaard">Standard paella burner</option>
+              <option value="professioneel">Professional/flat paella burner</option>
+              <option value="onbekend">I don't know</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div id="calc-error" class="calc-notice calc-notice-error" hidden></div>
+
+    <div id="calc-results" class="calc-fields calc-results" hidden>
+      <div class="calc-field"><span>Rice</span><strong id="calc-out-rijst">–</strong></div>
+      <div class="calc-field"><span>Stock</span><strong id="calc-out-vocht">–</strong></div>
+      <div class="calc-field"><span>Paella pan</span><strong id="calc-out-pan">–</strong><small class="calc-status" id="calc-status-pan"></small></div>
+      <div class="calc-field"><span>Gas burner</span><strong id="calc-out-brander">–</strong><small class="calc-status" id="calc-status-brander"></small></div>
+    </div>
+
+    <div id="calc-notices" aria-live="polite"></div>
+
+    <p id="calc-placeholder" style="text-align:center; color:var(--text-soft);">Enter the number of guests to calculate your paella.</p>
+
+    <div id="calc-pdf-actions" style="text-align:center; margin-top:20px;" hidden>
+      <button type="button" class="btn btn-primary" id="calc-pdf-btn">Create a PDF of the full recipe</button>
+      <p id="calc-pdf-error" class="calc-notice calc-notice-error" style="margin-top:10px;" hidden></p>
+    </div>
+
+    <p style="text-align:center; margin-top:24px;"><a class="btn btn-secondary btn-arrow" href="/en/the-paella/">Read more about paella first</a></p>
+
+    <p class="calc-disclaimer" style="text-align:center; max-width:680px; margin:28px auto 0; font-size:0.85rem; line-height:1.5; color:var(--text-soft);">All results and advice from this calculator are guidelines and are given without guarantee. Cooking with gas and large paella pans requires experience: we recommend always cooking under the guidance of an experienced paellador.</p>
+
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="/js/recipe-data.js?v2"></script>
+<script src="/js/recipe-pdf.js?v2"></script>
+<script src="/js/calculator-config.js?v4"></script>
+<script src="/js/calculator.js?v7"></script>
+<script src="/js/calculator-ui.js?v9"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    PaellaCalculatorUI.init({ lang: 'en' });
+  });
+</script>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-lockup">
+      <a href="/en/">
+        <img class="footer-logo" src="/assets/img/logo-footer.svg" alt="Hugo Paella — El Paellero Holandés — hugopaella.nl / hugopaella.es">
+      </a>
+    </div>
+    <ul class="footer-nav">
+      <li><a href="/en/">Home</a></li>
+      <li><a href="/en/paella-on-location/">Paella on location</a></li>
+      <li><a href="/en/prices/">Prices</a></li>
+      <li><a href="/en/about-hugo/">About Hugo</a></li>
+      <li><a href="/en/the-paella/">The Paella</a></li>
+      <li><a href="/en/blog/">Blog</a></li>
+      <li><a href="/en/calculator/">Calculator</a></li>
+      <li><a href="/en/contact/">Contact</a></li>
+    </ul>
+    <p class="contact-kvk">Contact: <a href="mailto:hugo@hugopaella.nl">hugo@hugopaella.nl</a><br>KvK (Dutch Chamber of Commerce): 24280255</p>
+    <p class="footer-social"><a href="https://www.instagram.com/hugo.paella/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c-2.72 0-3.06.01-4.12.06-1.06.05-1.79.22-2.43.47-.66.26-1.22.6-1.77 1.16-.56.55-.9 1.11-1.16 1.77-.25.64-.42 1.37-.47 2.43C2 8.94 2 9.28 2 12s.01 3.06.06 4.12c.05 1.06.22 1.79.47 2.43.26.66.6 1.22 1.16 1.77.55.56 1.11.9 1.77 1.16.64.25 1.37.42 2.43.47C8.94 22 9.28 22 12 22s3.06-.01 4.12-.06c1.06-.05 1.79-.22 2.43-.47.66-.26 1.22-.6 1.77-1.16.56-.55.9-1.11 1.16-1.77.25-.64.42-1.37.47-2.43.05-1.06.06-1.4.06-4.12s-.01-3.06-.06-4.12c-.05-1.06-.22-1.79-.47-2.43-.26-.66-.6-1.22-1.16-1.77-.55-.56-1.11-.9-1.77-1.16-.64-.25-1.37-.42-2.43-.47C15.06 2.01 14.72 2 12 2zm0 1.8c2.67 0 2.99.01 4.04.06.98.04 1.5.21 1.86.35.47.18.8.4 1.15.75.35.35.57.68.75 1.15.14.36.31.88.35 1.86.05 1.05.06 1.37.06 4.04s-.01 2.99-.06 4.04c-.04.98-.21 1.5-.35 1.86-.18.47-.4.8-.75 1.15-.35.35-.68.57-1.15.75-.36.14-.88.31-1.86.35-1.05.05-1.37.06-4.04.06s-2.99-.01-4.04-.06c-.98-.04-1.5-.21-1.86-.35-.47-.18-.8-.4-1.15-.75-.35-.35-.57-.68-.75-1.15-.14-.36-.31-.88-.35-1.86C3.81 14.99 3.8 14.67 3.8 12s.01-2.99.06-4.04c.04-.98.21-1.5.35-1.86.18-.47.4-.8.75-1.15.35-.35.68-.57 1.15-.75.36-.14.88-.31 1.86-.35C9.01 3.81 9.33 3.8 12 3.8zm0 3.05a5.15 5.15 0 1 0 0 10.3 5.15 5.15 0 0 0 0-10.3zm0 8.5a3.35 3.35 0 1 1 0-6.7 3.35 3.35 0 0 1 0 6.7zm5.36-8.7a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg></a></p>
+    <p class="fine">2026 Hugo Paella</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,13 +1,109 @@
 /*
  * DOM-koppeling voor de Paella Receptencalculator. Werkt samen met
  * calculator-config.js (tabellen) en calculator.js (rekenlogica). Eén bestand
- * voor beide talen: geef bij init({lang: 'nl'|'es'}) de taal mee.
+ * voor beide talen: geef bij init({lang: 'nl'|'es'|'en'}) de taal mee.
  */
 
 (function (global) {
   "use strict";
 
   var TEXT = {
+    en: {
+      gastenHint: function (min, max) {
+        return "(" + min + " to " + max + ")";
+      },
+      errors: {
+        empty: "Please enter the number of guests.",
+        kleinMin: function (min) {
+          return "For a small portion I calculate with at least " + min + " guests.";
+        },
+        grootMax: function (max) {
+          return "For large portions I calculate up to a maximum of " + max + " guests.";
+        },
+        range: function (min, max) {
+          return "Choose a number between " + min + " and " + max + " guests.";
+        },
+      },
+      placeholder: "Enter the number of guests to calculate your paella.",
+      pdfError: "Creating the PDF didn't work. Please try again.",
+      pdfBusy: "Working...",
+      pdfNeedInput: "Please fill in all fields first, then we'll create the PDF of your recipe.",
+      windLockedTitle: "Indoors, I always calculate without a wind correction.",
+      typeLockedTitle: "Indoors, a professional burner is required.",
+      status: {
+        pan: {
+          recommended: "Recommended",
+          ok: "✓ Suitable",
+          fitsBurner: "✓ Fits your burner",
+          tooSmall: function (own) { return "Your " + own + " cm is too small"; },
+          tooLarge: function (own) { return "Your " + own + " cm is too large"; },
+        },
+        burner: {
+          minimum: function (pro) { return pro ? "Minimum · professional" : "Minimum"; },
+          ok: function (pro) { return pro ? "✓ Suitable · professional" : "✓ Suitable"; },
+          tooSmall: function (own, pro) { return (pro ? "Professional" : "Minimum") + " · your " + own + " cm is too small"; },
+          tooLarge: function (own, pro) { return (pro ? "Professional · y" : "Y") + "our " + own + " cm is too large"; },
+          needsPro: "Professional burner required",
+        },
+      },
+      notices: {
+        panOk: function () { return "Your pan is suitable for this quantity."; },
+        comboOk: function () { return "Your own pan and burner are suitable."; },
+        panOutOfBand: function (n, rice) {
+          return (
+            "Your " + n.own + " cm pan is too " + (n.tooSmall ? "small" : "large") +
+            " for " + rice + " of rice. Suitable is " + n.bandMin + " to " + n.bandMax +
+            " cm; ideal is " + n.ideal + " cm. The advice below is based on " + n.ideal + " cm."
+          );
+        },
+        burnerTooSmall: function (n) {
+          var bad = n.pro ? "not suitable" : "too small";
+          var lead = n.viaIdeal
+            ? "Your " + n.own + " cm burner is " + bad + " for the recommended " + n.pan + " cm pan."
+            : n.panOk
+              ? "Your " + n.pan + " cm pan is suitable for this quantity. However, your " + n.own + " cm burner is " + bad + " for this pan."
+              : "Your " + n.own + " cm burner is " + bad + " for a " + n.pan + " cm pan.";
+          return lead + (n.pro
+            ? " A standard paella burner is not suitable for this pan; we recommend a professional burner of at least " + n.need + " cm."
+            : " For this combination we recommend a burner of at least " + n.need + " cm.");
+        },
+        burnerFitsIdeal: function (n) {
+          return "Your " + n.own + " cm burner does fit under the recommended " + n.pan + " cm pan.";
+        },
+        panAdjusted: function (n) {
+          return (
+            "The ideal " + n.ideal + " cm pan doesn't fit well on your " + n.own +
+            " cm burner. A " + n.pan + " cm pan is also suitable for this quantity and does fit."
+          );
+        },
+        burnerTooLarge: function (n) {
+          var lead = n.viaIdeal
+            ? "Your " + n.own + " cm burner is too large for the recommended " + n.pan + " cm pan"
+            : n.panOk
+              ? "Your " + n.pan + " cm pan is suitable for this quantity, but your " + n.own + " cm burner is too large for this pan"
+              : "Your " + n.own + " cm burner is too large for a " + n.pan + " cm pan";
+          return (
+            lead + ". This pan needs a burner of at most " + n.max + " cm. " +
+            "Does your burner have an inner ring that you can light and control separately? Then enter that diameter in the calculator."
+          );
+        },
+        proNeeded: function (n) {
+          return (
+            "A " + n.pan + " cm pan is too large for a standard paella burner. We recommend a professional burner of at least " +
+            n.burner + " cm."
+          );
+        },
+        unknownType: function () {
+          return "To be on the safe side, we assume a standard paella burner.";
+        },
+        unknownMaybeLarge: function (n) {
+          return "Is it a flat or professional burner? Then it is too large for a " + n.pan + " cm pan; it may be at most " + n.max + " cm.";
+        },
+        indoorInfo: function () {
+          return "Cooking indoors is only possible with a professional burner suitable for indoor use. Also make sure there is good ventilation.";
+        },
+      },
+    },
     nl: {
       gastenHint: function (min, max) {
         return "(" + min + " t/m " + max + ")";
@@ -224,8 +320,8 @@
 
   function init(config) {
     var lang = config.lang || "nl";
-    var locale = lang === "es" ? "es-ES" : "nl-NL";
-    var t = TEXT[lang];
+    var locale = lang === "es" ? "es-ES" : lang === "en" ? "en-GB" : "nl-NL";
+    var t = TEXT[lang] || TEXT.nl;
     var Calc = global.PaellaCalculator;
 
     var $ = function (id) { return document.getElementById(id); };
