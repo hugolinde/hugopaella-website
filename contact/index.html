@@ -60,7 +60,7 @@
     <div class="hero-text" style="text-align:center;">
       <span class="kicker">Contact</span>
       <h1>Zullen we een paella plannen?</h1>
-      <p>Stuur je wensen per e-mail naar <a href="mailto:hugo@hugopaella.nl">hugo@hugopaella.nl</a>, of vul hieronder het formulier in. Wil je weten of ik beschikbaar ben of een prijs voor jouw gezelschap ontvangen? Vermeld dan als het kan de gewenste datum, locatie, het aantal gasten en (als je al een voorkeur hebt) welke paella je wilt.</p>
+      <p>Stuur je wensen per e-mail naar <a href="mailto:hugo@hugopaella.nl">hugo@hugopaella.nl</a>, of vul hieronder het formulier in. Wil je gelijk al weten of ik beschikbaar ben of een prijs voor jouw gezelschap ontvangen? Vermeld dan als het kan de gewenste datum, locatie, het aantal gasten en (als je al een voorkeur hebt) welke paella je wilt.</p>
     </div>
   </div>
 </section>
@@ -69,13 +69,17 @@
   <div class="wrap" style="max-width:760px;">
 
     <!--
-      TODO (Hugo): dit formulier verstuurt nog nergens naartoe. Zodra je een
-      verzendoplossing hebt gekozen (bijvoorbeeld Formspree, of iets anders),
-      hoef je hier alleen het <form>-element aan te passen: geef het een
-      action="https://..." en method="POST", en verwijder het onsubmit-scriptje
-      hieronder (dat toont nu alleen een nette melding i.p.v. echt te versturen).
+      Verzending via FormSubmit (formsubmit.co): elke aanvraag gaat naar
+      hugo@hugopaella.nl en de afzender krijgt automatisch een bevestiging
+      (_autoresponse). Eenmalig activeren: na de eerste verzending stuurt
+      FormSubmit een activatiemail naar hugo@hugopaella.nl — klik op de link.
     -->
-    <form class="contact-form" id="contact-form" onsubmit="event.preventDefault(); document.getElementById('form-placeholder-note').hidden = false; this.hidden = true;">
+    <form class="contact-form" id="contact-form" action="https://formsubmit.co/hugo@hugopaella.nl" method="POST">
+      <input type="hidden" name="_subject" value="Nieuwe paella-aanvraag via hugopaella.nl">
+      <input type="hidden" name="_autoresponse" value="Wat leuk dat je aan een paella denkt! Je aanvraag is in goede orde bij me binnengekomen. Ik bekijk je wensen en kom zo snel mogelijk bij je terug, met een voorstel op maat. Hieronder vind je nog even een kopie van wat je hebt ingevuld. Heb je intussen nog iets aan te vullen? Antwoord dan gewoon op deze mail. ¡Hasta pronto! Hugo — Hugo Paella, de Hollandse paellero">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="https://hugopaella.nl/contact/bedankt/">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
       <div class="form-grid">
         <div class="field">
           <label for="naam">Naam</label>
@@ -121,10 +125,6 @@
       </div>
     </form>
 
-    <div id="form-placeholder-note" hidden>
-      <p style="font-weight:700;">Bedankt voor je aanvraag!</p>
-      <p style="color:var(--text-soft);">Het formulier is op deze testversie van de site nog niet gekoppeld aan e-mail. Mail je aanvraag voor nu rechtstreeks naar <a href="mailto:hugo@hugopaella.nl">hugo@hugopaella.nl</a>.</p>
-    </div>
 
   </div>
 </section>

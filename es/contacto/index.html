@@ -69,13 +69,17 @@
   <div class="wrap" style="max-width:760px;">
 
     <!--
-      TODO (Hugo): este formulario todavía no envía nada a ningún sitio.
-      En cuanto elijas una solución de envío (por ejemplo Formspree, u otra),
-      solo tienes que ajustar el elemento <form>: dale un action="https://..."
-      y method="POST", y elimina el script onsubmit de abajo (que ahora solo
-      muestra un aviso, en lugar de enviar de verdad).
+      Verzending via FormSubmit (formsubmit.co): elke aanvraag gaat naar
+      hugo@hugopaella.nl en de afzender krijgt automatisch een bevestiging
+      (_autoresponse). Eenmalig activeren: na de eerste verzending stuurt
+      FormSubmit een activatiemail naar hugo@hugopaella.nl — klik op de link.
     -->
-    <form class="contact-form" id="contact-form" onsubmit="event.preventDefault(); document.getElementById('form-placeholder-note').hidden = false; this.hidden = true;">
+    <form class="contact-form" id="contact-form" action="https://formsubmit.co/hugo@hugopaella.nl" method="POST">
+      <input type="hidden" name="_subject" value="Nueva solicitud de paella vía hugopaella.nl (ES)">
+      <input type="hidden" name="_autoresponse" value="¡Qué bien que estés pensando en una paella! He recibido tu solicitud correctamente. Voy a revisar tus deseos y te responderé lo antes posible con una propuesta a medida. Abajo encontrarás una copia de lo que has rellenado. ¿Quieres añadir algo? Responde simplemente a este correo. ¡Hasta pronto! Hugo — Hugo Paella, el paellero holandés">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="https://hugopaella.nl/es/contacto/gracias/">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
       <div class="form-grid">
         <div class="field">
           <label for="naam">Nombre</label>
@@ -121,10 +125,6 @@
       </div>
     </form>
 
-    <div id="form-placeholder-note" hidden>
-      <p style="font-weight:700;">¡Gracias por tu solicitud!</p>
-      <p style="color:var(--text-soft);">En esta versión de prueba de la web, el formulario todavía no está conectado al correo. Por ahora, envía tu solicitud directamente a <a href="mailto:hugo@hugopaella.nl">hugo@hugopaella.nl</a>.</p>
-    </div>
 
   </div>
 </section>
