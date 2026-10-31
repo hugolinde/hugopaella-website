@@ -703,6 +703,18 @@ a.dish-card:hover {
   .dish-grid { grid-template-columns: 1fr; }
 }
 
+/* Compacte gerechtkaarten (Paella op locatie) */
+.dish-grid.compact { gap: 18px; }
+.dish-grid.compact .dish-body { padding: 14px 16px 16px; text-align: center; }
+.dish-grid.compact h3 { margin-bottom: 4px; }
+.dish-grid.compact p { font-size: 0.88rem; }
+@media (max-width: 560px) {
+  .dish-grid.compact { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .dish-grid.compact .dish-body { padding: 10px 10px 12px; }
+  .dish-grid.compact h3 { font-size: 0.95rem; }
+  .dish-grid.compact p { font-size: 0.8rem; }
+}
+
 /* Price table */
 .price-table {
   width: 100%;
