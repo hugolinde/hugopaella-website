@@ -940,6 +940,11 @@ a.blog-card:hover {
   .blog-grid { grid-template-columns: 1fr; }
 }
 
+/* Homepage: drie blogkaarten naast elkaar */
+.blog-grid.blog-grid-3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 960px) { .blog-grid.blog-grid-3 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 760px) { .blog-grid.blog-grid-3 { grid-template-columns: 1fr; } }
+
 .blog-article-header {
   padding: 48px 0 32px;
   text-align: center;
