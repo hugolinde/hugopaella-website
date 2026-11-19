@@ -343,6 +343,10 @@ a { color: var(--accent-dark); }
   margin: 0 auto 56px;
 }
 
+/* Kopblok als laatste element in een sectie: geen extra witruimte eronder */
+.section-heading:last-child { margin-bottom: 0; }
+.section-heading:last-child > :last-child { margin-bottom: 0; }
+
 .section-heading.left {
   text-align: left;
   margin: 0 0 40px;
@@ -1000,6 +1004,16 @@ a.blog-card:hover {
 }
 .blog-back:hover { color: var(--accent-dark); }
 .blog-back::before { content: "\2190"; }
+
+/* Terug-knop onderaan elk blogartikel */
+.blog-back-bottom { padding-top: 8px; text-align: center; }
+.blog-back-button {
+  padding: 12px 22px;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  background: #fff;
+}
+.blog-back-button:hover { background: var(--bg-soft); }
 
 /* Coming soon block (used for calculator + empty blog posts) */
 .coming-soon {
