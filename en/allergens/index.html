@@ -26,9 +26,8 @@
 
 <style>
 .al-card { background:#fff; border-radius:var(--radius); box-shadow:var(--shadow-sm); overflow:hidden; }
-.al-row { display:grid; grid-template-columns:92px minmax(150px,220px) 1fr; gap:22px; align-items:center; padding:20px 24px; border-top:1px solid var(--line); }
+.al-row { display:grid; grid-template-columns:minmax(150px,220px) 1fr; gap:22px; align-items:center; padding:20px 24px; border-top:1px solid var(--line); }
 .al-row:first-child { border-top:none; }
-.al-thumb { width:92px; height:92px; border-radius:12px; object-fit:cover; }
 .al-dish h2 { font-family:var(--font-display); font-size:1.15rem; font-weight:800; margin:0 0 2px; line-height:1.2; }
 .al-dish p { margin:0; color:var(--text-soft); font-size:.9rem; }
 .al-chips { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:14px 6px; }
@@ -49,16 +48,17 @@
 .al-legend .al-chip { width:auto; }
 .al-legend .al-icon { width:46px; height:46px; }
 .al-actions { margin-top:30px; display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
-.al-stamp { color:var(--text-soft); font-size:.85rem; margin-top:18px; }
+.al-back { margin:0 0 6px; font-size:.92rem; font-weight:600; }
+.al-back a { text-decoration:none; }
+.al-back a:hover { text-decoration:underline; }
 @media (max-width:760px) {
-  .al-row { grid-template-columns:72px 1fr; gap:14px 16px; padding:18px; }
-  .al-thumb { width:72px; height:72px; }
+  .al-row { grid-template-columns:1fr; gap:12px; padding:18px; }
   .al-body { grid-column:1 / -1; }
   .al-legend ul { grid-template-columns:repeat(3,1fr); }
   .al-chip { width:92px; }
 }
 @media print {
-  .site-header, .site-footer, .al-actions { display:none !important; }
+  .site-header, .site-footer, .al-actions, .al-back { display:none !important; }
   body { background:#fff; }
   .page-hero { padding-top:0; }
   .al-card { box-shadow:none; border:1px solid #ddd; }
@@ -118,6 +118,7 @@
 
 <section class="page-hero no-image">
   <div class="wrap">
+    <p class="al-back"><a href="/en/paella-on-location/">&larr; Back to Paella on location</a></p>
     <div class="hero-text" style="text-align:center;">
       <span class="kicker">Allergens</span>
       <h1>Allergen chart</h1>
@@ -130,35 +131,28 @@
   <div class="wrap" style="max-width:920px;">
     <div class="al-card">
       <div class="al-row">
-        <img class="al-thumb" src="/assets/img/gerecht-paella-valenciana.jpg?v2" alt="Paella Valenciana" loading="lazy">
         <div class="al-dish"><h2>Paella Valenciana</h2><p>Chicken &amp; rabbit</p></div>
-        <div class="al-body"><div class="al-none"><svg class="al-icon" aria-hidden="true"><use href="#al-geen"></use></svg><span>Contains none of the 14 allergens</span></div><div class="al-option"><span>On request with snails. The paella then also contains:</span><ul class="al-chips"><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-weekdieren"></use></svg><span>Molluscs</span></li></ul></div></div>
+        <div class="al-body"><div class="al-none"><svg class="al-icon" aria-hidden="true"><use href="#al-geen"></use></svg><span>Contains none of the 14 allergens</span></div></div>
       </div>
       <div class="al-row">
-        <img class="al-thumb" src="/assets/img/gerecht-paella-marisco.jpg?v2" alt="Paella de Marisco" loading="lazy">
         <div class="al-dish"><h2>Paella de Marisco</h2><p>Fish &amp; seafood</p></div>
-        <div class="al-body"><ul class="al-chips" aria-label="Contains"><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-schaaldieren"></use></svg><span>Crustaceans</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-weekdieren"></use></svg><span>Molluscs</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-vis"></use></svg><span>Fish</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-sulfiet"></use></svg><span>Sulphites<sup>1</sup></span></li></ul></div>
+        <div class="al-body"><ul class="al-chips" aria-label="Contains"><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-schaaldieren"></use></svg><span>Crustaceans</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-weekdieren"></use></svg><span>Molluscs</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-vis"></use></svg><span>Fish</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-sulfiet"></use></svg><span>Sulphites</span></li></ul></div>
       </div>
       <div class="al-row">
-        <img class="al-thumb" src="/assets/img/gerecht-paella-verduras.jpg?v2" alt="Paella de Verduras" loading="lazy">
         <div class="al-dish"><h2>Paella de Verduras</h2><p>Vegetarian</p></div>
         <div class="al-body"><div class="al-none"><svg class="al-icon" aria-hidden="true"><use href="#al-geen"></use></svg><span>Contains none of the 14 allergens</span></div></div>
       </div>
       <div class="al-row">
-        <img class="al-thumb" src="/assets/img/gerecht-fideua.jpg?v2" alt="Fideuà" loading="lazy">
         <div class="al-dish"><h2>Fideuà</h2><p>Pasta and seafood</p></div>
-        <div class="al-body"><ul class="al-chips" aria-label="Contains"><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-gluten"></use></svg><span>Gluten (wheat)</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-schaaldieren"></use></svg><span>Crustaceans</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-weekdieren"></use></svg><span>Molluscs</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-vis"></use></svg><span>Fish</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-sulfiet"></use></svg><span>Sulphites<sup>1</sup></span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-ei"></use></svg><span>Egg<sup>2</sup></span></li></ul></div>
+        <div class="al-body"><ul class="al-chips" aria-label="Contains"><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-gluten"></use></svg><span>Gluten (wheat)</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-schaaldieren"></use></svg><span>Crustaceans</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-weekdieren"></use></svg><span>Molluscs</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-vis"></use></svg><span>Fish</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-sulfiet"></use></svg><span>Sulphites</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-ei"></use></svg><span>Egg<sup>1</sup></span></li></ul></div>
       </div>
     </div>
 
     <div class="al-notes">
       <h2>Good to know</h2>
-      <ol>
-        <li>Frozen or imported prawns and langoustines are often treated with sulphites to prevent discolouration. That is why I list sulphites for these dishes.</li>
-        <li>The egg is in the aioli I serve separately with the Fideuà. Without aioli, the Fideuà contains no egg.</li>
-      </ol>
-      <p>If I also cook Paella de Marisco or Fideuà on the same day, I cannot fully rule out traces of crustaceans, molluscs and fish in the other dishes.</p>
+      <p><sup>1</sup> The egg is in the aioli. I serve it separately with the Fideuà, and it can easily be replaced with another sauce.</p>
       <p>Do you have a severe allergy? Mention it when you book, and I will agree the preparation with you in advance.</p>
+      <p>If ingredients have to be changed due to circumstances, I will inform the client about this before the event.</p>
     </div>
 
     <div class="al-legend">
@@ -166,7 +160,6 @@
       <ul><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-gluten"></use></svg><span>Gluten</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-schaaldieren"></use></svg><span>Crustaceans</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-ei"></use></svg><span>Egg</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-vis"></use></svg><span>Fish</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-pinda"></use></svg><span>Peanuts</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-soja"></use></svg><span>Soy</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-melk"></use></svg><span>Milk</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-noten"></use></svg><span>Tree nuts</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-selderij"></use></svg><span>Celery</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-mosterd"></use></svg><span>Mustard</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-sesam"></use></svg><span>Sesame</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-sulfiet"></use></svg><span>Sulphites</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-lupine"></use></svg><span>Lupin</span></li><li class="al-chip"><svg class="al-icon" aria-hidden="true"><use href="#al-weekdieren"></use></svg><span>Molluscs</span></li></ul>
     </div>
 
-    <p class="al-stamp">Last updated: November 2026. I check the labels every time I buy ingredients.</p>
     <div class="al-actions">
       <button type="button" class="btn btn-primary" onclick="window.print()">Print or save as PDF</button>
       <a class="btn btn-secondary" href="/en/paella-on-location/">Back to Paella on location</a>
