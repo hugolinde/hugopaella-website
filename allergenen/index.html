@@ -51,6 +51,9 @@
 .al-back { margin:0 0 6px; font-size:.92rem; font-weight:600; }
 .al-back a { text-decoration:none; }
 .al-back a:hover { text-decoration:underline; }
+.al-float { position:fixed; right:20px; bottom:20px; z-index:30; display:inline-flex; align-items:center; gap:6px; padding:12px 18px; border-radius:999px; background:var(--accent); color:#fff; font-family:var(--font-display); font-weight:700; font-size:.92rem; text-decoration:none; box-shadow:0 8px 22px rgba(36,33,31,.22); }
+.al-float:hover { background:var(--accent-dark); color:#fff; }
+.site-footer { padding-bottom:84px; }
 @media (max-width:760px) {
   .al-row { grid-template-columns:1fr; gap:12px; padding:18px; }
   .al-body { grid-column:1 / -1; }
@@ -58,7 +61,7 @@
   .al-chip { width:92px; }
 }
 @media print {
-  .site-header, .site-footer, .al-actions, .al-back { display:none !important; }
+  .site-header, .site-footer, .al-actions, .al-back, .al-float { display:none !important; }
   body { background:#fff; }
   .page-hero { padding-top:0; }
   .al-card { box-shadow:none; border:1px solid #ddd; }
@@ -166,6 +169,8 @@
     </div>
   </div>
 </section>
+
+<a class="al-float" href="/paella-op-locatie/" aria-label="Terug naar Paella op locatie">&larr; Terug</a>
 
 <footer class="site-footer">
   <div class="wrap">
