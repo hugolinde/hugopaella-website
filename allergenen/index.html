@@ -36,6 +36,11 @@
 .al-icon { width:52px; height:52px; margin-bottom:6px; }
 .al-none { display:flex; align-items:center; gap:12px; font-weight:700; color:var(--green); }
 .al-none .al-icon { margin:0; flex-shrink:0; }
+.al-card { --chip-w:88px; --icon:46px; --gap:8px; }
+.al-card .al-chips { display:grid; grid-template-columns:repeat(auto-fill, var(--chip-w)); gap:14px var(--gap); }
+.al-card .al-chip { width:auto; min-width:0; font-size:.66rem; letter-spacing:0; }
+.al-card .al-icon { width:var(--icon); height:var(--icon); }
+.al-card .al-none { display:block; padding-left:calc((var(--chip-w) - var(--icon)) / 2); }
 .al-option { margin-top:14px; padding-top:12px; border-top:1px dashed var(--line); display:flex; align-items:center; gap:14px; flex-wrap:wrap; font-size:.9rem; color:var(--text-soft); }
 .al-option .al-chip { flex-direction:row; width:auto; gap:8px; }
 .al-option .al-icon { width:36px; height:36px; margin:0; }
@@ -59,6 +64,11 @@
   .al-body { grid-column:1 / -1; }
   .al-legend ul { grid-template-columns:repeat(3,1fr); }
   .al-chip { width:92px; }
+  .al-card { --icon:40px; --gap:10px; }
+  .al-card .al-row { padding:18px 16px; }
+  .al-card .al-chips { grid-template-columns:repeat(4, minmax(0, 1fr)); }
+  .al-card .al-chip { width:auto; font-size:.57rem; }
+  .al-card .al-none { padding-left:calc((100% - 3 * var(--gap)) / 8 - var(--icon) / 2); }
 }
 @media print {
   .site-header, .site-footer, .al-actions, .al-back, .al-float { display:none !important; }
@@ -125,7 +135,7 @@
     <div class="hero-text" style="text-align:center;">
       <span class="kicker">Allergenen</span>
       <h1>Allergenenkaart</h1>
-      <p>Per gerecht zie je welke van de 14 wettelijk vastgestelde EU-allergenen erin zitten. Ik kook met verse ingrediënten en trek de bouillon zelf, zonder bouillonblokjes of kruidenmixen.</p>
+      <p>Per gerecht zie je welke van de 14 wettelijk vastgestelde EU-allergenen erin zitten. Heb je een ernstige allergie? Meld het bij je aanvraag, dan stem ik de bereiding vooraf met je af.</p>
     </div>
   </div>
 </section>
@@ -135,7 +145,7 @@
     <div class="al-card">
       <div class="al-row">
         <div class="al-dish"><h2>Paella Valenciana</h2><p>Kip &amp; konijn</p></div>
-        <div class="al-body"><div class="al-none"><svg class="al-icon" aria-hidden="true"><use href="#al-geen"></use></svg><span>Bevat geen van de 14 allergenen</span></div></div>
+        <div class="al-body"><div class="al-none"><span>Bevat geen van de 14 allergenen</span></div></div>
       </div>
       <div class="al-row">
         <div class="al-dish"><h2>Paella de Marisco</h2><p>Vis &amp; zeevruchten</p></div>
@@ -143,7 +153,7 @@
       </div>
       <div class="al-row">
         <div class="al-dish"><h2>Paella de Verduras</h2><p>Vegetarisch</p></div>
-        <div class="al-body"><div class="al-none"><svg class="al-icon" aria-hidden="true"><use href="#al-geen"></use></svg><span>Bevat geen van de 14 allergenen</span></div></div>
+        <div class="al-body"><div class="al-none"><span>Bevat geen van de 14 allergenen</span></div></div>
       </div>
       <div class="al-row">
         <div class="al-dish"><h2>Fideuà</h2><p>Pasta en zeevruchten</p></div>
@@ -154,8 +164,7 @@
     <div class="al-notes">
       <h2>Goed om te weten</h2>
       <p><sup>1</sup> Het ei zit in de aioli. Die serveer ik apart bij de Fideuà en kan eenvoudig worden vervangen door een andere saus.</p>
-      <p>Heb je een ernstige allergie? Meld het bij je aanvraag, dan stem ik de bereiding vooraf met je af.</p>
-      <p>Moeten ingrediënten door omstandigheden worden aangepast, dan informeer ik de opdrachtgever daarover vooraf aan het evenement.</p>
+      <p>Mochten ingrediënten en allergenen bij de bestelde paella door omstandigheden zijn aangepast, dan deel ik vooraf aan het evenement de aangepaste allergenenkaart.</p>
     </div>
 
     <div class="al-legend">
@@ -164,7 +173,7 @@
     </div>
 
     <div class="al-actions">
-      <button type="button" class="btn btn-primary" onclick="window.print()">Afdrukken of opslaan als pdf</button>
+      <a class="btn btn-primary" href="/allergenen/allergenenkaart-hugo-paella.pdf" target="_blank" rel="noopener" onclick="return alPrint(event)">Afdrukken of opslaan als pdf</a>
     </div>
   </div>
 </section>
@@ -193,5 +202,14 @@
   </div>
 </footer>
 
+<script>
+function alPrint(e) {
+  var ios = /iP(hone|od|ad)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (ios || typeof window.print !== 'function') return true;
+  e.preventDefault();
+  window.print();
+  return false;
+}
+</script>
 </body>
 </html>
