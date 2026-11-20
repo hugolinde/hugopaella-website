@@ -216,7 +216,7 @@
     }).catch(function () {});
   }
   window.alPrint = function (e) {
-    if (!ios && typeof window.print === 'function') { e.preventDefault(); window.print(); return false; }
+    if (!ios) { e.preventDefault(); if (!window.open(link.getAttribute('href'), '_blank')) window.location.href = link.getAttribute('href'); return false; }
     if (pdfFile) {
       e.preventDefault();
       navigator.share({ files: [pdfFile], title: 'Allergen chart Hugo Paella' }).catch(function (err) {
