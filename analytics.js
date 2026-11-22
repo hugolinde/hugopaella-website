@@ -7,6 +7,25 @@
   var GA_ID = 'G-W9CNNFKFM3';
   var KEY = 'cookie-consent'; // 'granted' | 'denied'
 
+  // Huisstijl van de banner
+  var THEME = {
+      "bg": "#fff5e6",
+      "text": "#24211f",
+      "border": "1px solid #ecdcbf",
+      "radius": "16px",
+      "shadow": "0 14px 34px rgba(36,33,31,.18)",
+      "font": "'Montserrat',Arial,sans-serif",
+      "btnFont": "'Montserrat',Arial,sans-serif",
+      "btnWeight": "700",
+      "btnRadius": "999px",
+      "yesBg": "#f15a24",
+      "yesHover": "#c2431a",
+      "yesText": "#ffffff",
+      "noText": "#24211f",
+      "noBorder": "#ecdcbf",
+      "noHoverBg": "#faead1"
+  };
+
   var T = {
     nl: { text: 'Wij gebruiken analytische cookies (Google Analytics) om te zien hoe de website wordt gebruikt. Ga je hiermee akkoord?', yes: 'Accepteren', no: 'Weigeren', link: 'Cookie-instellingen' },
     en: { text: 'We use analytics cookies (Google Analytics) to understand how this website is used. Do you accept?', yes: 'Accept', no: 'Decline', link: 'Cookie settings' },
@@ -49,15 +68,19 @@
     var st = document.createElement('style');
     st.id = 'cc-style';
     st.textContent =
-      '#cc-banner{position:fixed;left:16px;right:16px;bottom:16px;z-index:99999;max-width:560px;margin:0 auto;' +
-      'background:#fff;color:#222;border-radius:12px;box-shadow:0 6px 30px rgba(0,0,0,.25);padding:16px 18px;' +
-      'font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}' +
-      '#cc-banner p{margin:0 0 12px}' +
+      '#cc-banner{position:fixed;left:16px;right:16px;bottom:16px;z-index:99999;max-width:580px;margin:0 auto;box-sizing:border-box;' +
+      'background:' + THEME.bg + ';color:' + THEME.text + ';border:' + THEME.border + ';border-radius:' + THEME.radius + ';' +
+      'box-shadow:' + THEME.shadow + ';padding:18px 20px;font-family:' + THEME.font + ';font-size:15px;line-height:1.5}' +
+      '#cc-banner p{margin:0 0 14px;color:inherit;font-size:inherit}' +
       '#cc-banner .cc-btns{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}' +
-      '#cc-banner button{font:inherit;cursor:pointer;border-radius:8px;padding:8px 16px;border:1px solid #222}' +
-      '#cc-banner .cc-no{background:#fff;color:#222}' +
-      '#cc-banner .cc-yes{background:#222;color:#fff}' +
-      '.cc-settings-link{display:inline-block;margin-top:8px;font-size:.85em;opacity:.75;cursor:pointer;text-decoration:underline;background:none;border:0;color:inherit;padding:0}';
+      '#cc-banner button{font-family:' + THEME.btnFont + ';font-weight:' + THEME.btnWeight + ';font-size:15px;cursor:pointer;' +
+      'border-radius:' + THEME.btnRadius + ';padding:9px 20px;transition:background .15s,border-color .15s,color .15s}' +
+      '#cc-banner .cc-yes{background:' + THEME.yesBg + ';color:' + THEME.yesText + ';border:1.5px solid ' + THEME.yesBg + '}' +
+      '#cc-banner .cc-yes:hover{background:' + THEME.yesHover + ';border-color:' + THEME.yesHover + '}' +
+      '#cc-banner .cc-no{background:transparent;color:' + THEME.noText + ';border:1.5px solid ' + THEME.noBorder + '}' +
+      '#cc-banner .cc-no:hover{background:' + THEME.noHoverBg + '}' +
+      '#cc-banner button:focus-visible{outline:2px solid ' + THEME.yesBg + ';outline-offset:2px}' +
+      '.cc-settings-link{display:inline-block;margin-top:8px;font-size:.85em;opacity:.75;cursor:pointer;text-decoration:underline;background:none;border:0;color:inherit;font-family:inherit;padding:0}';
     document.head.appendChild(st);
   }
 
